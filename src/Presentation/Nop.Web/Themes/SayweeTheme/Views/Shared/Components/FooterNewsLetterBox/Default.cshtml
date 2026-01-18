@@ -1,0 +1,133 @@
+@inject IThemeContext themeContext
+@model NewsLetterBoxModel
+@{
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<!-- Footer Newsletter Area -->
+<section class="footer-newsletter mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="footer-newsletter-wrapper text-center">
+                    <h4 class="footer-newsletter-title mb-3">
+                        @T("Newsletter.Title")
+                    </h4>
+                    <p class="footer-newsletter-subtitle mb-4">
+                        @T("Newsletter.Subtitle", "Subscribe to get special offers and updates")
+                    </p>
+                    <form action="#" class="footer-newsletter-form">
+                        <div class="input-group mb-3 justify-content-center">
+                            <input asp-for="NewsLetterEmail" id="footer-newsletter-email" class="form-control newsletter-subscribe-text" placeholder=@T("Newsletter.Email.Placeholder") aria-label="@T("Newsletter.Subscribe")" />
+                            <button type="button" id="footer-newsletter-subscribe-button" class="btn btn-primary">Subscribe</button>
+                        </div>
+                        @if (Model.AllowToUnsubscribe)
+                        {
+                            <div class="options text-center mb-3">
+                                <span class="subscribe custom-radio me-3">
+                                    <input class="custom-control-input" id="footer_newsletter_subscribe" type="radio" value="newsletter_subscribe" name="footer_newsletter_block" checked="checked" />
+                                    <label class="custom-control-label" for="footer_newsletter_subscribe">@T("Newsletter.Options.Subscribe")</label>
+                                </span>
+                                <span class="unsubscribe custom-radio">
+                                    <input class="custom-control-input" id="footer_newsletter_unsubscribe" type="radio" value="newsletter_unsubscribe" name="footer_newsletter_block" />
+                                    <label class="custom-control-label" for="footer_newsletter_unsubscribe">@T("Newsletter.Options.Unsubscribe")</label>
+                                </span>
+                            </div>
+                        }
+                        @if (Model.DisplayCaptcha)
+                        {
+                            <div class="text-center mb-3">
+                                <nop-captcha />
+                            </div>
+                        }
+                        <div class="footer-newsletter-messages">
+                            <span id="footer-subscribe-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait")</span>
+                            <span asp-validation-for="NewsLetterEmail"></span>
+                        </div>
+                        <div class="newsletter-result" id="footer-newsletter-result-block"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script asp-location="Footer">
+
+    async function getFooterCaptchaToken(action, reCaptchaPublicKey, isReCaptchaV3) {
+        var recaptchaToken = '';
+        if (isReCaptchaV3) {
+            grecaptcha.ready(() => {
+                grecaptcha.execute(reCaptchaPublicKey, { action: action }).then((token) => {
+                    recaptchaToken = token;
+                });
+            });
+
+            while (recaptchaToken == '') {
+                await new Promise(t => setTimeout(t, 100));
+            }
+        } else {
+            recaptchaToken = $('#footer-newsletter-subscribe-block .captcha-box textarea[name="g-recaptcha-response"').val();
+        }
+
+        return recaptchaToken;
+    }
+
+    async function footer_newsletter_subscribe(subscribe) {
+        var subscribeProgress = $("#footer-subscribe-loading-progress");
+        subscribeProgress.show();
+        var captchaTok = '';
+        if (@Model.DisplayCaptcha.ToString().ToLowerInvariant() == true) {
+            captchaTok = await getFooterCaptchaToken('SubscribeNewsletter', '@Model.ReCaptchaPublicKey', @Model.IsReCaptchaV3.ToString().ToLowerInvariant());
+        }
+        var postData = {
+            subscribe: subscribe,
+            email: $("#footer-newsletter-email").val(),
+            'g-recaptcha-response': captchaTok
+        };
+        addAntiForgeryToken(postData);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.RouteUrl(NopRouteNames.Ajax.SUBSCRIBE_NEWSLETTER))",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $("#footer-newsletter-result-block").html(data.Result);
+                if (data.Success) {
+                    $('#footer-newsletter-subscribe-block').hide();
+                    $('#footer-newsletter-result-block').show();
+                } else {
+                    $('#footer-newsletter-result-block').fadeIn("slow").delay(2000).fadeOut("slow");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Failed to subscribe.');
+            },
+            complete: function (jqXHR, textStatus) {
+                subscribeProgress.hide();
+            }
+        });
+    }
+
+    $(function() {
+        $('#footer-newsletter-subscribe-button').on('click', function () {
+            @if (Model.AllowToUnsubscribe)
+            {
+                    <text>if ($('#footer_newsletter_subscribe').is(':checked')) {
+                    footer_newsletter_subscribe('true');
+                } else {
+                    footer_newsletter_subscribe('false');
+                }</text>
+            }
+            else
+            {
+                    <text>footer_newsletter_subscribe('true');</text>
+            }
+        });
+        $("#footer-newsletter-email").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                $("#footer-newsletter-subscribe-button").trigger("click");
+                return false;
+            }
+        });
+    });
+</script>
+<!-- End Footer Newsletter Area -->

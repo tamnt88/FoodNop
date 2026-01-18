@@ -1,0 +1,27 @@
+
+@model LogoModel
+@using Nop.Core
+@inject IThemeContext themeContext
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+
+<div class="mtheader__bottom-category-wrap p-relative">
+    <div class="mtheader__bottom-category">
+        <div class="mtheader__logo">
+            <a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">
+            
+                @if (!string.IsNullOrEmpty(Model.LogoPath))
+                {
+                    <img alt="@Model.StoreName" src="@Model.LogoPath">
+                }
+                else
+                {
+                    <img alt="@Model.StoreName" src="~/Themes/@(themeName)/Content/images/logo.png"> 
+                } 
+            </a>
+        </div>
+    </div>
+</div>
+ 

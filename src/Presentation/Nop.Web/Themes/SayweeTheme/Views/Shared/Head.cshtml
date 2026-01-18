@@ -1,0 +1,31 @@
+ @using Nop.Core.Domain.Catalog
+@using Nop.Services.Helpers
+
+@inject CatalogSettings catalogSettings
+@inject IThemeContext themeContext
+@inject IUserAgentHelper userAgentHelper
+@inject Nop.Core.IStoreContext storeContext
+@{
+    Layout = "";
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+    var supportRtl = await Html.ShouldUseRtlThemeAsync();
+    var store =await storeContext.GetCurrentStoreAsync();
+    //add main CSS file
+    // NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/styles{(supportRtl ? ".rtl" : "")}.css");
+    
+    //add swiper css file
+    // if (catalogSettings.DisplayAllPicturesOnCatalogPages)
+    // {
+    //     NopHtml.AppendCssFileParts("~/lib_npm/swiper/swiper-bundle.min.css");
+    // }
+    //add jQuery UI css file
+    NopHtml.AppendCssFileParts("~/lib_npm/jquery-ui-dist/jquery-ui.min.css");
+    NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/main.css");
+    // NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/swiper-min.css");
+    NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/magnific-popup.css");
+    NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/fontawesome-pro.min.css");
+    NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/animate.css");
+    NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/bootstrap.min.css"); 
+    
+    
+}

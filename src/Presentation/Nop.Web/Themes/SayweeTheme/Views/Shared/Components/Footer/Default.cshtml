@@ -1,0 +1,186 @@
+
+@model FooterModel
+
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+@using Nop.Core.Domain.Topics
+
+@inject IWorkContext workContext 
+@inject IThemeContext themeContext
+
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<!-- feature area Start -->
+<section class="mtfeature__area mtfeature__bg pb-50 pt-60 fix">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-3 col-md-4">
+                <div class="mtfeature__wrapper d-flex align-items-center">
+                    <div class="mtfeature__icon">
+                        <img src="~/Themes/@(themeName)/Content/img/feature/feature-1-1.jpg" alt="">
+                    </div>
+                    <div class="mtfeature__content">
+                        <h5 class="mtfeature__title">@T("ContactUs.Feature1.Title", "Free Shipping")</h5>
+                        <p>
+                            @T("ContactUs.Feature1.Description", "shipping on your order. No extra charges for delivery.")
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="mtfeature__wrapper d-flex align-items-center">
+                    <div class="mtfeature__icon">
+                        <img src="~/Themes/@(themeName)/Content/img/feature/feature-1-2.jpg" alt="">
+                    </div>
+                    <div class="mtfeature__content">
+                        <h5 class="mtfeature__title">@T("ContactUs.Feature2.Title", "Secure Payments")</h5>
+                        <p>
+                            @T("ContactUs.Feature2.Description", "our financial information is protected")
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="mtfeature__wrapper d-flex align-items-center">
+                    <div class="mtfeature__icon">
+                        <img src="~/Themes/@(themeName)/Content/img/feature/feature-1-3.jpg" alt="">
+                    </div>
+                    <div class="mtfeature__content">
+                        <h5 class="mtfeature__title">@T("ContactUs.Feature3.Title", "24 Hour Support")</h5>
+                        <p>
+                            @T("ContactUs.Feature3.Description", "We're here to help whenever you need us.")
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="mtfeature__wrapper d-flex align-items-center">
+                    <div class="mtfeature__icon">
+                        <img src="~/Themes/@(themeName)/Content/img/feature/feature-1-4.jpg" alt="">
+                    </div>
+                    <div class="mtfeature__content">
+                        <h5 class="mtfeature__title">@T("ContactUs.Feature4.Title", "Best Prices & Offers")</h5>
+                        <p>
+                            @T("ContactUs.Feature4.Description", "Provides unbeatable deals on a wide range of products")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- feature area End -->
+<!-- footer start  -->
+ 
+    <footer class="mt-footer-area mt-footer-2 p-relative fix pt-80" data-bg-color="#171A2B">
+     
+    <div class="mt-footer-wraper p-relative">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-3 col-md-4">
+                    <div class="mt-footer-widget footer-2-cols-1">
+                        <div class="mt-footer-logo mb-20">
+                            <a href="#"><img src="~/Themes/@(themeName)/Content/img/logo/white-logo.png" alt=""></a>
+                        </div>
+                        <div class="mt-footer-content">
+                            <p class="mb-25">@Model.StoreName is a online grocery shop. we are selling grocery products</p>
+                            @await Component.InvokeAsync(typeof(SocialButtonsViewComponent))
+                            <div class="mt-footer-app mb-20">
+                                <h4 class="mt-footer-app-title">Download App</h4>
+                                <div class="mt-footer-app-img mt-20">
+                                    <a href="#"><img src="~/Themes/@(themeName)/Content/img/footer/goolge-play.png" alt="Rosun"></a>
+                                    <a href="#"><img src="~/Themes/@(themeName)/Content/img/footer/app-store.png" alt="Rosun"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="mt-footer-wrapper mb-30">
+                        <div class="row">
+                            @await Component.InvokeAsync(typeof(FooterMenuViewComponent))
+                             
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-footer-midel mt-footer-midel-border pb-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="mt-footer-midel-item d-flex align-items-center mb-20">
+                        <div class="mt-footer-midel-icon mr-15">
+                            <span><i class="fa-solid fa-location-dot"></i></span>
+                        </div>
+                        <div class="mt-footer-midel-content">
+                            <a href="#">
+                                Tri Opposite 123 Main Street, <br>
+                                Anytown, California 90210 USA
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="mt-footer-midel-item d-flex align-items-center mb-20 justify-content-lg-center">
+                        <div class="mt-footer-midel-icon mr-15">
+                            <span><i class="fa-light fa-envelope-open-text"></i></span>
+                        </div>
+                        <div class="mt-footer-midel-content">
+                            <a href="https://template.moontelict.com/cdn-cgi/l/email-protection#b9caccc9c9d6cbcdf9ddd6d4d8d0d797dad6d4"><span class="__cf_email__" data-cfemail="e4979194948b9690a4808b89858d8aca878b89">[email&#160;protected]</span></a> <br>
+                            <a href="https://template.moontelict.com/cdn-cgi/l/email-protection#244d4a424b64404b49454d4a0a474b49"><span class="__cf_email__" data-cfemail="4d24232b220d2922202c2423632e2220">[email&#160;protected]</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="mt-footer-midel-item d-flex align-items-center mb-20 justify-content-lg-center">
+                        <div class="mt-footer-midel-icon mr-15">
+                            <span><i class="fa-regular fa-headset"></i></span>
+                        </div>
+                        <div class="mt-footer-midel-content">
+                            <a href="tel:+991234567888">+99 123 4567 888</a><br>
+                            <a href="tel:+001235555888">+00 123 5555 888</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="mt-footer-midel-item d-flex align-items-center mb-20  justify-content-lg-center">
+                        <div class="mt-footer-midel-icon mr-15">
+                            <span><i class="fa-light fa-clock"></i></span>
+                        </div>
+                        <div class="mt-footer-midel-content">
+                            <a href="#">
+                                10:00 - 18:00 <br>
+                                Monday - saturday
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- copy-right area start -->
+    <div class="mt-copyright-area mt-copyright-2  pt-20 pb-20">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                    <div class="mt-copyright-left text-center text-md-start">
+                        <p>@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</p>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                    <div class="mt-copyright-right text-center text-md-end">
+                        <img src="~/Themes/@(themeName)/Content/img/footer/payment.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- copy-right area end -->
+     
+</footer>
+ 

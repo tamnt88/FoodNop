@@ -1,0 +1,57 @@
+﻿@model ShoppingCartModel
+@inject IThemeContext themeContext
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.ShoppingCart").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-shopping-cart-page");
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+
+@section Breadcrumb
+{
+    <!-- Breadcrumb Area Start -->
+    <section class="mt-breadcrumb-area mt-breadcrumb-space p-relative"
+             data-background="Themes/@(themeName)/Content/img/breadcurmb/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="mt-breadcrumb p-relative">
+                        <h1 class="mt-breadcrumb-title">Your <span>Cart</span></h1>
+                        <div class="mt-breadcrumb-list">
+                            <span class="active">
+                                <a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a>
+                            </span>
+                            <span class="dvir">-</span>
+                            <span>
+                                <a href="@Url.RouteUrl(NopRouteNames.General.CART)">@T("ShoppingCart")</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mt-breadcrumb-img text-end wow img-custom-anim-top" data-wow-duration="1.5s"
+                         data-wow-delay="0.1s">
+                        <img src="~/Themes/@(themeName)/Content/img/breadcurmb/breadcrumb.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Area End -->
+}
+@if (!Model.OnePageCheckoutEnabled)
+{
+    @await Component.InvokeAsync(typeof(CheckoutProgressViewComponent), new {step = CheckoutProgressStep.Cart})
+}
+
+<section class="mt-whislist-area mt-whislist-cart pt-120 pb-50 p-relative">
+    <div class="container">
+        @await Component.InvokeAsync(typeof(OrderSummaryViewComponent), new { overriddenModel = Model })
+        </div>
+        </section>
+
+ 

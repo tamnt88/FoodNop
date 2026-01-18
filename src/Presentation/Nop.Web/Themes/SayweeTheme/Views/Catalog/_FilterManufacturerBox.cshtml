@@ -1,0 +1,64 @@
+
+@model ManufacturerFilterModel
+
+<!-- categories -->
+<div class="mt-shop-widget mb-50">
+    <h3 class="mt-shop-widget-title mb-20">@T("Filtering.ManufacturerFilter")</h3>
+    <div class="mt-shop-widget-content">
+        <div class="mt-shop-widget-brands">
+            <form action="#">
+                @foreach (var manufacturer in Model.Manufacturers)
+            {
+                <div class="form-check mt-shop-widget-brands-item mb-10"> 
+                        <input class="form-check-input" id="attribute-manufacturer-@manufacturer.Value" type="checkbox" data-manufacturer-id="@manufacturer.Value" checked="@manufacturer.Selected" />
+                        <label class="form-check-label" for="attribute-manufacturer-@manufacturer.Value">
+                            @manufacturer.Text @* <span> - (125)</span> *@
+                    </label>
+                </div>
+            }
+            </form>
+        </div>
+    </div>
+</div>
+
+@* <div class="product-filter product-manufacturer-filter">
+    <h2 class="filter-title">
+        @T("Filtering.ManufacturerFilter")
+    </h2>
+    <div class="filter-content">
+        <ul class="group product-manufacturer-group">
+            @foreach (var manufacturer in Model.Manufacturers)
+            {
+                <li class="item">
+                    <div class="custom-checkbox">
+                        <input class="custom-control-input" id="attribute-manufacturer-@manufacturer.Value" type="checkbox" data-manufacturer-id="@manufacturer.Value" checked="@manufacturer.Selected" />
+                        <label class="custom-control-label" for="attribute-manufacturer-@manufacturer.Value">
+                            @manufacturer.Text
+                        </label>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div> *@
+<script asp-location="Footer">
+    $(function() {
+        var $msEls = $('[data-manufacturer-id]');
+        $msEls.on('change', function () {
+            CatalogProducts.getProducts();
+        });
+
+        $(CatalogProducts).on('before', function (e) {
+            var selectedMs = $.map($msEls, function (el) {
+                var $mEl = $(el);
+                if ($mEl.is(':checked')) return $mEl.data('manufacturer-id')
+                return null;
+            });
+
+            if (selectedMs && selectedMs.length > 0) {
+                e.payload.urlBuilder
+                    .addParameter('ms', selectedMs.join(','));
+            }
+        });
+    });
+</script>

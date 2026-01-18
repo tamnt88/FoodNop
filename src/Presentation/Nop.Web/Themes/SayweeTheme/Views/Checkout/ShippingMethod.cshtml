@@ -1,0 +1,132 @@
+@*
+    // ***   ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **     **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **     **  ** *******     *     **  ** **   *** **** ****
+    // **************************************************************************
+    // *                                                                         *
+    // *     by                                                                  *
+    // *    Copyright (c) NopAdvance LLP. All Rights Reserved.                   *
+    // *                                                                         *
+    // **************************************************************************
+    // *                                                                         *
+    // *    This software is licensed for use under the terms accepted during    *
+    // *    the purchase of this product. A non-exclusive, non-transferable      *
+    // *    right is granted to use this product on the website for which it was *
+    // *    licensed.                                                            *
+    // *                                                                         *
+    // *    Companies purchasing this product for their customers are permitted, *
+    // *    provided the use complies with the terms outlined in the EULA:       *
+    // *    https://store.nopadvance.com/eula.                                   *
+    // *                                                                         *
+    // *    You may not reverse engineer, decompile, modify, or distribute this  *
+    // *    software without explicit permission from NopAdvance LLP. Any        *
+    // *    violation will result in the termination of your license and may     *
+    // *    lead to legal action.                                                *
+    // *                                                                         *
+    // **************************************************************************
+    // *    Contact: contact@nopadvance.com                                      *
+    // *    Website: https://nopadvance.com                                      *
+    // **************************************************************************
+*@
+@model CheckoutShippingMethodModel
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.Checkout").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-checkout-page");
+    NopHtml.AppendPageCssClassParts("html-shipping-method-page");
+}
+<div class="page checkout-page shipping-method-page">
+    @await Component.InvokeAsync(typeof(CheckoutProgressViewComponent), new { step = CheckoutProgressStep.Shipping })
+
+    <section class="mt-checkout-area pb-140 pt-140">
+        <div class="container checkout-data">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mt-checkout-bill-area section shipping-method">
+                        <div class="mt-section-content mb-30">
+                            <h3 class="mt-section-title">@T("Checkout.SelectShippingMethod")</h3>
+                        </div>
+
+                        <form asp-route="@NopRouteNames.Standard.CHECKOUT_SHIPPING_METHOD" method="post">
+                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CheckoutShippingMethodTop, additionalData = Model })
+
+                            @if (Model.DisplayPickupInStore && Model.PickupPointsModel.AllowPickupInStore)
+                            {
+                                @await Html.PartialAsync("_PickupPoints", Model.PickupPointsModel)
+                            }
+
+                            @if (Model.PickupPointsModel == null || !Model.PickupPointsModel.PickupInStoreOnly)
+                            {
+                                @if (!Model.Warnings.Any())
+                                {
+                                    <div class="mt-checkout-payment">
+                                        @for (var i = 0; i < Model.ShippingMethods.Count; i++)
+                                        {
+                                            var shippingMethod = Model.ShippingMethods[i];
+                                            <div class="mt-checkout-payment-item">
+                                                <div class="custom-radio">
+                                                    <input class="custom-control-input" id="shippingoption_@(i)" type="radio" name="shippingoption"
+                                                           value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)"
+                                                           checked="@shippingMethod.Selected" />
+                                                    <label class="custom-control-label" for="shippingoption_@(i)">
+                                                        @T("Checkout.SelectShippingMethod.MethodAndFee", shippingMethod.Name, shippingMethod.Fee)
+                                                    </label>
+                                                </div>
+                                                @if (!string.IsNullOrEmpty(shippingMethod.Description))
+                                                {
+                                                    <div class="mt-checkout-payment-desc method-description">
+                                                        @Html.Raw(shippingMethod.Description)
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+
+                                    if (Model.NotifyCustomerAboutShippingFromMultipleLocations)
+                                    {
+                                        <div class="multiple-locations mt-20">
+                                            @T("Checkout.ShippingMethod.ShippingFromMultipleLocations")
+                                        </div>
+                                    }
+
+                                    <div class="buttons mt-30">
+                                        <button type="submit" name="nextstep" class="mt-btn shipping-method-next-step-button">
+                                            <span>@T("Checkout.NextButton")</span>
+                                        </button>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="message-error">
+                                        <ul>
+                                            @foreach (var warning in Model.Warnings)
+                                            {
+                                                <li>@warning</li>
+                                            }
+                                        </ul>
+                                    </div>
+                                }
+                            }
+
+                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CheckoutShippingMethodBottom, additionalData = Model })
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 offset-lg-1">
+                    <div class="mt-checkout-place section order-summary">
+                        <h3 class="mt-checkout-place-title mb-20">
+                            @T("Checkout.OrderSummary")
+                        </h3>
+                        @await Component.InvokeAsync(typeof(OrderSummaryViewComponent))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

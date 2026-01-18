@@ -1,0 +1,72 @@
+﻿ 
+@inject Nop.Services.Helpers.IUserAgentHelper userAgentHelper;
+@inject IThemeContext themeContext
+@inject Nop.Core.IWebHelper webHelper
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+    var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+                ? url.ToString()
+                : webHelper.GetRawUrl(Context.Request);
+}
+
+@await Component.InvokeAsync(typeof(FlyoutShoppingCartViewComponent))
+
+<header class="mtheader__area p-relative">
+    <!-- header top area start -->
+    <div class="mtheader__top-area mtheader__top-2 theme-bg p-relative d-none d-lg-block">
+        <div class="container">
+            <div class="mtborder__top-wrapper d-flex align-items-center justify-content-between">
+                <div class="mtheader__top-left">
+                    <a href="https://template.moontelict.com/cdn-cgi/l/email-protection#9ae9efeaeaf5e8eedafef5f7fbf3f4b4f9f5f7">
+                        <i class="fa-light fa-envelope"></i><span><span class="__cf_email__" data-cfemail="c1b2b4b1b1aeb3b581a5aeaca0a8afefa2aeac">[email&nbsp;protected]</span></span>
+                    </a>
+                    <a href="#">
+                        <i class="fa-light fa-location-dot"></i><span>
+                            Lincoln- 344, Illinois, Florida,
+                            USA
+                        </span>
+                    </a>
+                </div>
+                <div class="mtheader__top-right d-flex align-items-center justify-content-between">
+                    <div class="mtheader__top-social">
+                        <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                    
+                    @await Component.InvokeAsync(typeof(LanguageSelectorViewComponent))
+                    @await Component.InvokeAsync(typeof(CurrencySelectorViewComponent))
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- header Menu area start -->
+    <div id="mt-header-sticky" class="mtheader__bottom-area mtheader__bottom-2 mt-sticky-theme-2 p-relative">
+        <div class="container">
+            <div class="row">@{
+            await Html.RenderPartialAsync("_Notifications");
+                        }
+</div>
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-6">
+                    @await Component.InvokeAsync(typeof(LogoViewComponent))
+                    
+                </div>
+                <div class="col-lg-10 col-6">
+                    <div class="mtheader__bottom-wrapper p-relative d-flex align-items-center justify-content-end justify-content-xl-between">
+                        <div class="mtheader__bottom-menu">
+                            <div class="desktop-header-utility align-items-center">
+                                @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent))
+                            </div>
+                            @await Component.InvokeAsync(typeof(HeaderLinksViewComponent))
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</header>

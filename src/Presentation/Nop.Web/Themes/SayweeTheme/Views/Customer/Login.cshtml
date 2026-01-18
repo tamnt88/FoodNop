@@ -1,0 +1,337 @@
+ 
+@model LoginModel
+@using Nop.Core
+@using Nop.Core.Domain.Customers
+@inject IThemeContext themeContext
+@inject IWebHelper webHelper
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.Login").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-login-page");
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl(NopRouteNames.Standard.REGISTER, new { returnUrl = this.Context.Request.Query["returnUrl"] }, webHelper.GetCurrentRequestProtocol());
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+
+@section Breadcrumb
+{
+    <!-- Breadcrumb Area Start -->
+    <section class="mt-breadcrumb-area mt-breadcrumb-space p-relative"
+             data-background="Themes/@(themeName)/Content/img/breadcurmb/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="mt-breadcrumb p-relative">
+                        <h1 class="mt-breadcrumb-title">Login <span>Account</span></h1>
+                        <div class="mt-breadcrumb-list">
+                            <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a></span>
+                            <span class="dvir">-</span>
+                            <span><a href="#">Login</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mt-breadcrumb-img text-end wow img-custom-anim-top" data-wow-duration="1.5s"
+                         data-wow-delay="0.1s">
+                        <img src="~/Themes/@(themeName)/Content/img/breadcurmb/breadcrumb.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Area End -->
+}
+
+<!--  -->
+<section class="mt-login-area pt-120 pb-140 p-relative z-index-1 fix">
+    <div class="container">
+        <div class="mt-login-wrapper" data-background="Themes/@(themeName)/Content/img/contact/login-bg.jpg">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="mt-login-wrap mr-30">
+                        <div class="mt-login-top text-center mb-40">
+                            <h3 class="mt-login-title">@T("Account.Login.ReturningCustomer")</h3>
+                            <span>Please login to your account</span>
+                        </div>
+                        <div class="mt-login-option">
+                            <div class="mt-login-input-wrapper mb-20">
+                                <form asp-route="@NopRouteNames.General.LOGIN" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+                                    <div class="row">
+                                        
+                                        <div class="col-md-12">
+                                            @if (Model.UsernamesEnabled)
+                                            {
+                                                <div class="mt-checkout-input">
+                                                  @*   <label asp-for="Username" asp-postfix=":"></label> *@
+                                                    <input asp-for="Username" class="username" autofocus="autofocus" placeholder="Username" />
+                                                    <span asp-validation-for="Username"></span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="mt-checkout-input">
+                                                   @*  <label asp-for="Email" asp-postfix=":"></label> *@
+                                                    <input asp-for="Email" autofocus="autofocus" placeholder="Email Address" />
+                                                    <span asp-validation-for="Email"></span>
+                                                </div>
+                                            } 
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="mt-checkout-input p-relative">
+                                                <input asp-for="Password" placeholder="Password" />
+                                                <span><i class="fa-regular fa-eye-slash"></i></span>
+                                                <span asp-validation-for="Password"></span>
+                                            </div> 
+                                        </div>
+                                        <div class="mt-login-suggetions d-sm-flex align-items-center justify-content-between mb-30">
+                                            <div class="mt-login-remeber" type="checkbox">
+                                                <input  asp-for="RememberMe" />
+                                                <label asp-for="RememberMe">Remember me</label> 
+                                            </div>
+                                            <div class="mt-login-forgot">
+                                                <a asp-route="@NopRouteNames.Standard.PASSWORD_RECOVERY">@T("Account.Login.ForgotPassword")</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            @if (Model.DisplayCaptcha)
+                                            {
+                                                <div class="captcha-box">
+                                                    <nop-captcha />
+                                                </div>
+                                            }
+                                            <div asp-validation-summary="ModelOnly" class="message-error">@T("Account.Login.Unsuccessful")</div> 
+                                            <button type="submit" class="mt-btn-2 w-100">
+                                                <span>@T("Account.Login.LoginButton")</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            @await Component.InvokeAsync(typeof(ExternalMethodsViewComponent), "ExternalAuthentication")
+                            @* @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "LoginRegistrationInfo" }) *@
+                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LoginBottom, additionalData = Model })
+                            <div class="mt-login-mail text-center p-relative mb-20">
+                                <p>Or Login With</p>
+                            </div>
+
+                            <div class="mt-login-social mb-20 d-flex flex-wrap align-items-center justify-content-center">
+                                <div class="mt-login-option-item">
+                                    <a href="#">
+                                        <img src="~/Themes/@(themeName)/Content/img/contact/fb.svg" alt="">
+                                        <span>Facebook</span>
+                                    </a>
+                                </div>
+                                <div class="mt-login-option-item">
+                                    <a href="#">
+                                        <img class="apple" src="~/Themes/@(themeName)/Content/img/contact/google.svg" alt="">
+                                        <span>Google</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-login-account text-center mb-30">
+                                <p>
+                                    Already have account?
+                                    <a href="#"> Login</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    @if (Model.RegistrationType == UserRegistrationType.Disabled)
+                    {
+                        <div class="mt-login-wrap ml-30">
+                            <div class="mt-login-top text-center mb-40">
+                                <h3 class="mt-login-title">@T("Account.Register")</h3>
+                            </div>
+                            <div class="mt-login-option">
+                                <div class="mt-login-account text-center mb-30">
+                                    <p>@T("Account.Register.Result.Disabled")</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (Model.CheckoutAsGuest)
+                    {
+                        <div class="mt-login-wrap ml-30 checkout-as-guest-or-register-block">
+                            <div class="mt-login-top text-center mb-40">
+                                <h3 class="mt-login-title">@T("Account.Login.CheckoutAsGuestOrRegister")</h3>
+                            </div>
+                            <div class="mt-login-option">
+                                <div class="mt-login-account text-center mb-30">
+                                    @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "CheckoutAsGuestOrRegister" })
+                                </div>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <button type="button" class="mt-btn-3 w-100 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT)'">
+                                            @T("Account.Login.CheckoutAsGuest")
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <button type="button" class="mt-btn-2 w-100 register-button" onclick="location.href='@registerUrl'">
+                                            @T("Account.Register")
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="mt-login-wrap ml-30 register-block">
+                            <div class="mt-login-top text-center mb-40">
+                                <h3 class="mt-login-title">@T("Account.Login.NewCustomer")</h3>
+                            </div>
+                            <div class="mt-login-option">
+                                <div class="mt-login-account text-center mb-30">
+                                    <p>@T("Account.Login.NewCustomerText")</p>
+                                </div>
+                                <button type="button" class="mt-btn-2 w-100 register-button" onclick="location.href='@registerUrl'">
+                                    <span>@T("Account.Register")</span>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                    @* <div class="mt-login-thumb br-40 text-center text-lg-end wow img-custom-anim-top"
+                         data-wow-duration="1.5s" data-wow-delay="0.1s">
+                        <img src="~/Themes/@(themeName)/Content/img/contact/login-thumb.jpg" alt="">
+                    </div> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--  -->
+
+@* <div class="page login-page">
+<div class="container">
+    <div class="page-title">
+        <h1>@T("Account.Login.Welcome")</h1>
+    </div>
+    @await Html.PartialAsync("_ExternalAuthentication.Errors")
+    <div class="page-body">
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LoginTop, additionalData = Model })
+        <div class="customer-blocks">
+            @if (Model.RegistrationType == UserRegistrationType.Disabled)
+            {
+                <div class="new-wrapper">
+                    <h2 class="title">
+                        @T("Account.Register")
+                    </h2>
+                    <div class="text">
+                        @T("Account.Register.Result.Disabled")
+                    </div>
+                </div>
+            }
+            else if (Model.CheckoutAsGuest)
+            {
+                <div class="new-wrapper checkout-as-guest-or-register-block">
+                    <h2 class="title">
+                        @T("Account.Login.CheckoutAsGuestOrRegister")
+                    </h2>
+                    <div class="text">
+                        @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "CheckoutAsGuestOrRegister" })
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="button-1 checkout-as-guest-button" onclick="location.href='@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT)'">@T("Account.Login.CheckoutAsGuest")</button>
+                        <button type="button" class="button-1 register-button" onclick="location.href='@registerUrl'">@T("Account.Register")</button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="new-wrapper register-block">
+                    <h2 class="title">
+                        @T("Account.Login.NewCustomer")
+                    </h2>
+                    <div class="text">
+                        @T("Account.Login.NewCustomerText")
+                    </div>
+                    <div class="buttons">
+                        <button type="button" class="button-1 register-button" onclick="location.href='@registerUrl'">@T("Account.Register")</button>
+                    </div>
+                </div>
+            }
+            <div class="returning-wrapper fieldset">
+                <form asp-route="@NopRouteNames.General.LOGIN" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+
+                    <h2 class="title">
+                        @T("Account.Login.ReturningCustomer")
+                    </h2>
+                    <div class="form-fields">
+                        @if (Model.UsernamesEnabled)
+                        {
+                            <div class="inputs">
+                                <label asp-for="Username" asp-postfix=":"></label>
+                                <input asp-for="Username" class="username" autofocus="autofocus" />
+                                <span asp-validation-for="Username"></span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="inputs">
+                                <label asp-for="Email" asp-postfix=":"></label>
+                                <input asp-for="Email" class="email" autofocus="autofocus" />
+                                <span asp-validation-for="Email"></span>
+                            </div>
+                        }
+                        <div class="inputs">
+                            <label asp-for="Password" asp-postfix=":"></label>
+                            <div class="login-password">
+                                <input asp-for="Password" class="password" />
+                                <span class="password-eye"></span>
+                            </div>
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                        <div class="inputs reversed">
+                            <div class="custom-checkbox">
+                                <input class="custom-control-input" asp-for="RememberMe" />
+                                <label class="custom-control-label" asp-for="RememberMe"></label>
+                            </div>
+                            
+                            <span class="forgot-password">
+                                <a asp-route="@NopRouteNames.Standard.PASSWORD_RECOVERY">@T("Account.Login.ForgotPassword")</a>
+                            </span>
+                        </div>
+                        @if (Model.DisplayCaptcha)
+                        {
+                            <div class="captcha-box">
+                                <nop-captcha />
+                            </div>
+                        }
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="message-error">@T("Account.Login.Unsuccessful")</div>
+                    <div class="buttons">
+                        <button type="submit" class="button-1 login-button">@T("Account.Login.LoginButton")</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div class="external-authentication">
+            @await Component.InvokeAsync(typeof(ExternalMethodsViewComponent), "ExternalAuthentication")
+        </div>
+        @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "LoginRegistrationInfo" })
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LoginBottom, additionalData = Model })
+    </div>
+</div>
+</div> *@
+<script asp-location="Footer">
+    $(function () {
+        const password = $("#@Html.IdFor(m => m.Password)");
+
+        $(".password-eye").on("click", function () {
+            // toggle the type attribute
+            const type = password.attr("type") === "password" ? "text" : "password";
+            password.attr("type", type);
+
+            // toggle the icon
+            $(this).toggleClass("password-eye-open");
+        });
+    });
+</script>

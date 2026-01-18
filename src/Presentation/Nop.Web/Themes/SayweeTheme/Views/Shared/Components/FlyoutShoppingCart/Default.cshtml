@@ -1,0 +1,86 @@
+﻿@model MiniShoppingCartModel
+
+@using Nop.Core.Domain.Catalog
+<!-- mt-offcanvas-overlay -->
+<div class="mt-offcanvas-overlay"></div>
+<!-- Cart mini star -->
+<div class="mtcartmini__area" id="flyout-cart">
+    <div class="mtcartmini__wrapper d-flex justify-content-between flex-column">
+        <div class="mtcartmini__top-wrapper">
+            <div class="mtcartmini__top p-relative">
+                <div class="mtcartmini__top-title">
+                    <h4>@T("ShoppingCart")</h4>
+                </div>
+                <div class="mtcartmini__close">
+                    <button type="button" class="mtcartmini__close-btn mtcartmini-close-btn">
+                        <i class="fal fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="mtcartmini__shipping">
+                <p> Free Shipping for all orders over <span>$50</span></p>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                         data-width="70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+                    </div>
+                </div>
+            </div>
+            <div class="mtcartmini__widget">
+                @for (var i = 0; i < Model.Items.Count; i++)
+                {
+                    var item = Model.Items[i];
+
+                    <div class="mtcartmini__widget-item">
+                        @if (Model.ShowProductImages)
+                        {
+                            <div class="mtcartmini__thumb">
+                                <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = item.ProductSeName }))" title="@item.Picture.Title">
+                                    <img alt="@item.Picture.AlternateText" src="@item.Picture.ImageUrl" title="@item.Picture.Title">
+                                </a>
+                            </div> 
+                        }
+                        
+                        <div class="mtcartmini__content">
+                            <h5 class="mtcartmini__title"><a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = item.ProductSeName }))">@item.ProductName</a></h5>
+                            <div class="mtcartmini__prmte-wrapper">
+                                <span class="mtcartmini__prmte">@item.UnitPrice</span>
+                                <span class="mtcartmini__quantity">x@(item.Quantity)</span>
+                            </div>
+                        </div>
+                        @* <a href="#" class="mtcartmini__del"><i class="fa-regular fa-xmark"></i></a> *@
+                    </div>
+                }
+               
+            </div>
+            <!-- for wp -->
+        </div>
+        <div class="mtcartmini__checkout">
+            <div class="mtcartmini__checkout-title mb-30">
+                <h4>@T("ShoppingCart.Totals.SubTotal"):</h4>
+                <span>@Model.SubTotal</span>
+            </div>
+            <div class="mtcartmini__checkout-btn text-center">
+                @if (Model.DisplayShoppingCartButton)
+                {
+                    <a href="@(Url.RouteUrl(NopRouteNames.General.CART))" class="mt-btn mb-10 w-100">@T("ShoppingCart.Mini.ViewCart")</a>
+                }
+                @if (Model.DisplayCheckoutButton)
+                {
+                    var checkoutUrl = "";
+                    if (Model.AnonymousCheckoutAllowed && Model.CurrentCustomerIsGuest)
+                    {
+                        checkoutUrl = Url.RouteUrl(NopRouteNames.Standard.LOGIN_CHECKOUT_AS_GUEST, new { returnUrl = Url.RouteUrl(NopRouteNames.General.CART) });
+                    }
+                    else
+                    {
+                        checkoutUrl = Url.RouteUrl(NopRouteNames.Standard.CHECKOUT);
+                    }
+                    <a href="@checkoutUrl" class="mt-btn-3 w-100">@T("Checkout.Button")</a>
+ 
+                }
+               
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart mini end --> 

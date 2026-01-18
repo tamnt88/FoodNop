@@ -1,0 +1,81 @@
+﻿@model IList<CategoryModel>
+@inject IThemeContext themeContext
+@using Nop.Core.Domain.Catalog
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<!-- Start countdown Banner area -->
+<section class="mtbanner__area mtbanner__2-bg pb-50 pt-80 mt-50 mb-55 p-relative fix"
+         data-background="Themes/@(themeName)/Content/img/banner/banner-bg-2-1.jpg">
+    <div class="mtbanner__shape ">
+        <img src="~/Themes/@(themeName)/Content/img/banner/shape-2-1.png" alt="Rosun">
+    </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-30 ">
+                <div class="mtbanner__wrapper mtbanner__2 p-relative wow img-custom-anim-left"
+                     data-wow-duration="1.5s" data-wow-delay="0.1s">
+                    <div class="mtbanner__img">
+                        <img src="~/Themes/@(themeName)/Content/img/banner/banner-2-1.png" alt="">
+                    </div>
+                    <div class="mtbanner__discount">
+                        <img src="~/Themes/@(themeName)/Content/img/banner/discount-1-1.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-30">
+                <div class="mtbanner__wrapper mtbanner__2 p-relative wow img-custom-anim-right"
+                     data-wow-duration="1.5s" data-wow-delay="0.1s">
+                    <div class="mtbanner__item">
+                        <div class="mtbanner__content">
+                            <h5 class="mtbanner__subtitle mb-20">
+                                Hurry Up!<span>Offer End In</span> <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg" alt="">
+                            </h5>
+                            <div class="mtbanner__countdown mb-20 pb-20" data-countdown data-date="Nov 19 2025 20:20:22">
+                                <div class="countdown d-flex align-items-center">
+                                    <div class="mtbanner__countdown-item">
+                                        <span data-days class="countdown-value">05</span>
+                                        <span class="countdown-label">DAYS</span>
+                                    </div>
+                                    <div class="countdown-separator">:</div>
+                                    <div class="mtbanner__countdown-item">
+                                        <span data-hours class=" countdown-value">12</span>
+                                        <span class="countdown-label">Hours</span>
+                                    </div>
+                                    <div class="countdown-separator">:</div>
+                                    <div class="mtbanner__countdown-item">
+                                        <span data-minutes class="minutes countdown-value">34</span>
+                                        <span class="countdown-label">Mins</span>
+                                    </div>
+                                    <div class="countdown-separator">:</div>
+                                    <div class="mtbanner__countdown-item">
+                                        <span data-seconds class="seconds countdown-value">44</span>
+                                        <span class="countdown-label">Secs</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="mtbanner__title mb-20">
+                                Pure & Organic Fruits,
+                                Veggies, and Meat
+                            </h3>
+                            <p>
+                                Enjoy a massive 45% discount on your entire order. That's right, save big on your
+                                favorite items and treat yourself to something special.
+                            </p>
+                            <div class="mtbanner__btn mt-50">
+                                <a href="shop.html" class="mt-btn">
+                                    <i class="fa-solid fa-basket-shopping"></i> <span>
+                                        Shop
+                                        Now
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End countdown Banner area -->

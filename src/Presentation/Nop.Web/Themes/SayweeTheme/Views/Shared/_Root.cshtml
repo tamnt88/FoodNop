@@ -1,0 +1,27 @@
+
+@{
+    Layout = "_Root.Head";
+}
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.BodyStartHtmlTagAfter })
+
+@{ await Html.RenderPartialAsync("_JavaScriptDisabledWarning"); }
+ 
+    @await Component.InvokeAsync(typeof(AdminHeaderLinksViewComponent))
+    @{ await Html.RenderPartialAsync("_Header"); }
+    
+    <main>
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ContentBefore })
+
+      
+        @if (IsSectionDefined("Breadcrumb"))
+        {
+            @RenderSection("Breadcrumb") 
+        }
+
+        @RenderBody()
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ContentAfter })
+    </main>
+    @await Component.InvokeAsync(typeof(FooterViewComponent))
+ 
+@await Component.InvokeAsync(typeof(EuCookieLawViewComponent))
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.BodyEndHtmlTagBefore })

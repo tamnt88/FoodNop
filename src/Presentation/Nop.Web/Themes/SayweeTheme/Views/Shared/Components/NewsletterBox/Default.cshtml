@@ -1,0 +1,149 @@
+@inject IThemeContext themeContext
+@model NewsLetterBoxModel
+@{
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<!-- Start Newslatter Area -->
+<section class="mtnewslatter__area mtnewslatter__space  mb-120">
+    <div class="container">
+        <div class="mtnewslatter__mainwrapper p-relative fix br-20 wow img-custom-anim-left"
+             data-wow-duration="1.5s" data-wow-delay="0.1s"
+             data-background="Themes/@(themeName)/Content/img/newslatter/newslatter-bg-2.jpg">
+            <div class="mtnewslatter__shape">
+                <img src="~/Themes/@(themeName)/Content/img/newslatter/star.png" alt="">
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="mtnewslatter__wrapper wow img-custom-anim-left" data-wow-duration="1.5s"
+                         data-wow-delay="0.5s">
+                        <div class="mtnewslatter__item">
+                            <h3 class="mtnewslatter__title mb-10 ">
+                                Subscribe <span class="p-relative">
+                                    @T("Newsletter.Title") <img src="~/Themes/@(themeName)/Content/img/newslatter/shape-text.png" alt="">
+                                </span> <br>
+                                to get offers
+
+                            </h3>
+                            <p class="mb-35">
+                                Enjoy early access to sales, new product launches, expert advice, and
+                                special offers delivered straight to your inbox.
+                            </p>
+                            <form action="#">
+                                <div class="mtnewslatter__subscribe p-relative">
+                                    <input asp-for="NewsLetterEmail" id="newsletter-email" class="newsletter-subscribe-text" placeholder=@T("Newsletter.Email.Placeholder") aria-label="@T("Newsletter.Subscribe")" />
+                                     
+                                    <button type="button" id="newsletter-subscribe-button" class="mt-btn">Subscribe</button>
+                                </div>
+                                @if (Model.AllowToUnsubscribe)
+                                {
+                                    <div class="options mt-3">
+                                        <span class="subscribe custom-radio">
+                                            <input class="custom-control-input" id="newsletter_subscribe" type="radio" value="newsletter_subscribe" name="newsletter_block" checked="checked" />
+                                            <label class="custom-control-label" for="newsletter_subscribe">@T("Newsletter.Options.Subscribe")</label>
+                                        </span>
+                                        <span class="unsubscribe custom-radio">
+                                            <input class="custom-control-input" id="newsletter_unsubscribe" type="radio" value="newsletter_unsubscribe" name="newsletter_block" />
+                                            <label class="custom-control-label" for="newsletter_unsubscribe">@T("Newsletter.Options.Unsubscribe")</label>
+                                        </span>
+                                    </div>
+                                }
+                                @if (Model.DisplayCaptcha)
+                                {
+                                    <nop-captcha />
+                                }
+                                <div class="mtnewslatter__subscribe">
+                                    <span id="subscribe-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait")</span>
+                                    <span asp-validation-for="NewsLetterEmail"></span>
+                                </div>
+                                <div class="newsletter-result" id="newsletter-result-block"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script asp-location="Footer">
+
+    async function getCaptchaToken(action, reCaptchaPublicKey, isReCaptchaV3) {
+        var recaptchaToken = '';
+        if (isReCaptchaV3) {
+            grecaptcha.ready(() => {
+                grecaptcha.execute(reCaptchaPublicKey, { action: action }).then((token) => {
+                    recaptchaToken = token;
+                });
+            });
+
+            while (recaptchaToken == '') {
+                await new Promise(t => setTimeout(t, 100));
+            }
+        } else {
+            recaptchaToken = $('#newsletter-subscribe-block .captcha-box textarea[name="g-recaptcha-response"').val();
+        }
+
+        return recaptchaToken;
+    }
+
+    async function newsletter_subscribe(subscribe) {
+        var subscribeProgress = $("#subscribe-loading-progress");
+        subscribeProgress.show();
+        var captchaTok = '';
+        if (@Model.DisplayCaptcha.ToString().ToLowerInvariant() == true) {
+            captchaTok = await getCaptchaToken('SubscribeNewsletter', '@Model.ReCaptchaPublicKey', @Model.IsReCaptchaV3.ToString().ToLowerInvariant());
+        }
+        var postData = {
+            subscribe: subscribe,
+            email: $("#newsletter-email").val(),
+            'g-recaptcha-response': captchaTok
+        };
+        addAntiForgeryToken(postData);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "@(Url.RouteUrl(NopRouteNames.Ajax.SUBSCRIBE_NEWSLETTER))",
+            data: postData,
+            success: function (data, textStatus, jqXHR) {
+                $("#newsletter-result-block").html(data.Result);
+                if (data.Success) {
+                    $('#newsletter-subscribe-block').hide();
+                    $('#newsletter-result-block').show();
+                } else {
+                    $('#newsletter-result-block').fadeIn("slow").delay(2000).fadeOut("slow");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Failed to subscribe.');
+            },
+            complete: function (jqXHR, textStatus) {
+                subscribeProgress.hide();
+            }
+        });
+    }
+
+    $(function() {
+        $('#newsletter-subscribe-button').on('click', function () {
+            @if (Model.AllowToUnsubscribe)
+            {
+                    <text>if ($('#newsletter_subscribe').is(':checked')) {
+                    newsletter_subscribe('true');
+                } else {
+                    newsletter_subscribe('false');
+                }</text>
+            }
+            else
+            {
+                    <text>newsletter_subscribe('true');</text>
+            }
+        });
+        $("#newsletter-email").on("keydown", function (event) {
+            if (event.keyCode == 13) {
+                $("#newsletter-subscribe-button").trigger("click");
+                return false;
+            }
+        });
+    });
+</script>
+<!-- End Newslatter Area -->
+ 

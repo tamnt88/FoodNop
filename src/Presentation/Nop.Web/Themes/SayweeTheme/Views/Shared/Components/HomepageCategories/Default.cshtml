@@ -1,0 +1,73 @@
+@inject IThemeContext themeContext
+@model IList<CategoryModel>
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+@using Nop.Core.Domain.Catalog
+
+@if (Model.Count > 0)
+{
+
+    <div class="mtheader__bottom-category-wrap p-relative">
+        <div class="mtheader__bottom-category">
+            <div class="mtheader__logo d-lg-none">
+                <a href="index.html"><img src="~/Themes/@(themeName)/Content/img/logo/black-logo.png" alt="Rosun"></a>
+            </div>
+            <div class="mtheader__bottom-bar-wrap ">
+                <div class="mtheader__bottom-bar d-flex align-items-center justify-content-between">
+                    <div class="mtcategories-bar">
+                        <i class="fa-regular fa-bars"></i>
+                        <span>All Categories</span>
+                    </div>
+                    <div class="mtcategories-icon">
+                        <i class="fa-regular fa-angle-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div id="mtheader__bottom-category-list" class="mtheader__bottom-category-list ">
+                <nav>
+                    <ul>
+    @foreach (var item in Model)
+    {
+                        <li>
+                                <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))">
+                                <img src="~/Themes/@(themeName)/Content/img/category/cat-menu-1-1.png"
+                                         alt=""><span>@item.Name</span>
+                            </a>
+                        </li>
+    }
+                    </ul>
+                    <a href="shop.html" class="mtheader__bottom-category-btn">
+                        View
+                        All <i class="fa-light fa-angle-right"></i>
+                    </a>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+
+    @* <section class="category-grid home-page-category-grid">
+        <div class="item-grid">
+            @foreach (var item in Model)
+            {
+                <article class="item-box">
+                    <div class="category-item">
+                        <h2 class="title">
+                            <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))" title="@item.PictureModel.Title">
+                                <span>@item.Name</span>
+                            </a>
+                        </h2>
+                        <div class="picture">
+                            <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))" title="@item.PictureModel.Title">
+                                <img width="356" height="231" alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title">
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    </section> *@
+}

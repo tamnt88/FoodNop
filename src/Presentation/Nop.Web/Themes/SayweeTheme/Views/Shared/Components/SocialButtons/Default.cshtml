@@ -1,0 +1,28 @@
+
+@model SocialModel
+<div class="mt-footer-social mb-30">
+    @if (!string.IsNullOrEmpty(Model.FacebookLink))
+    {
+        <a href="@Model.FacebookLink" aria-label="@T("Footer.FollowUs.Facebook")" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+         
+    }
+    @if (!string.IsNullOrEmpty(Model.TwitterLink))
+    {
+        <a href="@Model.TwitterLink" aria-label="@T("Footer.FollowUs.Twitter")" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+    }
+    @if (Model.NewsEnabled)
+    {
+        <a href="@Url.RouteUrl(NopRouteNames.Standard.NEWS_RSS, new { languageId = Model.WorkingLanguageId })" aria-label="@T("Footer.FollowUs.RSS")"><i class="fab fa-rss" aria-hidden="true"></i></a>
+    }
+    @if (!string.IsNullOrEmpty(Model.YoutubeLink))
+    {
+        <a href="@Model.YoutubeLink" target="_blank" aria-label="@T("Footer.FollowUs.Youtube")" rel="noopener noreferrer"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.InstagramLink))
+    {
+        <a href="@Model.InstagramLink" aria-label="@T("Footer.FollowUs.Instagram")" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+    }
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = "flexotheme_pinteresturl", additionalData = Model })
+   
+</div> 

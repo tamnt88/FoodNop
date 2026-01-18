@@ -1,0 +1,80 @@
+@*
+    // ***   ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **     **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **     **  ** *******     *     **  ** **   *** **** ****
+    // **************************************************************************
+    // *                                                                         *
+    // *     by                                                                  *
+    // *    Copyright (c) NopAdvance LLP. All Rights Reserved.                   *
+    // *                                                                         *
+    // **************************************************************************
+    // *                                                                         *
+    // *    This software is licensed for use under the terms accepted during    *
+    // *    the purchase of this product. A non-exclusive, non-transferable      *
+    // *    right is granted to use this product on the website for which it was *
+    // *    licensed.                                                            *
+    // *                                                                         *
+    // *    Companies purchasing this product for their customers are permitted, *
+    // *    provided the use complies with the terms outlined in the EULA:       *
+    // *    https://store.nopadvance.com/eula.                                   *
+    // *                                                                         *
+    // *    You may not reverse engineer, decompile, modify, or distribute this  *
+    // *    software without explicit permission from NopAdvance LLP. Any        *
+    // *    violation will result in the termination of your license and may     *
+    // *    lead to legal action.                                                *
+    // *                                                                         *
+    // **************************************************************************
+    // *    Contact: contact@nopadvance.com                                      *
+    // *    Website: https://nopadvance.com                                      *
+    // **************************************************************************
+*@
+@model CustomerAvatarModel
+@{
+    Layout = "_ColumnsTwo";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.Account").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-account-page");
+    NopHtml.AppendPageCssClassParts("html-avatar-page");
+}
+@section left
+{
+    @await Component.InvokeAsync(typeof(CustomerNavigationViewComponent), new { selectedTabId = CustomerNavigationEnum.Avatar })
+}
+
+<form asp-route="@NopRouteNames.Standard.CUSTOMER_AVATAR" method="post" enctype="multipart/form-data">
+    <div class="page account-page avatar-page">
+        <div class="page-title">
+            <h1>@T("Account.MyAccount") - @T("Account.Avatar")</h1>
+        </div>
+        <div class="page-body">
+            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CustomerAvatarTop, additionalData = Model })
+            <div asp-validation-summary="ModelOnly" class="message-error"></div>
+            <section class="fieldset">
+                @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                {
+                    <div class="image">
+                        <img src="@(Model.AvatarUrl)" alt="avatar" width="120" height="120">
+                    </div>
+                }
+                <div class="mt-checkout-input">
+                    <input name="uploadedFile" accept="image/jpeg, image/gif" type="file" aria-label="@T("Account.Avatar")" />
+                </div>
+            </section>
+            <section class="buttons">
+                <button type="submit" name="upload-avatar" class="button-1 mt-btn-2 upload-avatar-button">@T("Common.Upload")</button>
+                @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                {
+                    <button type="submit" name="remove-avatar" class="button-2 mt-btn-3 remove-avatar-button">@T("Account.Avatar.RemoveAvatar")</button>
+                }
+            </section>
+            <div class="info">
+                @T("Account.Avatar.UploadRules")
+            </div>
+            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CustomerAvatarBottom, additionalData = Model })
+        </div>
+    </div>
+</form>

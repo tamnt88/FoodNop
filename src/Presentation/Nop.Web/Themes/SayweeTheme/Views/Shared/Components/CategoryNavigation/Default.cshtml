@@ -1,0 +1,124 @@
+﻿@model CategoryNavigationModel
+
+@using Nop.Core.Domain.Catalog
+@inject IThemeContext themeContext
+@{
+
+    
+}
+@functions {
+    bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
+    {
+        if (Model.CurrentCategoryId == 0)
+            return false;
+
+        if (category.Id == Model.CurrentCategoryId)
+            return true;
+
+        foreach (var subCategory in category.SubCategories)
+        {
+            if (BreadCrumbContainsCurrentCategoryId(subCategory))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    async Task CategoryLine(CategoryNavigationModel.CategoryLineModel lineModel)
+    {
+        var themeName = await themeContext.GetWorkingThemeNameAsync();
+        var active = lineModel.Category.Id == lineModel.CurrentCategoryId || lineModel.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+        var last = lineModel.Category.Id == lineModel.CurrentCategoryId;
+        var liClass = active ? "active" : "inactive";
+        if (last)
+        {
+            liClass += " last";
+        }
+
+        <li data-target="desktop-cat-@(lineModel.Category.Id)" class="" tabindex="0">
+            <a class="desktop-category-parent-link" href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = lineModel.Category.SeName }))">
+                <i class="fa-light fa-bolt"></i><span>@lineModel.Category.Name</span> 
+            </a> 
+        </li>
+    }
+
+    async Task CategoryLineSub(CategoryNavigationModel.CategoryLineModel lineModel)
+    {
+        var themeName = await themeContext.GetWorkingThemeNameAsync();
+        var active = lineModel.Category.Id == lineModel.CurrentCategoryId || lineModel.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+        var last = lineModel.Category.Id == lineModel.CurrentCategoryId;
+        var liClass = active ? "active" : "inactive";
+        if (last)
+        {
+            liClass += " last";
+        }
+
+        <h6 class="desktop-category-subgroup-title"><a class="desktop-category-subgroup-link" href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = lineModel.Category.SeName }))">@lineModel.Category.Name</a></h6>
+         
+    }
+}
+ 
+@if (Model.Categories.Count > 0)
+{
+    <div class="desktop-category-menu">
+        <button type="button" class="desktop-category-button" aria-expanded="false" aria-controls="desktopCategoryDropdown">
+            <span class="desktop-category-button__icon"><i class="fa-light fa-bars"></i></span>
+            <span class="desktop-category-button__label">@T("Categories")</span>
+            <span class="desktop-category-button__arrow"><i class="fa-light fa-angle-down"></i></span>
+        </button>
+        <div class="desktop-category-dropdown" id="desktopCategoryDropdown">
+            <div class="desktop-category-layout">
+                <div class="desktop-category-list">
+                    <ul id="desktopCategoryList">
+                        @foreach (var category in Model.Categories)
+                        {
+                            var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                            {
+                                CurrentCategoryId = Model.CurrentCategoryId,
+                                Category = category
+                            };
+                            await CategoryLine(categoryLineModel);
+                        } 
+                    </ul>
+                </div>
+                <div class="desktop-category-panel">
+                    <div class="desktop-category-panel-wrapper" id="desktopCategoryPanel">
+                        @foreach (var category in Model.Categories)
+                        {
+                            var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                            {
+                                CurrentCategoryId = Model.CurrentCategoryId,
+                                Category = category
+                            };
+
+
+                            if (categoryLineModel.Category.SubCategories.Count > 0)
+                            {
+                                <div class="desktop-category-panel-item" id="desktop-cat-@(categoryLineModel.Category.Id)">
+                                    <div class="desktop-category-columns">
+                                        @foreach (var sCategory in categoryLineModel.Category.SubCategories)
+                                        {
+                                            var sCategoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                                            {
+                                                CurrentCategoryId = Model.CurrentCategoryId,
+                                                Category = sCategory
+                                            };
+                                            await CategoryLineSub(sCategoryLineModel);
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="desktop-search">
+            @await Component.InvokeAsync(typeof(SearchBoxViewComponent))
+            
+        </div>
+    </div>
+}
+

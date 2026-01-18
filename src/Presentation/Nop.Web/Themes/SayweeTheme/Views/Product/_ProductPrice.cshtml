@@ -1,0 +1,31 @@
+﻿@model ProductPriceModel
+
+@using Nop.Core
+@using Nop.Core.Domain.Tax
+
+@inject IWorkContext workContext
+
+@if (!Model.CustomerEntersPrice)
+{
+    <div class="mt-shop-details__price mb-17">
+        @if (Model.CallForPrice)
+        {
+            <span>@T("Products.CallForPrice")</span>
+        }
+        else
+        {
+            if (Model.IsRental)
+            {
+                <span>@T("Products.Price.RentalPrice"):</span>
+                <span>@Model.RentalPrice</span>
+            }
+            if (!string.IsNullOrWhiteSpace(Model.OldPrice))
+            {
+                <del>@Model.OldPrice</del>
+            }
+
+            <span>@Html.Raw(Model.Price)</span>
+
+        }
+    </div>
+}

@@ -1,0 +1,172 @@
+@*
+    // ***   ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **     **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **     **  ** *******     *     **  ** **   *** **** ****
+    // **************************************************************************
+    // *                                                                         *
+    // *     by                                                                  *
+    // *    Copyright (c) NopAdvance LLP. All Rights Reserved.                   *
+    // *                                                                         *
+    // **************************************************************************
+    // *                                                                         *
+    // *    This software is licensed for use under the terms accepted during    *
+    // *    the purchase of this product. A non-exclusive, non-transferable      *
+    // *    right is granted to use this product on the website for which it was *
+    // *    licensed.                                                            *
+    // *                                                                         *
+    // *    Companies purchasing this product for their customers are permitted, *
+    // *    provided the use complies with the terms outlined in the EULA:       *
+    // *    https://store.nopadvance.com/eula.                                   *
+    // *                                                                         *
+    // *    You may not reverse engineer, decompile, modify, or distribute this  *
+    // *    software without explicit permission from NopAdvance LLP. Any        *
+    // *    violation will result in the termination of your license and may     *
+    // *    lead to legal action.                                                *
+    // *                                                                         *
+    // **************************************************************************
+    // *    Contact: contact@nopadvance.com                                      *
+    // *    Website: https://nopadvance.com                                      *
+    // **************************************************************************
+*@
+@model CheckoutConfirmModel
+
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.Checkout").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-checkout-page");
+    NopHtml.AppendPageCssClassParts("html-order-confirm-page");
+}
+<div class="page checkout-page order-confirm-page">
+    @await Component.InvokeAsync(typeof(CheckoutProgressViewComponent), new { step = CheckoutProgressStep.Confirm })
+
+    <section class="mt-checkout-area pb-140 pt-140">
+        <div class="container checkout-data">
+            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CheckoutConfirmTop, additionalData = Model })
+
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="section order-summary mt-checkout-bill-area">
+                        <div class="mt-section-content mb-30">
+                            <h3 class="mt-section-title">@T("Checkout.OrderSummary")</h3>
+                        </div>
+                        @await Component.InvokeAsync(typeof(OrderSummaryViewComponent), new { prepareAndDisplayOrderReviewData = true })
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="section confirm-order mt-checkout-place">
+                        <h3 class="mt-checkout-place-title mb-20">@T("Checkout.ConfirmYourOrder")</h3>
+
+                        <form asp-route="@NopRouteNames.Standard.CHECKOUT_CONFIRM" method="post" id="confirm-order-form">
+                            <script asp-location="Footer">
+                                $(function() {
+                                    $('.confirm-order-next-step-button').on('click', function () {
+                                        //terms of service
+                                        var termOfServiceOk = true;
+                                        if ($('#termsofservice').length > 0) {
+                                            //terms of service element exists
+                                            if (!$('#termsofservice').is(':checked')) {
+                                                $("#terms-of-service-warning-box").dialog();
+                                                termOfServiceOk = false;
+                                            } else {
+                                                termOfServiceOk = true;
+                                            }
+                                        }
+                                        if (termOfServiceOk) {
+                                            //$('#confirm-order-form').submit();
+                                            //$('.confirm-order-next-step-button').prop('disabled', true);
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            @if (!string.IsNullOrEmpty(Model.MinOrderTotalWarning))
+                            {
+                                <div class="message-error min-order-warning mb-20">@Model.MinOrderTotalWarning</div>
+                            }
+                            else
+                            {
+                                if (Model.TermsOfServiceOnOrderConfirmPage)
+                                {
+                                    <div id="terms-of-service-warning-box" title="@T("Checkout.TermsOfService")" style="display: none;">
+                                        <p>@T("Checkout.TermsOfService.PleaseAccept")</p>
+                                    </div>
+                                    <div class="terms-of-service mt-checkout-option-wrapper mb-20">
+                                        <div class="mt-checkout-option custom-checkbox">
+                                            <input class="custom-control-input" id="termsofservice" type="checkbox" name="termsofservice" />
+                                            <label class="custom-control-label" for="termsofservice">@T("Checkout.TermsOfService.IAccept")</label>
+                                        </div>
+
+                                        @if (Model.TermsOfServicePopup)
+                                        {
+                                            <a class="read d-inline-block mt-10" id="read-terms">@T("Checkout.TermsOfService.Read")</a>
+                                            <script asp-location="Footer">
+                                                $(function() {
+                                                    $('#read-terms').on('click',
+                                                        function(e) {
+                                                            e.preventDefault();
+                                                            displayPopupContentFromUrl('@Url.RouteUrl(NopRouteNames.Ajax.TOPIC_POPUP, new { SystemName = "conditionsofuse" })', '@T("Checkout.TermsOfService")');
+                                                        });
+                                                });
+                                            </script>
+                                        }
+                                        else
+                                        {
+                                            <a class="read d-inline-block mt-10" id="read-terms" href="@Url.RouteTopicUrl("conditionsofuse")">@T("Checkout.TermsOfService.Read")</a>
+                                        }
+                                    </div>
+                                }
+
+                                <div class="mt-checkout-btn-wrapper">
+                                    <button type="submit" name="nextstep" class="button-1 mt-btn confirm-order-next-step-button w-100">
+                                        <span>@T("Checkout.ConfirmButton")</span>
+                                    </button>
+                                </div>
+
+                                <script asp-location="Footer">
+                                    $('#confirm-order-form').on('submit',
+                                        function () {
+                                            var button = $(this).find('button[type="submit"][name="nextstep"]');
+                                            setTimeout(function () {
+                                                button.prop('disabled', true);
+                                            },
+                                            0);
+                                        });
+                                </script>
+
+                                if (Model.DisplayCaptcha)
+                                {
+                                    <div class="mt-20">
+                                        <nop-captcha />
+                                    </div>
+                                }
+                            }
+
+                            @if (Model.Warnings.Count > 0)
+                            {
+                                <div class="message-error mt-20">
+                                    <ul>
+                                        @foreach (var warning in Model.Warnings)
+                                        {
+                                            <li>@warning</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CheckoutConfirmBottom, additionalData = Model })
+        </div>
+    </section>
+</div>

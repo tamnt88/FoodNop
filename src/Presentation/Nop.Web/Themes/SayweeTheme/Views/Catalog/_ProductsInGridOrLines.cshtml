@@ -1,0 +1,78 @@
+﻿@model CatalogProductsModel
+
+@if (!string.IsNullOrEmpty(Model.WarningMessage))
+{
+    <div class="warning">
+        @Model.WarningMessage
+    </div>
+}
+@{
+    var pager = Html.Pager(Model)
+        .QueryParam("pagenumber") 
+        // for search page
+        .BooleanParameterName("advs")
+        .BooleanParameterName("isc")
+        .BooleanParameterName("sid")
+        .RenderEmptyParameters(true);
+}
+
+
+@if (Model.Products.Count > 0)
+{
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+             aria-labelledby="pills-home-tab">
+            <div class="mt-shop-@(Model.ViewMode == "list" ? "list" : "grid"))-wrapper">
+                <div class="row">
+                    @foreach (var product in Model.Products)
+                    {
+                        if (Model.ViewMode == "list")
+                        {
+                            @await Html.PartialAsync("_CatalogProductBox.List", product)
+                        }else
+                        {
+                            @await Html.PartialAsync("_CatalogProductBox.Grid", product)
+                        } 
+                    }
+                </div>
+
+                <!--pagination  -->
+                @if (!await pager.IsEmpty())
+                {
+                    <div class="mt-pagination-wrap d-flex align-items-center justify-content-between mt-20 flex-wrap">
+                        @pager
+                        <div class="mt-pagination mb-20">
+                            <a href="#" class="button"><i class="fa-regular fa-chevron-left"></i> Prev</a>
+                            <a href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">...</a>
+                            <a href="#" class="button">Next <i class="fa-regular fa-chevron-right"></i> </a>
+                        </div>
+                        <div class="mt-pagination-sort mb-20">
+                            <div class="ddd">
+                                <span>Show</span>
+                            </div>
+                            <select>
+                                <option>12</option>
+                                <option>16</option>
+                                <option>20</option>
+                                <option>25</option>
+                            </select>
+                        </div>
+                    </div>
+                    @pager
+                }
+
+
+            </div>
+        </div> 
+    </div>
+}
+else if (!string.IsNullOrEmpty(Model.NoResultMessage))
+{
+    <div class="no-result">
+        @Model.NoResultMessage
+    </div>
+}
+ 

@@ -1,0 +1,100 @@
+
+@model ProductOverviewModel
+
+@using Nop.Core
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Domain.Tax
+
+@inject CatalogSettings catalogSettings
+@inject IWorkContext workContext
+
+@{
+    //prepare "Add to cart" AJAX link
+    var addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    }
+
+    var addtowishlistlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = Model.Id });
+
+    var productPicture = Model.PictureModels.FirstOrDefault();
+}
+
+<div class="mt-shop-list-item mb-40 d-flex align-items-center">
+    <div class="mt-shop-list-img">
+        <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">
+            <img alt="@productPicture?.AlternateText" src="@productPicture?.ImageUrl" title="@productPicture?.Title">
+        </a>
+
+    </div>
+    <div class="mt-shop-list-content-wrap ">
+        <div class="mt-shop-list-content mb-17 d-flex align-items-end justify-content-between">
+            <h3 class="mt-shop-list-title mb-0">
+                <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">@Model.Name</a>
+            </h3>
+            @* <div class="mt-shop-list-offer">
+                <span>50% OFF</span>
+            </div> *@
+        </div>
+        <p class="mb-15 @(catalogSettings.ShowShortDescriptionOnCatalogPages ? "" : "data-short-description=none")">
+            @Html.Raw(Model.ShortDescription)
+        </p>
+        <div class="mt-shop-list-pricing-wrap mb-20 d-flex align-items-center">
+            <div class="mt-shop-list-cate mr-10">
+                <span>1Kg</span>
+                <span>500Kg</span>
+            </div>
+            <div class="mt-shop-list-rating">
+                <span><i class="fa-solid fa-star"></i></span>
+                <span><i class="fa-solid fa-star"></i></span>
+                <span><i class="fa-solid fa-star"></i></span>
+                <span><i class="fa-solid fa-star"></i></span>
+                <span><i class="fa-solid fa-star"></i></span>
+            </div>
+        </div>
+
+        <div class="mt-shop-list-price-wrap d-flex align-items-center justify-content-between">
+            <div class="mt-shop-list-price">
+                @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                {
+                    <del>@Model.ProductPrice.OldPrice</del> 
+                }
+                
+                <span>@Model.ProductPrice.Price</span>
+
+            </div>
+            <div class="mt-shop-list-btn">
+               @*  <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))"><i class="fa-sharp fa-regular fa-eye"></i></a> *@
+                @if (!Model.ProductPrice.DisableBuyButton)
+                {
+                    var addToCartText = T("ShoppingCart.AddToCart").Text;
+                    if (Model.ProductPrice.IsRental)
+                    {
+                        addToCartText = T("ShoppingCart.Rent").Text;
+                    }
+                    if (Model.ProductPrice.AvailableForPreOrder)
+                    {
+                        addToCartText = T("ShoppingCart.PreOrder").Text;
+                    }
+                    <a href="javascript:void(0)" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;"><i class="fa-solid fa-basket-shopping"></i></a>
+                     
+                }
+                
+               @*  <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a> *@
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+ 
+

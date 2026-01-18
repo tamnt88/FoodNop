@@ -1,0 +1,76 @@
+﻿@inject IThemeContext themeContext
+@using Nop.Core.Domain.Catalog
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<!-- Start Banner area -->
+<section class="mtbanner__area pb-40 pt-40 p-relative fix">
+    <div class="container">
+        <div class="row align-items-center align-items-xl-end">
+            <div class="col-lg-6 mb-30">
+                <div class="mtbanner__wrapper p-relative ">
+                    <div class="mtbanner__shape wow img-custom-anim-top" data-wow-duration="1.5s"
+                         data-wow-delay="0.1s">
+                        <img src="~/Themes/@(themeName)/Content/img/banner/shape-1-1.png" alt="">
+                    </div>
+                    <div class="mtbanner__item d-flex" data-background="Themes/@(themeName)/Content/img/banner/banner-bg-1-1.jpg">
+                        <div class="mtbanner__content wow img-custom-anim-left" data-wow-duration="1.5s"
+                             data-wow-delay="0.1s">
+                            <h5 class="mtbanner__subtitle mb-10 ">
+                                <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg"
+                                     alt=""><span>New Arrival</span> <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg" alt="">
+                            </h5>
+                            <h3 class="mtbanner__title mb-20">
+                                Organic raw green <br>
+                                beans & seed
+                            </h3>
+                            <p>Get 40% discount for new arrival</p>
+                            <div class="mtbanner__btn mt-30">
+                                <a href="shop.html" class="mt-btn">
+                                    <i class="fa-solid fa-basket-shopping"></i> <span>
+                                        Shop
+                                        Now
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mtbanner__img wow img-custom-anim-right" data-wow-duration="1.5s"
+                             data-wow-delay="0.1s">
+                            <img src="~/Themes/@(themeName)/Content/img/banner/banner-1-1.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-30">
+                <div class="mtbanner__wrapper p-relative">
+                    <div class="mtbanner__item d-flex align-items-end"
+                         data-background="Themes/@(themeName)/Content/img/banner/banner-bg-1-2.jpg">
+                        <div class="mtbanner__content wow img-custom-anim-left" data-wow-duration="1.5s"
+                             data-wow-delay="0.1s">
+                            <h5 class="mtbanner__subtitle mb-10">
+                                <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg"
+                                     alt=""><span>Hot Deals</span> <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg" alt="">
+                            </h5>
+                            <h3 class="mtbanner__title mb-20">Organic Fruits and vegetables </h3>
+                            <p>Get 30% discount for new arrival</p>
+                            <div class="mtbanner__btn mt-30">
+                                <a href="shop.html" class="mt-btn">
+                                    <i class="fa-solid fa-basket-shopping"></i> <span>
+                                        Shop
+                                        Now
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mtbanner__img wow img-custom-anim-right" data-wow-duration="1.5s"
+                             data-wow-delay="0.1s">
+                            <img src="~/Themes/@(themeName)/Content/img/banner/banner-1-2.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner area -->

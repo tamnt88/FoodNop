@@ -1,0 +1,163 @@
+ 
+@model CategoryModel
+
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Common
+@using Nop.Core.Domain.Seo
+@inject IThemeContext themeContext
+@inject Nop.Core.IWebHelper webHelper
+@inject SeoSettings seoSettings
+@inject CommonSettings commonSettings 
+@{
+    Layout = "_ColumnsTwo";
+
+    //title
+    NopHtml.AddTitleParts(!string.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    //meta
+    NopHtml.AddMetaDescriptionParts(Model.MetaDescription);
+    NopHtml.AddMetaKeywordParts(Model.MetaKeywords);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-category-page");
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+
+    if (seoSettings.CanonicalUrlsEnabled)
+    {
+        var categoryUrl = (await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = Model.SeName }, webHelper.GetCurrentRequestProtocol())).ToLowerInvariant();
+        NopHtml.AddCanonicalUrlParts(categoryUrl, seoSettings.QueryStringInCanonicalUrlsEnabled);
+    }
+
+    var currentCategoryId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.ActionContext.RouteData.Values["categoryId"].ToString());
+    }
+
+    //current product ID
+    var currentProductId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+        Url.ActionContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.ActionContext.RouteData.Values["productId"].ToString());
+    }
+
+    var breadcrumbDelimiter = commonSettings.BreadcrumbDelimiter;
+    NopHtml.AddJsonLdParts(Model.JsonLd); 
+}
+
+@*category breadcrumb*@
+@section Breadcrumb
+{
+    @if (Model.DisplayCategoryBreadcrumb)
+    {
+        var lastCategory = Model.CategoryBreadcrumb.SingleOrDefault(cat => cat.Id == Model.Id);
+         
+        <!-- Breadcrumb Area Start -->
+        <section class="mt-breadcrumb-area mt-breadcrumb-space p-relative"
+                 data-background="Themes/@(themeName)/Content/img/breadcurmb/breadcrumb-bg.jpg">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="mt-breadcrumb p-relative">
+                            <h1 class="mt-breadcrumb-title">Shop <span>@(lastCategory?.Name)</span></h1>
+                            <div class="mt-breadcrumb-list">
+                                <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a></span>
+                                <span class="dvir">@breadcrumbDelimiter</span>
+                                @{
+                                    int position = 1;
+                                }
+        @foreach (var cat in Model.CategoryBreadcrumb)
+                                {
+                                   
+                                    var isLastCategory = cat.Id == Model.Id;
+                                    @if (isLastCategory)
+                                    {
+                                        <span><a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = cat.SeName }))" title="@cat.Name">@cat.Name</a></span>
+                                         
+                                    }
+                                    else
+                                    {
+                                        <span><a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = cat.SeName }))" title="@cat.Name">@cat.Name</a></span>
+                                        <span class="dvir">@breadcrumbDelimiter</span>
+                                    }
+                                    position++;
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mt-breadcrumb-img text-end wow img-custom-anim-top" data-wow-duration="1.5s"
+                             data-wow-delay="0.1s">
+                            <img src="~/Themes/@(themeName)/Content/img/breadcurmb/breadcrumb.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsAfterBreadcrumb, additionalData = Model })
+    }
+}
+ 
+@section CatalogFilters {
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeFilters, additionalData = Model })
+    @await Html.PartialAsync("_CatalogFilters", Model.CatalogProductsModel)
+}
+ 
+   
+<div class="mt-shop-wrapper page">
+    <!-- banner -->
+    <div class="mt-shop-top mb-30 wow img-custom-anim-top" data-wow-duration="1.5s"
+         data-wow-delay="0.1s">
+        <div class="mt-shop-top-filtar mb-20">
+            <a class="active" href="#"><i class="fa-light fa-flask"></i> Filtered</a>
+            <a href="#"><i class="fa-light fa-xmark"></i> Fruits & Vegetables</a>
+            <a href="#"><i class="fa-light fa-xmark"></i> RosMart</a>
+        </div>
+        <a href="#"><img src="~/Themes/@(themeName)/Content/img/banner/shop-banner.jpg" alt=""></a>
+    </div>
+    @{
+        var catalogProductsViewData = new ViewDataDictionary(ViewData);
+        catalogProductsViewData["fetchUrl"] = Html.Raw(Url.RouteUrl(NopRouteNames.Ajax.GET_CATEGORY_PRODUCTS, new { categoryId = Model.Id }));
+    }
+    <!-- Showing -->
+    @if (Model.SubCategories.Count == 0)
+    {
+        @await Html.PartialAsync("_CatalogSelectors", Model.CatalogProductsModel)
+        
+    } 
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeSubcategories, additionalData = Model })
+    @*subcategories*@
+    @if (Model.SubCategories.Count > 0)
+    {
+        <div class="category-grid sub-category-grid">
+            <div class="item-grid row">
+                @foreach (var item in Model.SubCategories)
+                {
+                    <div class="item-box col-lg-4 col-md-6 col-sm-12">
+                        <div class="sub-category-item">
+                            <h2 class="title">
+                                <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))" title="@item.PictureModel.Title">
+                                    @item.Name
+                                </a>
+                            </h2>
+                            <div class="picture">
+                                <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))" title="@item.PictureModel.Title">
+                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeFeaturedProducts, additionalData = Model })
+
+    @await Html.PartialAsync("_CatalogProducts", Model.CatalogProductsModel, catalogProductsViewData)
+    
+
+</div>  
+

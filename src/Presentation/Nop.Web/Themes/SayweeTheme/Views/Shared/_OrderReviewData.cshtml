@@ -1,0 +1,116 @@
+﻿@using Nop.Services.Orders
+@model ShoppingCartModel.OrderReviewDataModel
+@if (Model.Display)
+{
+    <div class="order-review-data">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="billing-info">
+                <div class="mt-team-more-info mt-30">
+                    <h4 class="mt-team-sm-title mb-20">@T("Order.BillingAddress")</h4>
+                    <ul>
+                        <li><label>Name:</label> <span>@Model.BillingAddress.FirstName @Model.BillingAddress.LastName</span></li>
+                        <li><label>@T("Order.Email"):</label> <span>@Model.BillingAddress.Email</span></li>
+                        @if (Model.BillingAddress.PhoneEnabled)
+                        {
+                            <li><label>@T("Order.Phone"):</label> <span>@Model.BillingAddress.PhoneNumber</span></li>
+                        }
+                        @if (Model.BillingAddress.FaxEnabled)
+                        {
+                            <li><label>@T("Order.Fax"):</label> <span>@Model.BillingAddress.FaxNumber</span></li>
+                        }
+                        @if (Model.BillingAddress.CompanyEnabled && !string.IsNullOrEmpty(Model.BillingAddress.Company))
+                        {
+                            <li><label>Company:</label> <span>@Model.BillingAddress.Company</span></li>
+                        }
+                        @foreach (var item in Model.BillingAddress.AddressFields)
+                        {
+                            <li><label>@item.Key:</label> <span>@item.Value</span></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BillingAddress.FormattedCustomAddressAttributes))
+                        {
+                            <li><label>Custom Attributes:</label> <span>@Html.Raw(Model.BillingAddress.FormattedCustomAddressAttributes)</span></li>
+                        }
+                        @await Html.PartialAsync("_OrderCustomValues", Model.CustomValues?.GetValuesByDisplayLocation(CustomValueDisplayLocation.BillingAddress))
+                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OrderSummaryBillingAddress, additionalData = Model })
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            @if (Model.IsShippable)
+            {
+                <div class="shipping-info">
+                    <div class="mt-team-more-info mt-30">
+                        <h4 class="mt-team-sm-title mb-20">@(Model.SelectedPickupInStore ? T("Order.PickupAddress") : T("Order.ShippingAddress"))</h4>
+                        <ul>
+                            @if (!Model.SelectedPickupInStore)
+                            {
+                                <li><label>Name:</label> <span>@Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName</span></li>
+                                <li><label>@T("Order.Email"):</label> <span>@Model.ShippingAddress.Email</span></li>
+                                if (Model.ShippingAddress.PhoneEnabled)
+                                {
+                                    <li><label>@T("Order.Phone"):</label> <span>@Model.ShippingAddress.PhoneNumber</span></li>
+                                }
+                                if (Model.ShippingAddress.FaxEnabled)
+                                {
+                                    <li><label>@T("Order.Fax"):</label> <span>@Model.ShippingAddress.FaxNumber</span></li>
+                                }
+                                if (Model.ShippingAddress.CompanyEnabled && !string.IsNullOrEmpty(Model.ShippingAddress.Company))
+                                {
+                                    <li><label>Company:</label> <span>@Model.ShippingAddress.Company</span></li>
+                                }
+                                @foreach (var item in Model.ShippingAddress.AddressFields)
+                                {
+                                    <li><label>@item.Key:</label> <span>@item.Value</span></li>
+                                }
+                                if (!string.IsNullOrEmpty(Model.ShippingAddress.FormattedCustomAddressAttributes))
+                                {
+                                    <li><label>Custom Attributes:</label> <span>@Html.Raw(Model.ShippingAddress.FormattedCustomAddressAttributes)</span></li>
+                                }
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OrderSummaryShippingAddress, additionalData = Model })
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.PickupAddress.AddressFields)
+                                {
+                                    <li><label>@item.Key:</label> <span>@item.Value</span></li>
+                                }
+                            }
+                            @await Html.PartialAsync("_OrderCustomValues", Model.CustomValues?.GetValuesByDisplayLocation(CustomValueDisplayLocation.ShippingAddress))
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.PaymentMethod))
+    {
+        <div class="payment-method-info">
+            <div class="mt-team-more-info mt-30">
+                <h4 class="mt-team-sm-title mb-20">@T("Order.Payment")</h4>
+                <ul>
+                    <li><label>@T("Order.Payment.Method"):</label> <span>@Model.PaymentMethod</span></li>
+                    @await Html.PartialAsync("_OrderCustomValues", Model.CustomValues?.GetValuesByDisplayLocation(CustomValueDisplayLocation.Payment))
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OrderSummaryPaymentMethodInfo, additionalData = Model })
+                </ul>
+            </div>
+        </div>
+    }
+
+    @if (Model.IsShippable)
+    {
+        <div class="shipping-method-info">
+            <div class="mt-team-more-info mt-30">
+                <h4 class="mt-team-sm-title mb-20">@T("Order.Shipping")</h4>
+                <ul>
+                    <li><label>@T("Order.Shipping.Name"):</label> <span>@Model.ShippingMethod</span></li>
+                    @await Html.PartialAsync("_OrderCustomValues", Model.CustomValues?.GetValuesByDisplayLocation(CustomValueDisplayLocation.Shipping))
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OrderSummaryShippingMethodInfo, additionalData = Model })
+                </ul>
+            </div>
+        </div>
+    }
+    </div>
+}

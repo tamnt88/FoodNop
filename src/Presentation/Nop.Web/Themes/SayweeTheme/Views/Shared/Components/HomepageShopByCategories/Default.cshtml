@@ -1,0 +1,74 @@
+﻿@model IList<CategoryModel>
+@inject IThemeContext themeContext
+@using Nop.Core.Domain.Catalog
+@{
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+@if (Model.Count > 0)
+{
+     
+    <!-- Start  Categories -->
+    <section class="mtshop__category-area pt-40 pb-55 p-relative fix">
+        <div class="container">
+            <div class="mtshop__category-2 p-relative">
+                <div class="row align-items-center">
+                    <div class="col-lg-2 ">
+                        <div class="mtshop__category-content mb-20 ml-30">
+                            <h3 class="mtshop__category-content-title mb-15">
+                                Shop by <br>
+                                Category
+                            </h3>
+                            <a href="shop.html" class="mtshop__category-content-btn">
+                                View All
+                                <i class="fa-regular fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="mtshop__category-wrapper">
+                            <div class="swiper mtshop__category_2_active">
+                                <div class="swiper-wrapper">
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <div class="swiper-slide">
+                                            <div class="mtshop__category-item ">
+                                                <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))">
+                                                    <img src="@item.PictureModel.ImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
+                                                    <h5 class="mtshop__category-title">@item.Name</h5>
+                                                    <span>@item.FeaturedProducts.Count ITEMS ITEMS</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mtshop__category-arrow mtshop__category-arrow-2  mb-30 d-flex justify-content-end p-relative">
+                        <div class="mtshop__category-arrow-left mtshop__category-arrow">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14"
+                                     fill="none">
+                                    <path d="M7.39367 0.820693C6.37396 5.14484 1.88 6.84235 1.46856 6.98943C1.4577 6.99331 1.45706 7.00855 1.4676 7.01347C1.87294 7.20245 6.37316 9.37583 7.39367 13.1793M14.54 7.00001L2.62943 7.00001"
+                                          stroke="#060121" stroke-width="2" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="mtshop__category-arrow-right mtshop__category-arrow">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14"
+                                     fill="none">
+                                    <path d="M7.60633 13.1793C8.62604 8.85516 13.12 7.15765 13.5314 7.01057C13.5423 7.00669 13.5429 6.99145 13.5324 6.98653C13.1271 6.79755 8.62684 4.62417 7.60633 0.820679M0.459961 6.99999L12.3706 6.99999"
+                                          stroke="#060121" stroke-width="2" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Categories -->
+}

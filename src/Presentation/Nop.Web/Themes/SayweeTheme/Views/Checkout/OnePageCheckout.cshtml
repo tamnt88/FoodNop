@@ -1,0 +1,286 @@
+@model OnePageCheckoutModel
+@using Nop.Core
+@using Nop.Services.Customers
+@inject IWebHelper webHelper
+@inject IWorkContext workContext
+@inject ICustomerService _customerService
+@inject IThemeContext themeContext
+@{
+    Layout = "_ColumnsOne";
+
+    var storeLocation = webHelper.GetStoreLocation();
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.Checkout").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-checkout-page");
+
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+@{
+    //step numbers
+    var billingAddressStepNumber = 1;
+    var shippingAddressStepNumber = 2;
+    var shippingMethodStepNumber = 3;
+    var paymentMethodStepNumber = 4;
+    var paymentInfoStepNumber = 5;
+    var confirmOrderStepNumber = 6;
+    if (!Model.ShippingRequired)
+    {
+        paymentMethodStepNumber = paymentMethodStepNumber - 2;
+        paymentInfoStepNumber = paymentInfoStepNumber - 2;
+        confirmOrderStepNumber = confirmOrderStepNumber - 2;
+    }
+    if (Model.DisableBillingAddressCheckoutStep)
+    {
+        shippingAddressStepNumber--;
+        shippingMethodStepNumber--;
+        paymentMethodStepNumber--;
+        paymentInfoStepNumber--;
+        confirmOrderStepNumber--;
+    }
+}
+
+<script src="~/js/public.accordion.js" asp-location="Footer"></script>
+<script src="~/js/public.onepagecheckout.js" asp-location="Footer"></script>
+
+@section Breadcrumb
+{
+    <!-- Breadcrumb Area Start -->
+    <section class="mt-breadcrumb-area mt-breadcrumb-space p-relative"
+             data-background="Themes/@(themeName)/Content/img/breadcurmb/breadcrumb-bg.jpg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <div class="mt-breadcrumb p-relative">
+                        <h1 class="mt-breadcrumb-title">Checkout <span>Page</span></h1>
+                        <div class="mt-breadcrumb-list">
+                            <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a></span>
+                            <span class="dvir">-</span>
+                            <span><a href="@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT)">@T("Checkout")</a></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="mt-breadcrumb-img text-end wow img-custom-anim-top" data-wow-duration="1.5s"
+                         data-wow-delay="0.1s">
+                        <img src="~/Themes/@(themeName)/Content/img/breadcurmb/breadcrumb.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Area End -->
+}
+
+<div class="page checkout-page">
+    <section class="mt-checkout-area pb-140 pt-140">
+        <div class="container">
+            <div class="page-body checkout-data">
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OpcContentBefore, additionalData = Model })
+
+                <ol class="opc list-unstyled d-flex flex-column gap-3" id="checkout-steps">
+            <li id="opc-billing" class="tab-section allow bg-white shadow-sm rounded-4 p-4">
+                <div class="step-title d-flex align-items-center gap-3 mb-0">
+                    <span class="number badge rounded-pill bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px; font-size: 14px;">@billingAddressStepNumber</span>
+                    <h2 class="title">@T("Checkout.BillingAddress")</h2>
+                </div>
+                <div id="checkout-step-billing" class="step a-item" style="display: none;">
+                    <form id="co-billing-form" action="" method="post">
+                        <div id="checkout-billing-load">
+                            @await Html.PartialAsync("OpcBillingAddress", Model.BillingAddress)
+                            @*billing address content will be loaded here*@
+                        </div>
+                    </form>
+                    <script asp-location="Footer">
+                        Billing.init('#co-billing-form', '@(storeLocation)checkout/GetAddressById/',
+                            '@(storeLocation)checkout/OpcSaveBilling/',
+                            @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()),
+                            @((await _customerService.IsGuestAsync(await workContext.GetCurrentCustomerAsync())).ToString().ToLowerInvariant()));
+                        if ($("#billing-address-select").length > 0) {
+                            Billing.newAddress(!$('#billing-address-select').val());
+                        }
+                    </script>
+                        <div class="buttons d-flex justify-content-between align-items-center" id="billing-buttons-container">
+                            <button id="save-billing-address-button" type="button" class="button-1 mt-btn-3" style="display: none" onclick="Billing.saveEditAddress('@(storeLocation)checkout/SaveEditBillingAddress/'); return false;">@T("Common.Save")</button>
+
+                            <button type="button" name="save" class="button-1 mt-btn new-address-next-step-button" onclick="Billing.save()">
+                                <span>@T("Common.Continue")</span>
+                            </button>
+
+                            <span class="please-wait" id="billing-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                        </div>
+                </div>
+            </li>
+            @if (Model.ShippingRequired)
+            {
+                <li id="opc-shipping" class="tab-section bg-white shadow-sm rounded-4 p-4">
+                    <div class="step-title d-flex align-items-center gap-3 mb-0">
+                        <span class="number badge rounded-pill bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px; font-size: 14px;">@shippingAddressStepNumber</span>
+                        <h2 class="title">@T("Checkout.ShippingAddress")</h2>
+                    </div>
+                    <div id="checkout-step-shipping" class="step a-item" style="display: none;">
+                        <form action="" id="co-shipping-form" method="post">
+                            <div id="checkout-shipping-load">
+                                @*shipping address content will be loaded here*@
+                            </div>
+                        </form>
+                        <script asp-location="Footer">
+                            Shipping.init('#co-shipping-form', '@(storeLocation)checkout/OpcSaveShipping/');
+                            if ($("#shipping-address-select").length > 0) {
+                                Shipping.newAddress($('#shipping-address-select').val(), @Model.BillingAddress.BillingNewAddress.Id);
+                            }
+                        </script>
+                        <div class="buttons d-flex justify-content-between align-items-center" id="shipping-buttons-container">
+                            @if (!Model.DisableBillingAddressCheckoutStep)
+                            {
+                                <div class="back-link">
+                                    <a href="#" class="mt-btn-3" onclick="Checkout.back(); return false;">
+                                        <span>&laquo;</span> @T("Common.Back")
+                                    </a>
+                                </div>
+                            }
+
+                            <span id="edit-shipping-address-buttons">
+                                <button id="save-shipping-address-button" type="button" class="button-1 mt-btn-3" style="display: none" onclick="Shipping.saveEditAddress('@(storeLocation)checkout/SaveEditShippingAddress/'); return false;">@T("Common.Save")</button>
+                            </span>
+
+                            <button type="button" class="button-1 mt-btn new-address-next-step-button" onclick="Shipping.save()">
+                                <span>@T("Common.Continue")</span>
+                            </button>
+                            <span id="shipping-please-wait" class="please-wait" style="display: none;"> @T("Common.LoadingNextStep")</span>
+                        </div>
+                    </div>
+                </li>
+                <li id="opc-shipping_method" class="tab-section bg-white shadow-sm rounded-4 p-4">
+                    <div class="step-title d-flex align-items-center gap-3 mb-0">
+                        <span class="number badge rounded-pill bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px; font-size: 14px;">@shippingMethodStepNumber</span>
+                        <h2 class="title">@T("Checkout.ShippingMethod")</h2>
+                    </div>
+                    <div id="checkout-step-shipping-method" class="step a-item" style="display: none;">
+                        <form id="co-shipping-method-form" action="" method="post">
+                            <div id="checkout-shipping-method-load">
+                                @*shipping methods content will be loaded here*@
+                            </div>
+                            <script asp-location="Footer">
+                                var localized_data = {
+                                    NotAvailableMethodsError: "@T("ShippingMethod.NotAvailableMethodsError")",
+                                    SpecifyMethodError: "@T("ShippingMethod.SpecifyMethodError")"
+                                };
+                                ShippingMethod.init('#co-shipping-method-form', '@(storeLocation)checkout/OpcSaveShippingMethod/', localized_data);
+                            </script>
+                            <div class="buttons d-flex justify-content-between align-items-center" id="shipping-method-buttons-container">
+                                <div class="back-link">
+                                    <a href="#" class="mt-btn-3" onclick="Checkout.back(); return false;">
+                                        <span>&laquo;</span> @T("Common.Back")
+                                    </a>
+                                </div>
+                                <button type="button" class="button-1 mt-btn shipping-method-next-step-button" onclick="ShippingMethod.save()">
+                                    <span>@T("Common.Continue")</span>
+                                </button>
+                                <span id="shipping-method-please-wait" class="please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            }
+            <li id="opc-payment_method" class="tab-section bg-white shadow-sm rounded-4 p-4">
+                <div class="step-title d-flex align-items-center gap-3 mb-0">
+                    <span class="number badge rounded-pill bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px; font-size: 14px;">@paymentMethodStepNumber</span>
+                    <h2 class="title">@T("Checkout.PaymentMethod")</h2>
+                </div>
+                <div id="checkout-step-payment-method" class="step a-item" style="display: none;">
+                    <form action="" id="co-payment-method-form" method="post">
+                        <div id="checkout-payment-method-load">
+                            @*payment methods content will be loaded here*@ Payment is not required
+                        </div>
+                    </form>
+                    <script asp-location="Footer">
+                        var localized_data = {
+                            NotAvailableMethodsError: "@T("PaymentMethod.NotAvailableMethodsError")",
+                            SpecifyMethodError: "@T("PaymentMethod.SpecifyMethodError")"
+                        };
+                        PaymentMethod.init('#co-payment-method-form', '@(storeLocation)checkout/OpcSavePaymentMethod/', localized_data);
+                    </script>
+                    <div class="buttons d-flex justify-content-between align-items-center" id="payment-method-buttons-container">
+                        <div class="back-link">
+                            <a href="#" class="mt-btn-3" onclick="Checkout.back(); return false;">
+                                <span>&laquo;</span> @T("Common.Back")
+                            </a>
+                        </div>
+                        <button type="button" name="save" class="button-1 mt-btn payment-method-next-step-button" onclick="PaymentMethod.save()">
+                            <span>@T("Common.Continue")</span>
+                        </button>
+                        <span class="please-wait" id="payment-method-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                    </div>
+                </div>
+            </li>
+            <li id="opc-payment_info" class="tab-section bg-white shadow-sm rounded-4 p-4">
+                <div class="step-title d-flex align-items-center gap-3 mb-0">
+                    <span class="number badge rounded-pill bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px; font-size: 14px;">@paymentInfoStepNumber</span>
+                    <h2 class="title">@T("Checkout.PaymentInfo")</h2>
+                </div>
+                <div id="checkout-step-payment-info" class="step a-item" style="display: none;">
+                    <form action="" id="co-payment-info-form" method="post">
+                        <div id="checkout-payment-info-load">
+                            @*payment info content will be loaded here*@ Payment is not required
+                        </div>
+                    </form>
+                    <script asp-location="Footer">
+                        PaymentInfo.init('#co-payment-info-form', '@(storeLocation)checkout/OpcSavePaymentInfo/');
+                    </script>
+                    <div class="buttons d-flex justify-content-between align-items-center" id="payment-info-buttons-container">
+                        <div class="back-link">
+                            <a href="#" class="mt-btn-3" onclick="Checkout.back(); return false;">
+                                <span>&laquo;</span> @T("Common.Back")
+                            </a>
+                        </div>
+                        <button type="button" class="button-1 mt-btn payment-info-next-step-button" onclick="PaymentInfo.save()">
+                            <span>@T("Common.Continue")</span>
+                        </button>
+                        <span class="please-wait" id="payment-info-please-wait" style="display: none;">@T("Common.LoadingNextStep")</span>
+                    </div>
+                </div>
+            </li>
+            <li id="opc-confirm_order" class="tab-section bg-white shadow-sm rounded-4 p-4">
+                <div class="step-title d-flex align-items-center gap-3 mb-0">
+                    <span class="number badge rounded-pill bg-warning text-dark d-inline-flex align-items-center justify-content-center" style="width: 34px; height: 34px; font-size: 14px;">@confirmOrderStepNumber</span>
+                    <h2 class="title">@T("Checkout.ConfirmOrder")</h2>
+                </div>
+                <div id="checkout-step-confirm-order" class="step a-item" style="display: none;">
+                    <div id="checkout-confirm-order-load">
+                        @*confirm order content will be loaded here*@
+                    </div>
+                    <script asp-location="Footer">
+                        ConfirmOrder.init('@(storeLocation)checkout/OpcConfirmOrder/', '@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT_COMPLETED)', @Model.DisplayCaptcha.ToString().ToLowerInvariant(), @Model.IsReCaptchaV3.ToString().ToLowerInvariant(), '@Model.ReCaptchaPublicKey', '#checkout-step-confirm-order');
+                    </script>
+                    <div class="buttons d-flex justify-content-between align-items-center" id="confirm-order-buttons-container">
+                        <div class="back-link">
+                            <a href="#" class="mt-btn-3" onclick="Checkout.back(); return false;">
+                                <span>&laquo;</span> @T("Common.Back")
+                            </a>
+                        </div>
+                        <button type="button" class="button-1 mt-btn confirm-order-next-step-button" onclick="ConfirmOrder.save()">
+                            <span>@T("Checkout.ConfirmButton")</span>
+                        </button>
+                        <span class="please-wait" id="confirm-order-please-wait" style="display: none;">@T("Checkout.SubmittingOrder")</span>
+                    </div>
+                </div>
+            </li>
+        </ol>
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OpcContentAfter, additionalData = Model })
+            </div>
+        </div>
+    </section>
+    </div>
+    <script asp-location="Footer">
+        Accordion.init('checkout-steps', '.step-title', true);
+        Accordion.openSection('#opc-billing');
+        Checkout.init('@(storeLocation)cart/');
+        if (Billing.disableBillingAddressCheckoutStep)
+        {
+            Accordion.hideSection('#opc-billing');
+            Billing.save();
+        }
+    </script>
+</div>

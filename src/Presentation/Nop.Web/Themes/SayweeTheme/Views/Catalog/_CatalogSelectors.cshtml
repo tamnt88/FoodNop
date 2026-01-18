@@ -1,0 +1,104 @@
+
+@model CatalogProductsModel
+
+@if (Model.Products.Count <= 0 &&
+     !Model.PriceRangeFilter.Enabled &&
+     !Model.SpecificationFilter.Enabled &&
+     !Model.ManufacturerFilter.Enabled)
+{
+    return;
+}
+  
+<div class="mt-shop-header mb-30">
+    <h5 class="mt-shop-header-title">Showing 01-20 of 159 results</h5>
+    @*view mode*@
+    @if (Model.AllowProductViewModeChanging)
+    {
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+            @if (Model.AvailableViewModes.Count > 1)
+            {
+                var gridMode = Model.AvailableViewModes[0];
+                var listMode = Model.AvailableViewModes[1];
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @if(gridMode.Selected){<text>active</text>}" data-stat="@if(gridMode.Selected){<text>1</text>}" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" data-viewmode="@gridMode.Value" title="@gridMode.Text" tabindex="0" aria-controls="pills-home" aria-selected="@if(gridMode.Selected){<text>true</text>}else{<text>false</text>}">
+                        <span><i class="fa-light fa-grid-2"></i></span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @if(listMode.Selected){<text>active</text>}" data-stat="@if(listMode.Selected){<text>1</text>}" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" data-viewmode="@listMode.Value" title="@listMode.Text" tabindex="0" role="button" aria-controls="pills-profile" aria-selected="@if(listMode.Selected){<text>true</text>}else{<text>false</text>}">
+                        <span><i class="fa-light fa-list-ul"></i></span>
+                    </button>
+                </li>
+            }
+            
+        </ul>  
+        <script asp-location="Footer">
+            $(function() {
+                var $viewModeEls = $('[data-viewmode]');
+                $viewModeEls.on('click', function () {
+                    var stat = $(this).data('stat');
+        
+                    if (stat != '1') {
+                        $viewModeEls.data('stat', '');
+                        $(this).data('stat', '1');
+                        CatalogProducts.getProducts();
+                    }
+                    return false;
+                });
+
+                $(CatalogProducts).on('before', function (e) {
+                var $viewModeEl = $('[data-viewmode].active');
+                    if ($viewModeEl) {
+                        e.payload.urlBuilder
+                            .addParameter('viewmode', $viewModeEl.data('viewmode'));
+                    }
+                });
+            });
+        </script>
+    }
+
+    @if (Model.AllowProductSorting)
+    {
+        <div class="mt__select-box">
+            <span class="mt__select-box-title">@T("Catalog.OrderBy"):</span>
+            @Html.DropDownList("products-orderby", Model.AvailableSortOptions, new { aria_label = T("Catalog.OrderBy.Label") })
+        </div> 
+        <script asp-location="Footer">
+            $(function() {
+                var $orderByEl = $('#products-orderby');
+                $orderByEl.on('change', function () {
+                    CatalogProducts.getProducts();
+                });
+
+                $(CatalogProducts).on('before', function (e) {
+                    e.payload.urlBuilder
+                        .addParameter('orderby', $orderByEl.val());
+                });
+            });
+        </script>
+    }
+
+    @if (Model.AllowCustomersToSelectPageSize)
+    {
+        <div class="product-page-size">
+            <span>@T("Catalog.PageSize")</span>
+            @Html.DropDownList("products-pagesize", Model.PageSizeOptions, new { aria_label = T("Catalog.PageSize.Label") })
+            <span>@T("Catalog.PageSize.PerPage")</span>
+        </div>
+        <script asp-location="Footer">
+            $(function() {
+                var $pageSizeEl = $('#products-pagesize');
+                $pageSizeEl.on('change', function () {
+                    CatalogProducts.getProducts();
+                });
+
+                $(CatalogProducts).on('before', function (e) {
+                    e.payload.urlBuilder
+                        .addParameter('pagesize', $pageSizeEl.val());
+                });
+            });
+        </script>
+    }
+
+</div>

@@ -1,0 +1,104 @@
+﻿@*
+    // ***   ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **     **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **     **  ** *******     *     **  ** **   *** **** ****
+    // **************************************************************************
+    // *                                                                         *
+    // *     by                                                                  *
+    // *    Copyright (c) NopAdvance LLP. All Rights Reserved.                   *
+    // *                                                                         *
+    // **************************************************************************
+    // *                                                                         *
+    // *    This software is licensed for use under the terms accepted during    *
+    // *    the purchase of this product. A non-exclusive, non-transferable      *
+    // *    right is granted to use this product on the website for which it was *
+    // *    licensed.                                                            *
+    // *                                                                         *
+    // *    Companies purchasing this product for their customers are permitted, *
+    // *    provided the use complies with the terms outlined in the EULA:       *
+    // *    https://store.nopadvance.com/eula.                                   *
+    // *                                                                         *
+    // *    You may not reverse engineer, decompile, modify, or distribute this  *
+    // *    software without explicit permission from NopAdvance LLP. Any        *
+    // *    violation will result in the termination of your license and may     *
+    // *    lead to legal action.                                                *
+    // *                                                                         *
+    // **************************************************************************
+    // *    Contact: contact@nopadvance.com                                      *
+    // *    Website: https://nopadvance.com                                      *
+    // **************************************************************************
+*@
+@model ProductSpecificationModel
+
+@using Nop.Core.Domain.Catalog;
+
+@if (Model.Groups.SelectMany(g => g.Attributes).ToList().Count > 0)
+{
+    <div class="product-specs-box">
+        <h2 class="title">
+            @T("Products.Specs")
+        </h2>
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr class="hidden-row">
+                        <th class="colWidth25"><span>@T("Products.Specs.AttributeName")</span></th>
+                        <th><span>@T("Products.Specs.AttributeValue")</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model.Groups)
+                    {
+                        @if (group.Attributes.Count > 0)
+                        {
+                            @if (group.Id > 0)
+                            {
+                                <tr class="spec-header">
+                                    <td class="spec-group-name" colspan="2">
+                                        @group.Name
+                                    </td>
+                                </tr>
+                            }
+
+                            @for (int i = 0; i < group.Attributes.Count; i++)
+                            {
+                                var attr = group.Attributes[i];
+
+                                <tr @(i % 2 == 0 ? Html.Raw(" class=\"odd\"") : Html.Raw(" class=\"even\""))>
+                                    <td class="spec-name">
+                                        @attr.Name
+                                    </td>
+                                    <td class="spec-value">
+                                        @for (int j = 0; j < attr.Values.Count; j++)
+                                        {
+                                            var value = attr.Values[j];
+
+                                            @if (!string.IsNullOrEmpty(value.ColorSquaresRgb) && (value.AttributeTypeId == (int)SpecificationAttributeType.Option))
+                                            {
+                                                <div class="attribute-squares color-squares attribute-squares-padding">
+                                                    <span class="attribute-square-container" title="@Html.Raw(value.ValueRaw)">
+                                                        <span class="attribute-square" style="background-color: @(value.ColorSquaresRgb);">&nbsp;</span>
+                                                    </span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw(value.ValueRaw)
+                                                if (j != attr.Values.Count - 1)
+                                                {
+                                                    <text>,&nbsp;</text>
+                                                }
+                                            }
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

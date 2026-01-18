@@ -1,0 +1,175 @@
+@inject IThemeContext themeContext
+@model Nop.Web.Models.Catalog.SearchModel
+@{
+    Layout = "_ColumnsTwo";
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.Search").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-search-page");
+}
+<script asp-location="Footer">
+    $(function() {
+        $("#@Html.IdFor(model => model.advs)").on('click', toggleAdvancedSearch);
+        toggleAdvancedSearch();
+    });
+
+    function toggleAdvancedSearch() {
+        if ($('#@Html.IdFor(model => model.advs)').is(':checked')) {
+            $('#advanced-search-block').show();
+        }
+        else {
+            $('#advanced-search-block').hide();
+        }
+    }
+</script>
+@section CatalogFilters {
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeFilters, additionalData = Model })
+    @await Html.PartialAsync("_CatalogFilters", Model.CatalogProductsModel)
+} 
+
+<div class="mt-shop-wrapper">
+    <!-- banner -->
+    <div class="mt-shop-top mb-30 wow img-custom-anim-top" data-wow-duration="1.5s"
+         data-wow-delay="0.1s">
+        <div class="mt-shop-top-filtar mb-20">
+            <a class="active" href="#"><i class="fa-light fa-flask"></i> Filtered</a>
+            <a href="#"><i class="fa-light fa-xmark"></i> Fruits & Vegetables</a>
+            <a href="#"><i class="fa-light fa-xmark"></i> RosMart</a>
+        </div>
+        <a href="#"><img src="~/Themes/@(themeName)/Content/img/banner/shop-banner.jpg" alt=""></a>
+    </div>
+    <div class="search-input">
+        <form asp-route="@NopRouteNames.General.SEARCH" method="get">
+            <section class="fieldset">
+                <div class="form-fields">
+                    <div class="basic-search">
+                        <div class="inputs">
+                            <div class="mt-checkout-input">
+                                <label asp-for="q">@T("Search.SearchTerm"):</label>
+                                <input asp-for="q" class="search-text" />
+                                <span asp-validation-for="q"></span>
+                            </div>
+                        </div>
+                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductSearchPageBasic, additionalData = Model })
+                        <div class="inputs reversed">
+                            <div class="custom-checkbox">
+                                <input class="custom-control-input" asp-for="advs" />
+                                <label class="custom-control-label" asp-for="advs">@T("Search.AdvancedSearch")</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="advanced-search" id="advanced-search-block">
+                        @if (Model.AvailableCategories.Count > 0)
+                        {
+                            <div class="inputs">
+                                <div class="mt-checkout-input">
+                                    <label asp-for="cid">@T("Search.Category"):</label>
+                                    <select asp-for="cid" asp-items="Model.AvailableCategories" class="mt-select-scroll"></select>
+                                    <span asp-validation-for="cid"></span>
+                                </div>
+                            </div>
+                            <div class="inputs reversed">
+                                <div class="custom-checkbox">
+                                    <input class="custom-control-input" asp-for="isc" />
+                                    <label class="custom-control-label" asp-for="isc">@T("Search.IncludeSubCategories")</label>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.AvailableManufacturers.Count > 0)
+                        {
+                            <div class="inputs">
+                                <div class="mt-checkout-input">
+                                    <label asp-for="mid">@T("Search.Manufacturer"):</label>
+                                    <select asp-for="mid" asp-items="Model.AvailableManufacturers"></select>
+                                    <span asp-validation-for="mid"></span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.asv && Model.AvailableVendors.Count > 0)
+                        {
+                            <div class="inputs">
+                                <div class="mt-checkout-input">
+                                    <label asp-for="vid">@T("Search.Vendor"):</label>
+                                    <select asp-for="vid" asp-items="Model.AvailableVendors"></select>
+                                    <span asp-validation-for="vid"></span>
+                                </div>
+                            </div>
+                        }
+                        <div class="inputs reversed">
+                            <div class="custom-checkbox">
+                                <input class="custom-control-input" asp-for="sid" />
+                                <label class="custom-control-label" asp-for="sid">@T("Search.SearchInDescriptions")</label>
+                            </div>
+                        </div>
+                        <div class="inputs reversed">
+                            <div class="custom-checkbox">
+                                <input class="custom-control-input" asp-for="sit" />
+                                <label class="custom-control-label" asp-for="sit">@T("Search.SearchInTags")</label>
+                            </div>
+                        </div>
+                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductSearchPageAdvanced, additionalData = Model })
+                    </div>
+                </div>
+            </section>
+            <section class="buttons">
+                <button type="submit" class="button-1 search-button">@T("Search.Button")</button>
+            </section>
+        </form>
+    </div>
+    <!-- Showing -->
+    <div class="mt-shop-header mb-30">
+
+        <h5 class="mt-shop-header-title">Showing 01-20 of 159 results</h5>
+        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">
+                    <span><i class="fa-light fa-@(Model.CatalogProductsModel.ViewMode == "list" ? "list-ul" : "grid-2")"></i></span>
+                </button>
+            </li>
+        </ul>
+        <div class="mt__select-box">
+            <span class="mt__select-box-title">Sort:</span>
+            <select>
+                <option>Default Sorting</option>
+                <option>Low to Hight</option>
+                <option>High to Low</option>
+                <option>New Added</option>
+                <option>On Sale</option>
+            </select>
+        </div>
+
+
+    </div>
+    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeProductList, additionalData = Model })
+    @{
+        var catalogProductsViewData = new ViewDataDictionary(ViewData);
+        catalogProductsViewData["fetchUrl"] = Html.Raw(Url.RouteUrl(NopRouteNames.Ajax.SEARCH_PRODUCTS));
+    }
+    @await Html.PartialAsync("_CatalogProducts", Model.CatalogProductsModel, catalogProductsViewData)
+    <script asp-location="Footer">
+        $(function() {
+            $(CatalogProducts).on('before', function (e) {
+                var isAdvanced = $('#@Html.IdFor(model => model.advs)').is(':checked');
+
+                e.payload.urlBuilder
+                    .addParameter('q', $('#@Html.IdFor(model => model.q)').val())
+                    .addParameter('advs', isAdvanced);
+
+                if (isAdvanced) {
+                    e.payload.urlBuilder
+                        .addParameter('cid', $('#@Html.IdFor(model => model.cid)').val())
+                        .addParameter('isc', $('#@Html.IdFor(model => model.isc)').is(':checked'))
+                        .addParameter('mid', $('#@Html.IdFor(model => model.mid)').val())
+                        .addParameter('vid', $('#@Html.IdFor(model => model.vid)').val())
+                        .addParameter('sid', $('#@Html.IdFor(model => model.sid)').is(':checked'))
+                        .addParameter('sit', $('#@Html.IdFor(model => model.sit)').is(':checked'));
+                }
+            });
+        });
+    </script>
+
+
+</div>  

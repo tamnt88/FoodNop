@@ -1,0 +1,567 @@
+﻿@model ProductDetailsModel
+
+@using Nop.Core
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Seo
+@using Nop.Services.Html
+@inject IThemeContext themeContext
+@inject IHtmlFormatter htmlFormatter
+@inject IWebHelper webHelper
+@inject SeoSettings seoSettings
+
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    NopHtml.AddTitleParts(!string.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name);
+    //meta
+    NopHtml.AddMetaDescriptionParts(Model.MetaDescription);
+    NopHtml.AddMetaKeywordParts(Model.MetaKeywords);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-product-details-page");
+
+    //canonical URL
+    if (seoSettings.CanonicalUrlsEnabled)
+    {
+        var productUrl = (await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }, webHelper.GetCurrentRequestProtocol())).ToLowerInvariant();
+        NopHtml.AddCanonicalUrlParts(productUrl, seoSettings.QueryStringInCanonicalUrlsEnabled);
+    }
+
+    //open graph META tags
+    if (seoSettings.OpenGraphMetaTags)
+    {
+        NopHtml.AddHeadCustomParts("<meta property=\"og:type\" content=\"product\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"og:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"og:description\" content=\"" + Html.Encode(htmlFormatter.StripTags(Model.MetaDescription)) + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"og:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"og:image:url\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"og:url\" content=\"" + webHelper.GetThisPageUrl(false) + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"og:site_name\" content=\"" + Html.Encode(Model.CurrentStoreName) + "\" />");
+    }
+
+    //Twitter META tags
+    if (seoSettings.TwitterMetaTags)
+    {
+        NopHtml.AddHeadCustomParts("<meta property=\"twitter:card\" content=\"summary\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"twitter:site\" content=\"" + Html.Encode(Model.CurrentStoreName) + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"twitter:title\" content=\"" + Html.Encode(Model.Name) + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"twitter:description\" content=\"" + Html.Encode(htmlFormatter.StripTags(Model.MetaDescription)) + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
+        NopHtml.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + webHelper.GetThisPageUrl(false) + "\" />");
+    }
+    
+    NopHtml.AddJsonLdParts(Model.JsonLd);
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<!--product breadcrumb-->
+@section Breadcrumb
+{
+    @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
+}
+@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsAfterBreadcrumb, additionalData = Model })
+<form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+    <div data-productid="@Model.Id">
+<div class="mt-product-details-area pt-130 fix">
+    <div class="container">
+        <div class="row">
+
+       
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
+        
+           
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsEssentialTop, additionalData = Model })
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="mt-shop-details__wrapper mb-30">
+                            <div class="row">
+                                @await Html.PartialAsync("_ProductDetailsPictures", Model)
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="mt-shop-details__right-warp mb-30 p-relative">
+                            @await Html.PartialAsync("_Discontinued", Model)
+                            <h3 class="mt-shop-details__title-sm mb-15">@Model.Name</h3>
+
+                            @if (!string.IsNullOrEmpty(Model.ShortDescription))
+                            {
+                                <div class="mt-shop-details__text mb-17">
+                                    @Html.Raw(Model.ShortDescription)
+                                </div>
+                            }
+                            
+
+                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewTop, additionalData = Model })
+                            <!--product reviews-->
+
+                            <div class="mt-shop-details__product-info mb-15">
+                                <ul>
+                                    <li>Type: <span>Organic</span></li>
+                                    <!--manufacturers-->
+                                    @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
+
+                                    <li>SKU: <span>@Model.Sku</span></li>
+                                    @* <li>Brand: <span>EcoMart</span></li> *@
+
+                                </ul>
+                            </div>
+                            <div class="mt-shop-details__product-box ">
+                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
+                                    <span><i class="fa-solid fa-sack-dollar"></i></span>
+                                    <div class="mt-shop-details__product-box-text">
+                                        <p>Save 5% on First Flipkart Order! for this</p>
+                                    </div>
+                                </div>
+                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
+                                    <span><i class="fa-solid fa-tags"></i></span>
+                                    <div class="mt-shop-details__product-box-text">
+                                        <p>Get $30+ with Citi-branded Credit Card EMI. Terms apply.</p>
+                                    </div>
+                                </div>
+                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
+                                    <span><i class="fa-solid fa-truck"></i></span>
+                                    <div class="mt-shop-details__product-box-text">
+                                        <p>Enjoy free shipping on all orders over $100.</p>
+                                    </div>
+                                </div>
+                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
+                                    <span><i class="fa-solid fa-shield"></i></span>
+                                    <div class="mt-shop-details__product-box-text">
+                                        <p>Your transactions are safe with us. We</p>
+                                    </div>
+                                </div>
+                            </div> 
+                            <!--SKU, MAN, GTIN, vendor-->
+                            @await Html.PartialAsync("_SKU_Man_GTIN_Ven", Model)
+                            <!--delivery-->
+                            @await Html.PartialAsync("_DeliveryInfo", Model) 
+
+                            <!--attributes-->
+                            @{
+                                var dataDictAttributes = new ViewDataDictionary(ViewData);
+                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
+                                @await Html.PartialAsync("_ProductAttributes", Model, dataDictAttributes)
+                            }
+                             
+                            <!--price & add to cart & estimate shipping-->
+                            @{
+                                var dataDictPrice = new ViewDataDictionary(ViewData);
+                                dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{Model.Id}";
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductPriceTop, additionalData = Model })
+                                @await Html.PartialAsync("_ProductPrice", Model.ProductPrice, dataDictPrice)
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductPriceBottom, additionalData = Model })
+
+                                @await Html.PartialAsync("_ProductTierPrices", Model.TierPrices)
+
+                                var dataDictAddToCart = new ViewDataDictionary(ViewData);
+                                dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                                @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
+
+                                @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
+                            }
+                            <!--wishlist, compare, email a friend-->
+                            <div class="overview-buttons">
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
+                                @{
+                                    var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
+                                    dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                                    @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                                }
+                                @await Html.PartialAsync("_CompareProductsButton", Model)
+                                @await Html.PartialAsync("_ProductEmailAFriendButton", Model)
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
+                            </div>
+                            @await Html.PartialAsync("_ShareButton", Model)
+                            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
+                        </div>
+                         
+                    </div>
+                     
+                @await Component.InvokeAsync(typeof(ProductsAlsoPurchasedViewComponent), new { productId = Model.Id })
+                @await Component.InvokeAsync(typeof(RelatedProductsViewComponent), new { productId = Model.Id })
+                @await Component.InvokeAsync(typeof(CompatibleWithFilterLevelValuesViewComponent), new { productId = Model.Id })
+            
+        
+         
+        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
+    </div>
+                <div class="row">
+                    <div class="productdetails-tabs mt-100 ">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-12">
+                                <div class="product-additional-tab">
+                                    <div class="pro-details-nav mb-40">
+                                        <ul class="nav nav-tabs pro-details-nav-btn" id="myTabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-links active" id="home-tab-1" data-bs-toggle="tab"
+                                                        data-bs-target="#home-1" type="button" role="tab" aria-controls="home-1"
+                                                        aria-selected="true">
+                                                    <span>Description</span>
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-links" id="information-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#additional-information" type="button" role="tab"
+                                                        aria-controls="additional-information" aria-selected="false">
+                                                    <span>
+                                                        Additional
+                                                        Information
+                                                    </span>
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-links" id="reviews-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
+                                                        aria-selected="false">
+                                                    <span>Reviews</span>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content mt-content-tab" id="myTabContent-2">
+                                        <div class="tab-para tab-pane fade show active" id="home-1" role="tabpanel"
+                                             aria-labelledby="home-tab-1">
+                                            <div class="row">
+                                                 @Html.Raw(Model.FullDescription)
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="additional-information" role="tabpanel"
+                                             aria-labelledby="information-tab">
+                                            <div class="mt-content-tab-content">
+                                                <p class="mb-30">
+                                                    Enjoy the perfect crunch with our Crisp Green Apples. They offer a
+                                                    refreshing, tangy flavor that's ideal for snacking, baking, or adding to your
+                                                    favorite salads. Fresh and juicy, they bring a delightful burst of flavor to
+                                                    every bite.
+                                                </p>
+                                            </div>
+                                            <div class="product__details-info table-responsive mb-15">
+                                                <table class="table table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="add-info">Weight</td>
+                                                            <td class="add-info-list"> 2 lbs</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Dimensions</td>
+                                                            <td class="add-info-list"> 12 × 16 × 19 in</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Product</td>
+                                                            <td class="add-info-list">
+                                                                Purchase this product on
+                                                                rag-bone.com
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Color</td>
+                                                            <td class="add-info-list"> Gray, Black</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Size</td>
+                                                            <td class="add-info-list"> S, M, L, XL</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Model</td>
+                                                            <td class="add-info-list"> Model </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Shipping</td>
+                                                            <td class="add-info-list"> Standard shipping: $5,95L</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Care Info</td>
+                                                            <td class="add-info-list">
+                                                                Machine Wash up to 40ºC/86ºF
+                                                                Gentle Cycle
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="add-info">Brand</td>
+                                                            <td class="add-info-list"> Kazen</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-lg-9">
+                                                    <div class="product-details-review">
+                                                        <h3 class="mt-comments-title mb-35">Ratings and Reviews</h3>
+                                                        <div class="mt-product-details-range-wrap d-flex align-items-center mb-40">
+                                                            <div class="mt-product-details-range-rating d-flex align-items-center">
+                                                                <h2 class="mt-product-details-range-count">4.7</h2>
+                                                                <div class="mt-product-details-range-review">
+                                                                    <span><i class="fa-solid fa-star-sharp"></i> Excellent</span>
+                                                                    <p class="mt-6">(40 Reviews & 56 Ratings)</p>
+                                                                    <ul>
+                                                                        <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                        <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                        <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                        <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                        <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-product-details-range-right">
+                                                                <div class="mt-product-details-range-bar mb-10">
+                                                                    <ul>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><span></span></li>
+                                                                        <li>30</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mt-product-details-range-bar mb-10">
+                                                                    <ul>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><span></span></li>
+                                                                        <li>54</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mt-product-details-range-bar mb-10">
+                                                                    <ul>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><span></span></li>
+                                                                        <li>37</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mt-product-details-range-bar mb-10">
+                                                                    <ul>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><span></span></li>
+                                                                        <li>21</li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="mt-product-details-range-bar mb-10">
+                                                                    <ul>
+                                                                        <li><i class="fa-solid fa-star-sharp"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><i class="fal fa-star"></i></li>
+                                                                        <li><span></span></li>
+                                                                        <li>10</li>
+                                                                    </ul>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <!-- form -->
+                                                        <div class="product-details-comment pb-100">
+                                                            <div class="comment-title mb-20">
+                                                                <h3>Submit Your Reviews</h3>
+                                                            </div>
+                                                            <div class="comment-rating mb-20 d-flex">
+                                                                <span>Your Ratings </span>
+                                                                <ul>
+                                                                    <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                    <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                    <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                    <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
+                                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="comment-input-box">
+                                                                <div class="row">
+                                                                    <div class="col-xxl-6">
+                                                                        <div class="comment-input">
+                                                                            <input type="text" placeholder="Your Name*">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xxl-6">
+                                                                        <div class="comment-input">
+                                                                            <input type="email" placeholder="Your Email*">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xxl-12">
+                                                                        <div class="comment-input">
+                                                                            <textarea placeholder="Your review..."></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xxl-12">
+                                                                        <div class="comment-submit">
+                                                                            <button type="submit" class="mt-btn">
+                                                                                <span>
+                                                                                    Submit
+                                                                                    Review
+                                                                                </span>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mt-review-box d-flex align-items-center  mb-50">
+                                                            <span>Reviews</span>
+                                                            <div class="mt-reviews-box-number">
+                                                                <a href="#">
+                                                                    <i class="fa-solid fa-star-sharp"></i> 5
+                                                                </a>
+                                                                <a href="#">
+                                                                    <i class="fa-solid fa-star-sharp"></i> 4
+                                                                </a>
+                                                                <a href="#">
+                                                                    <i class="fa-solid fa-star-sharp"></i> 3
+                                                                </a>
+                                                                <a href="#">
+                                                                    <i class="fa-solid fa-star-sharp"></i> 2
+                                                                </a>
+                                                                <a href="#">
+                                                                    <i class="fa-solid fa-star-sharp"></i> 1
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- comment -->
+                                                        <div class="latest-comments mb-15">
+                                                            <ul>
+                                                                <li>
+                                                                    <div class="comments-box d-flex align-items-center">
+                                                                        <div class="comments-avatar br-5 mr-15">
+                                                                            <img src="~/Themes/@(themeName)/Content/img/product/author-1.jpg" alt="">
+                                                                        </div>
+                                                                        <div class="comments-text">
+                                                                            <div class="comments-top d-sm-flex align-items-start justify-content-between mb-6">
+                                                                                <div class="avatar-name d-flex">
+                                                                                    <b>Elias Gomez</b>
+                                                                                    <div class="comments-date">
+                                                                                        <span>18 July, 2025</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="user-rating">
+                                                                                    <ul>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-regular fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <p class="mb-8">
+                                                                                These green apples are amazing! They have the
+                                                                                perfect
+                                                                                balance of <br> tartness and sweetness, with a satisfying
+                                                                                crunch
+                                                                                in every bite.
+                                                                            </p>
+
+                                                                            <div class="comments-top-like-wrap">
+                                                                                <a href="#"><i class="fa-solid fa-thumbs-up"></i> 33</a>
+                                                                                <a href="#"><i class="fa-solid fa-thumbs-down"></i> 22</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class="comments-box d-flex align-items-center">
+                                                                        <div class="comments-avatar br-5 mr-15">
+                                                                            <img src="~/Themes/@(themeName)/Content/img/product/author-2.jpg" alt="">
+                                                                        </div>
+                                                                        <div class="comments-text">
+                                                                            <div class="comments-top d-sm-flex align-items-start justify-content-between mb-6">
+                                                                                <div class="avatar-name d-flex">
+                                                                                    <b>Mitchel Marsh</b>
+                                                                                    <div class="comments-date">
+                                                                                        <span>18 July, 2025</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="user-rating">
+                                                                                    <ul>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-solid fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <a href="#">
+                                                                                                <i class="fa-regular fa-star-sharp"></i>
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                            <p class="mb-8">
+                                                                                They're perfect for a healthy snack or adding a
+                                                                                zesty
+                                                                                touch to my <br> salads. Highly recommend!
+                                                                            </p>
+
+                                                                            <div class="comments-top-like-wrap">
+                                                                                <a href="#"><i class="fa-solid fa-thumbs-up"></i> 33</a>
+                                                                                <a href="#"><i class="fa-solid fa-thumbs-down"></i> 22</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>
+    </div>
+</form>

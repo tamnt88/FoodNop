@@ -1,0 +1,32 @@
+﻿@model ShoppingCartModel.DiscountBoxModel
+@if (Model.Display)
+{
+    <input name="discountcouponcode" id="discountcouponcode" type="text" class="input-text" aria-label="@T("ShoppingCart.DiscountCouponCode.Label")" />
+
+    <button type="submit" name="applydiscountcouponcode" id="applydiscountcouponcode" class="mt-btn-3 mt-btn-apply-coupon">@T("ShoppingCart.DiscountCouponCode.Button")</button>
+
+    @foreach (var message in Model.Messages)
+    {
+        <div class="@(Model.IsApplied ? "message-success" : "message-failure")">
+            @message
+        </div>
+    }
+    @foreach (var discount in Model.AppliedDiscountsWithCodes)
+    {
+        <div class="current-code">
+            <span class="applied-discount-code">@string.Format(T("ShoppingCart.DiscountCouponCode.CurrentCode").Text, discount.CouponCode)</span>
+            @*empty value (little hack for FormValueExistsAttribute)*@
+            <button type="submit" name="removediscount-@discount.Id" class="remove-discount-button"></button>
+        </div>
+    }
+    <script asp-location="Footer">
+        $(function() {
+            $('#discountcouponcode').on('keydown', function (event) {
+                if (event.keyCode == 13) {
+                    $('#applydiscountcouponcode').trigger("click");
+                    return false;
+                }
+            });
+        });
+    </script>
+}

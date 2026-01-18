@@ -1,0 +1,42 @@
+﻿@model IList<ProductOverviewModel>
+@if (Model.Count > 0)
+{
+    <!-- Start Feature Product Area -->
+    <section class="mtfeature__product-area mtfeature__product-2 pt-40 pb-75 p-relative fix"
+             data-background="assets/img/bg/feature-bg-2-1.png">
+        <div class="container">
+            <div class="mt-section-content text-center mb-50">
+                <h3 class="mt-section-title">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
+                            <path d="M9 1.82196L10.429 6.82929L10.5619 7.29477L11.0314 7.17707L16.0824 5.91098L12.4604 9.65222L12.1237 10L12.4604 10.3478L16.0824 14.089L11.0314 12.8229L10.5619 12.7052L10.429 13.1707L9 18.178L7.57097 13.1707L7.43813 12.7052L6.9686 12.8229L1.91761 14.089L5.53957 10.3478L5.87627 10L5.53957 9.65222L1.91761 5.91098L6.9686 7.17707L7.43813 7.29477L7.57097 6.82929L9 1.82196Z"
+                                  fill="#FDD057" stroke="#060121" />
+                        </svg>
+                    </span>
+                    Featured
+                    <span>@T("Homepage.Products")</span>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
+                            <path d="M9 1.82196L10.429 6.82929L10.5619 7.29477L11.0314 7.17707L16.0824 5.91098L12.4604 9.65222L12.1237 10L12.4604 10.3478L16.0824 14.089L11.0314 12.8229L10.5619 12.7052L10.429 13.1707L9 18.178L7.57097 13.1707L7.43813 12.7052L6.9686 12.8229L1.91761 14.089L5.53957 10.3478L5.87627 10L5.53957 9.65222L1.91761 5.91098L6.9686 7.17707L7.43813 7.29477L7.57097 6.82929L9 1.82196Z"
+                                  fill="#FDD057" stroke="#060121" />
+                        </svg>
+                    </span>
+                </h3>
+                <p>
+                    Discover our handpicked selection of top-rated and trending <br> items. Limited time offers and
+                    exclusive deals await!
+                </p>
+            </div>
+            <div class="mtfeature__product-wrapper">
+                <div class="mtfeature__product-cols">
+                    @foreach (var item in Model)
+                    {
+                        @await Html.PartialAsync("_HomePageProductBox", item)
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Feature Product Area -->
+}

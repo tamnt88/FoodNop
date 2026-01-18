@@ -1,0 +1,101 @@
+
+@model LanguageSelectorModel
+
+@inject Nop.Core.IWebHelper webHelper
+
+@* <div class="mtheader__top-lang">
+
+    <select style="display: none;">
+        <option value="1">Eng</option>
+        <option value="2">Bang</option>
+        <option value="3">Lang</option>
+        <option value="3">Latin</option>
+    </select>
+    <div class="nice-select" tabindex="0">
+        <span class="current">Eng</span>
+        <ul class="list">
+            <li data-value="1" class="option selected">Eng</li>
+            <li data-value="2" class="option">Bang</li>
+            <li data-value="3" class="option">Lang</li>
+            <li data-value="3" class="option">Latin</li>
+        </ul>
+    </div>
+</div> *@
+
+@if (Model.AvailableLanguages.Count > 1)
+{
+    <div class="mtheader__top-lang">
+    @{
+        var returnUrl = webHelper.GetRawUrl(Context.Request);
+
+            if (Model.UseImages)
+            {
+                 <select>
+                @foreach (var lang in Model.AvailableLanguages)
+                {
+                        <option>@lang.Name</option> 
+                     
+                }
+                </select>
+            
+        }
+        else
+        {
+            var languages = await Model.AvailableLanguages.SelectAwait(async lang => new SelectListItem
+            {
+                Text = lang.Name,
+                Value = Url.RouteUrl(NopRouteNames.Standard.CHANGE_LANGUAGE, new { langid = lang.Id, returnUrl }, webHelper.GetCurrentRequestProtocol()),
+                Selected = lang.Id.Equals(Model.CurrentLanguageId)
+            }).ToListAsync();
+
+            
+                
+                <select style="display: none;" id="customerlanguage" name="customerlanguage" asp-items="@languages" onchange="setLocation(this.value);" aria-label="@T("Languages.Selector.Label")"></select>
+                <div class="nice-select" tabindex="0">
+                    @foreach (var item in languages)
+                    {
+                        if (item.Selected)
+                        {
+                            <span class="current">@item.Text</span>
+                        }
+                        
+                         
+                    }
+                    
+                    <ul class="list">
+                        @foreach (var item in languages)
+                        {
+                            <li data-value="@item.Value" class="option @(item.Selected? "selected":"")">@item.Text</li>
+                        } 
+                    </ul>
+                </div>
+             
+        }
+    }
+    </div>
+}
+<script asp-location="Footer">
+    $(document).ready(function () {
+        getSelectedLanguageFlag();
+
+        var onClickShowLanguageimgList = function () {
+            $(".language-list").addClass("active");
+        };
+        $(".language-flag").unbind("click").click(onClickShowLanguageimgList);
+
+        $(".master-wrapper-page").unbind("click").click(function (evt) {
+            if (evt.target.className == "language-flag" || evt.target.className == "images") {
+                return;
+            } else if ($(".language-list").is(".active")) {
+                $(".language-list").removeClass("active");
+            }
+        });
+
+    });
+    var getSelectedLanguageFlag = function () {
+        if ($("img.selected", ".language-selector")) {
+            var src = $(".selected").attr("src");
+            $(".language-flag").html("<img class='images' src='" + src + "'>");
+        }
+    };
+</script>

@@ -1,0 +1,90 @@
+@*
+    // ***   ** ****** ****** ****** ******* **     ** ****** ***   ** **** ****
+    // ****  ** **  ** **  ** **  **  **  **  **   **  **  ** ****  ** *    *
+    // ** ** ** **  ** ****** ******  **  **   ** **   ****** ** ** ** *    ***
+    // **  **** **  ** **     **  **  **  **    ***    **  ** **  **** *    *
+    // **   *** ****** **     **  ** *******     *     **  ** **   *** **** ****
+    // **************************************************************************
+    // *                                                                         *
+    // *     by                                                                  *
+    // *    Copyright (c) NopAdvance LLP. All Rights Reserved.                   *
+    // *                                                                         *
+    // **************************************************************************
+    // *                                                                         *
+    // *    This software is licensed for use under the terms accepted during    *
+    // *    the purchase of this product. A non-exclusive, non-transferable      *
+    // *    right is granted to use this product on the website for which it was *
+    // *    licensed.                                                            *
+    // *                                                                         *
+    // *    Companies purchasing this product for their customers are permitted, *
+    // *    provided the use complies with the terms outlined in the EULA:       *
+    // *    https://store.nopadvance.com/eula.                                   *
+    // *                                                                         *
+    // *    You may not reverse engineer, decompile, modify, or distribute this  *
+    // *    software without explicit permission from NopAdvance LLP. Any        *
+    // *    violation will result in the termination of your license and may     *
+    // *    lead to legal action.                                                *
+    // *                                                                         *
+    // **************************************************************************
+    // *    Contact: contact@nopadvance.com                                      *
+    // *    Website: https://nopadvance.com                                      *
+    // **************************************************************************
+*@
+@model ForumGroupModel
+<div class="forums-table-section forum-group">
+    <div class="forums-table-section-title">
+        @Html.RouteLink(Model.Name, NopRouteNames.Standard.FORUM_GROUP_SLUG, new { id = Model.Id, slug = Model.SeName })
+    </div>
+    <div class="forums-table-section-body">
+        <div class="table-wrapper">
+            <table class="forum-table">
+                <colgroup>
+                    <col class="colWidth1"/>
+                    <col />
+                    <col class="colWidth1" />
+                    <col class="colWidth1" />
+                    <col class="colWidth1" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="forum-details" colspan="2">
+                            @T("Forum.Forum")
+                        </th>
+                        <th class="topics">
+                            @T("Forum.Topics")
+                        </th>
+                        <th class="posts">
+                            @T("Forum.Posts")
+                        </th>
+                        <th class="latest-post">
+                            @T("Forum.LatestPost")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var forum in Model.Forums)
+                    {
+                        <tr>
+                            <td class="image">
+                                <div class="post"></div>
+                            </td>
+                            <td class="forum-details">
+                                <div class="forum-title">
+                                    @Html.RouteLink(forum.Name, NopRouteNames.Standard.FORUM_SLUG, new { id = forum.Id, slug = forum.SeName })
+                                </div>
+                                <div class="forum-description">
+                                    @forum.Description
+                                </div>
+                            </td>
+                            <td class="topics">@forum.NumTopics</td>
+                            <td class="posts">@forum.NumPosts</td>
+                            <td class="latest-post">
+                                @await Component.InvokeAsync(typeof(ForumLastPostViewComponent), new {forumPostId = forum.LastPostId, showTopic = true})
+                            </td>
+                        </tr>            
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
