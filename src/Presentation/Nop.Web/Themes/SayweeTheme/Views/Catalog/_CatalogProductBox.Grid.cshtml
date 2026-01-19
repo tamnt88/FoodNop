@@ -32,6 +32,7 @@
         <div class="mt-shop-grid-img mb-10">
             @{
                 var productPicture = Model.PictureModels.FirstOrDefault();
+                
             }
             <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">
                 <img alt="@productPicture?.AlternateText" src="@productPicture?.ImageUrl" title="@productPicture?.Title">

@@ -8,7 +8,9 @@
 }
 @{
     var pager = Html.Pager(Model)
-        .QueryParam("pagenumber") 
+        .QueryParam("pagenumber")
+        .FirstPageCssClass("button")
+        .LastPageCssClass("button")
         // for search page
         .BooleanParameterName("advs")
         .BooleanParameterName("isc")
@@ -40,28 +42,41 @@
                 @if (!await pager.IsEmpty())
                 {
                     <div class="mt-pagination-wrap d-flex align-items-center justify-content-between mt-20 flex-wrap">
-                        @pager
+                         
                         <div class="mt-pagination mb-20">
-                            <a href="#" class="button"><i class="fa-regular fa-chevron-left"></i> Prev</a>
+                            @pager
+                           @*  <a href="#" class="button"><i class="fa-regular fa-chevron-left"></i> Prev</a>
                             <a href="#">1</a>
                             <a href="#">2</a>
                             <a href="#">3</a>
                             <a href="#">...</a>
-                            <a href="#" class="button">Next <i class="fa-regular fa-chevron-right"></i> </a>
+                            <a href="#" class="button">Next <i class="fa-regular fa-chevron-right"></i> </a> *@
                         </div>
-                        <div class="mt-pagination-sort mb-20">
-                            <div class="ddd">
-                                <span>Show</span>
+                        @* @if (Model.AllowCustomersToSelectPageSize)
+                        {
+                            <div class="mt-pagination-sort mb-20">
+                                <div class="ddd">
+                                    <span>Show</span>
+                                </div>
+                                @Html.DropDownList("products-pagesize-2", Model.PageSizeOptions, new { aria_label = T("Catalog.PageSize.Label") })
                             </div>
-                            <select>
-                                <option>12</option>
-                                <option>16</option>
-                                <option>20</option>
-                                <option>25</option>
-                            </select>
-                        </div>
-                    </div>
-                    @pager
+                             
+                            <script asp-location="Footer">
+                                $(function() {
+                                    var $pageSizeEl = $('#products-pagesize-2');
+                                    $pageSizeEl.on('change', function () {
+                                        CatalogProducts.getProducts();
+                                    });
+
+                                    $(CatalogProducts).on('before', function (e) {
+                                        e.payload.urlBuilder
+                                            .addParameter('pagesize', $pageSizeEl.val());
+                                    });
+                                });
+                            </script>
+                        }
+     *@                   
+                    </div> 
                 }
 
 
