@@ -1,5 +1,6 @@
-﻿
+﻿@model IList<ProductOverviewModel>
 @using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Orders
 @inject IThemeContext themeContext
 @{
 
@@ -78,265 +79,13 @@
                 <div class="col-lg-8">
                     <div class="mthot__product-wrap">
                         <div class="row g-3">
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item  p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-1.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">
-                                                local organic Green <br>
-                                                Broccoli
-                                            </a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$16.00</span>
-                                                <del>$20.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-2.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">Fresh packaged Red Tomato</a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$25.22</span>
-                                                <del>$35.33</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-3.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">Green Seedless fresh Grapes </a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$12.54</span>
-                                                <del>$34.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-4.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">local organic Green Broccoli</a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$16.45</span>
-                                                <del>$20.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-5.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">White Pumpkin - Each (appr 1.5 LB-2 LB)</a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$7.00</span>
-                                                <del>$20.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-6.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">Everist Meat Masala 100 Gm</a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$6.00</span>
-                                                <del>$20.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-7.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-15 ">
-                                            <a href="product-details.html">Best Masoori dry indian Rice</a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$30.00</span>
-                                                <del>$34.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 mthot__cols">
-                                <div class="mthot__product-item p-relative fix">
-                                    <div class="mthot__product-img mb-10">
-                                        <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-8.png" alt=""></a>
-                                        <div class="mthot__product-wishlist">
-                                            <a href="wishlist.html">
-                                                <i class="fa-regular fa-heart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="mthot__product-content">
-                                        <div class="mthot__product-cate mb-10">
-                                            <span>1Kg</span>
-                                            <span>500Kg</span>
-                                        </div>
-                                        <h6 class="mthot__product-title mb-10 ">
-                                            <a href="product-details.html">Palak (Spinach) - Bunch</a>
-                                        </h6>
-                                        <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                            <div class="mthot__product-price">
-                                                <span>$18.00</span>
-                                                <del>$24.00</del>
-                                            </div>
-                                            <div class="mthot__product-cart ">
-                                                <a href="cart.html">
-                                                    <i class="fa-solid fa-basket-shopping"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @{
+                                var products = Model.Skip(0).Take(8).ToList();
+                            }
+                            @foreach (var item in products)
+                            {
+                                await ProductBox(item, "col-xl-3 col-lg-4 col-md-6 mthot__cols");
+                            } 
                         </div>
                     </div>
                 </div>
@@ -344,203 +93,101 @@
         </div>
         <div class="mthot__product-wrapper mb-20">
             <div class="row g-3">
-                <div class="col-xl-2 col-lg-3 col-md-6 mthot__cols">
-                    <div class="mthot__product-item  p-relative fix">
-                        <div class="mthot__product-img mb-10">
-                            <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-9.png" alt=""></a>
-                            <div class="mthot__product-wishlist">
-                                <a href="wishlist.html">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mthot__product-content">
-                            <div class="mthot__product-cate mb-10">
-                                <span>1Kg</span>
-                                <span>500Kg</span>
-                            </div>
-                            <h6 class="mthot__product-title mb-10 ">
-                                <a href="product-details.html">Organic Campa Yellow Bananas </a>
-                            </h6>
-                            <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                <div class="mthot__product-price">
-                                    <span>$16.00</span>
-                                    <del>$20.00</del>
-                                </div>
-                                <div class="mthot__product-cart ">
-                                    <a href="cart.html">
-                                        <i class="fa-solid fa-basket-shopping"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-6 mthot__cols">
-                    <div class="mthot__product-item  p-relative fix">
-                        <div class="mthot__product-img mb-10">
-                            <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-10.png" alt=""></a>
-                            <div class="mthot__product-wishlist">
-                                <a href="wishlist.html">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mthot__product-content">
-                            <div class="mthot__product-cate mb-10">
-                                <span>1Kg</span>
-                                <span>500Kg</span>
-                            </div>
-                            <h6 class="mthot__product-title mb-10 ">
-                                <a href="product-details.html">Organic Packed green Cauliflower </a>
-                            </h6>
-                            <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                <div class="mthot__product-price">
-                                    <span>$22.00</span>
-                                    <del>$29.00</del>
-                                </div>
-                                <div class="mthot__product-cart ">
-                                    <a href="cart.html">
-                                        <i class="fa-solid fa-basket-shopping"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-6 mthot__cols">
-                    <div class="mthot__product-item  p-relative fix">
-                        <div class="mthot__product-img mb-10">
-                            <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-11.png" alt=""></a>
-                            <div class="mthot__product-wishlist">
-                                <a href="wishlist.html">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mthot__product-content">
-                            <div class="mthot__product-cate mb-10">
-                                <span>1Kg</span>
-                                <span>500Kg</span>
-                            </div>
-                            <h6 class="mthot__product-title mb-10 ">
-                                <a href="product-details.html">local organic Green Broccoli</a>
-                            </h6>
-                            <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                <div class="mthot__product-price">
-                                    <span>$12.00</span>
-                                    <del>$18.00</del>
-                                </div>
-                                <div class="mthot__product-cart ">
-                                    <a href="cart.html">
-                                        <i class="fa-solid fa-basket-shopping"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-6 mthot__cols">
-                    <div class="mthot__product-item  p-relative fix">
-                        <div class="mthot__product-img mb-10">
-                            <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-12.png" alt=""></a>
-                            <div class="mthot__product-wishlist">
-                                <a href="wishlist.html">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mthot__product-content">
-                            <div class="mthot__product-cate mb-10">
-                                <span>1Kg</span>
-                                <span>500Kg</span>
-                            </div>
-                            <h6 class="mthot__product-title mb-10 ">
-                                <a href="product-details.html">Whole White fresh Mushrooms</a>
-                            </h6>
-                            <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                <div class="mthot__product-price">
-                                    <span>$20.00</span>
-                                    <del>$26.00</del>
-                                </div>
-                                <div class="mthot__product-cart ">
-                                    <a href="cart.html">
-                                        <i class="fa-solid fa-basket-shopping"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-6 mthot__cols">
-                    <div class="mthot__product-item  p-relative fix">
-                        <div class="mthot__product-img mb-10">
-                            <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-13.png" alt=""></a>
-                            <div class="mthot__product-wishlist">
-                                <a href="wishlist.html">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mthot__product-content">
-                            <div class="mthot__product-cate mb-10">
-                                <span>1Kg</span>
-                                <span>500Kg</span>
-                            </div>
-                            <h6 class="mthot__product-title mb-10 ">
-                                <a href="product-details.html">Vadilal Fruits & Nuts Ice Cream</a>
-                            </h6>
-                            <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                <div class="mthot__product-price">
-                                    <span>$14.00</span>
-                                    <del>$20.00</del>
-                                </div>
-                                <div class="mthot__product-cart ">
-                                    <a href="cart.html">
-                                        <i class="fa-solid fa-basket-shopping"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-2 col-lg-3 col-md-6 mthot__cols">
-                    <div class="mthot__product-item  p-relative fix">
-                        <div class="mthot__product-img mb-10">
-                            <a href="product-details.html"><img src="~/Themes/@(themeName)/Content/img/product/hot-1-14.png" alt=""></a>
-                            <div class="mthot__product-wishlist">
-                                <a href="wishlist.html">
-                                    <i class="fa-regular fa-heart"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mthot__product-content">
-                            <div class="mthot__product-cate mb-10">
-                                <span>1Kg</span>
-                                <span>500Kg</span>
-                            </div>
-                            <h6 class="mthot__product-title mb-10 ">
-                                <a href="product-details.html">
-                                    Long Beans - Bunch
-                                    Organic
-                                </a>
-                            </h6>
-                            <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
-                                <div class="mthot__product-price">
-                                    <span>$26.00</span>
-                                    <del>$36.00</del>
-                                </div>
-                                <div class="mthot__product-cart ">
-                                    <a href="cart.html">
-                                        <i class="fa-solid fa-basket-shopping"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @{
+                    var products2 = Model.Skip(8).Take(6).ToList();
+                }
+                @foreach (var item in products)
+                {
+                    await ProductBox(item, "col-xl-2 col-lg-3 col-md-6 mthot__cols");
+                } 
             </div>
         </div>
     </div>
 </section>
 <!-- End Hot area -->
+
+@functions{
+    async Task ProductBox(ProductOverviewModel product, string boxClass)
+    {
+        var addtocartlink = "";
+        var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+        var quantity = 1;
+        if (product.ProductPrice.ForceRedirectionAfterAddingToCart)
+        {
+            addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
+        }
+        else
+        {
+            addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+        }
+
+        var addtowishlistlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+        var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = product.Id });
+
+        <div class="@boxClass">
+            <div class="mthot__product-item  p-relative fix">
+                <div class="mthot__product-img mb-10">
+                    @foreach (var picture in product.PictureModels)
+                    {
+                        <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = product.SeName }))">
+                            <img src="@picture.ImageUrl" alt="@picture.AlternateText" itle="@picture.Title">
+                        </a>
+                        break;
+                    }
+                    @if (!product.ProductPrice.DisableWishlistButton)
+                    {
+                        @await Html.PartialAsync("_MoveToWishlistModal", product.ProductToWishlist)
+                         
+                        <div class="mthot__product-wishlist">
+                            <a href="javascript:void(0)" class="button-2 add-to-wishlist-button" title="@T("ShoppingCart.AddToWishlist")" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;">
+                                <i class="fa-regular fa-heart"></i>
+                            </a>
+                        </div>
+                    }
+                    
+                </div>
+                <div class="mthot__product-content">
+                    <div class="mthot__product-cate mb-10">
+                        <span>1Kg</span>
+                        <span>500Kg</span>
+                    </div>
+                    <h6 class="mthot__product-title mb-10 ">
+                        <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = product.SeName }))">
+                            @product.Name  
+                        </a>
+                    </h6>
+                    <div class="mthot__product-price-wrap d-flex align-items-center justify-content-between">
+                        <div class="mthot__product-price">
+                            <span>@product.ProductPrice.Price</span>
+                            @if (!string.IsNullOrEmpty(product.ProductPrice.OldPrice))
+                            {
+                                <del>@product.ProductPrice.OldPrice</del>  
+                            }
+                            
+                        </div>
+                        <div class="mthot__product-cart">
+                            @if (!product.ProductPrice.DisableBuyButton)
+                            {
+                                var addToCartText = T("ShoppingCart.AddToCart").Text;
+                                if (product.ProductPrice.IsRental)
+                                {
+                                    addToCartText = T("ShoppingCart.Rent").Text;
+                                }
+                                if (product.ProductPrice.AvailableForPreOrder)
+                                {
+                                    addToCartText = T("ShoppingCart.PreOrder").Text;
+                                }
+                                <div class="mtfeature__product-cart">
+                                    <a href="javascript:void(0)" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">
+                                        <i class="fa-solid fa-basket-shopping"></i>
+                                    </a> 
+                                </div>
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -38,7 +38,7 @@
                         </li>
     }
                     </ul>
-                    <a href="shop.html" class="mtheader__bottom-category-btn">
+                    <a href="/" class="mtheader__bottom-category-btn">
                         View
                         All <i class="fa-light fa-angle-right"></i>
                     </a>
@@ -49,25 +49,5 @@
     </div>
 
 
-    @* <section class="category-grid home-page-category-grid">
-        <div class="item-grid">
-            @foreach (var item in Model)
-            {
-                <article class="item-box">
-                    <div class="category-item">
-                        <h2 class="title">
-                            <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))" title="@item.PictureModel.Title">
-                                <span>@item.Name</span>
-                            </a>
-                        </h2>
-                        <div class="picture">
-                            <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))" title="@item.PictureModel.Title">
-                                <img width="356" height="231" alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title">
-                            </a>
-                        </div>
-                    </div>
-                </article>
-            }
-        </div>
-    </section> *@
+     
 }

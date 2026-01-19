@@ -66,7 +66,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Themes\SayweeTheme\Views\Catalog\_CatalogFilters.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
     <Content Update="Themes\SayweeTheme\Views\Catalog\_CatalogProducts.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Themes\SayweeTheme\Views\Catalog\_FilterPriceBox.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
     <Content Update="Themes\SayweeTheme\Views\Catalog\_ProductsInGridOrLines.cshtml">
