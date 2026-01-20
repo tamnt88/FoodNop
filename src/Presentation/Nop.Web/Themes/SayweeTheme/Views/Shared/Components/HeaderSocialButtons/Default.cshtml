@@ -1,0 +1,18 @@
+
+@model SocialModel
+
+<div class="mtheader__top-social">
+    @if (!string.IsNullOrEmpty(Model.YoutubeLink))
+    {
+        <a href="@Model.YoutubeLink" aria-label="@T("Footer.FollowUs.Youtube")" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+    } 
+    @if (!string.IsNullOrEmpty(Model.InstagramLink))
+    {
+        <a href="@Model.InstagramLink" aria-label="@T("Footer.FollowUs.Instagram")" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a>
+    } 
+    @if (!string.IsNullOrEmpty(Model.FacebookLink))
+    {
+        <a href="@Model.FacebookLink" aria-label="@T("Footer.FollowUs.Facebook")" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+    } 
+</div>
+ 

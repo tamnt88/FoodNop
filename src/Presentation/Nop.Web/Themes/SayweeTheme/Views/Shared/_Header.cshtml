@@ -1,6 +1,8 @@
-﻿ 
+﻿@using Nop.Core
+ 
 @inject Nop.Services.Helpers.IUserAgentHelper userAgentHelper;
 @inject IThemeContext themeContext
+@inject IStoreContext storeContext
 @inject Nop.Core.IWebHelper webHelper
 @{
 
@@ -21,20 +23,15 @@
                     <a href="https://template.moontelict.com/cdn-cgi/l/email-protection#9ae9efeaeaf5e8eedafef5f7fbf3f4b4f9f5f7">
                         <i class="fa-light fa-envelope"></i><span><span class="__cf_email__" data-cfemail="c1b2b4b1b1aeb3b581a5aeaca0a8afefa2aeac">[email&nbsp;protected]</span></span>
                     </a>
-                    <a href="#">
+                    <a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">
                         <i class="fa-light fa-location-dot"></i><span>
-                            Lincoln- 344, Illinois, Florida,
-                            USA
+                            @storeContext.GetCurrentStore().CompanyAddress
                         </span>
                     </a>
                 </div>
                 <div class="mtheader__top-right d-flex align-items-center justify-content-between">
-                    <div class="mtheader__top-social">
-                        <a href="#"><i class="fa-brands fa-pinterest-p"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    </div>
-                    
+                     
+                    @await Component.InvokeAsync(typeof(HeaderSocialButtonsViewComponent))
                     @await Component.InvokeAsync(typeof(LanguageSelectorViewComponent))
                     @await Component.InvokeAsync(typeof(CurrencySelectorViewComponent))
                      

@@ -6,6 +6,7 @@
 @using Nop.Core.Domain.Topics
 
 @inject IWorkContext workContext 
+@inject IStoreContext storeContext;
 @inject IThemeContext themeContext
 
 @{
@@ -118,8 +119,7 @@
                         </div>
                         <div class="mt-footer-midel-content">
                             <a href="#">
-                                Tri Opposite 123 Main Street, <br>
-                                Anytown, California 90210 USA
+                                @storeContext.GetCurrentStore().CompanyAddress
                             </a>
                         </div>
                     </div>
@@ -141,8 +141,8 @@
                             <span><i class="fa-regular fa-headset"></i></span>
                         </div>
                         <div class="mt-footer-midel-content">
-                            <a href="tel:+991234567888">+99 123 4567 888</a><br>
-                            <a href="tel:+001235555888">+00 123 5555 888</a>
+                            <a href="tel:@storeContext.GetCurrentStore().CompanyPhoneNumber">@storeContext.GetCurrentStore().CompanyPhoneNumber</a><br>
+                             
                         </div>
                     </div>
                 </div>
