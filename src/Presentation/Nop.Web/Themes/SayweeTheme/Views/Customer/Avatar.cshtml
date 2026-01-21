@@ -47,32 +47,45 @@
 
 <form asp-route="@NopRouteNames.Standard.CUSTOMER_AVATAR" method="post" enctype="multipart/form-data">
     <div class="page account-page avatar-page">
-        <div class="page-title">
-            <h1>@T("Account.MyAccount") - @T("Account.Avatar")</h1>
-        </div>
-        <div class="page-body">
+        <h3 class="mt-section-title">
+            @T("Account.MyAccount")
+            <span>@T("Account.Avatar")</span>
+            <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
+                    <path d="M9 1.82196L10.429 6.82929L10.5619 7.29477L11.0314 7.17707L16.0824 5.91098L12.4604 9.65222L12.1237 10L12.4604 10.3478L16.0824 14.089L11.0314 12.8229L10.5619 12.7052L10.429 13.1707L9 18.178L7.57097 13.1707L7.43813 12.7052L6.9686 12.8229L1.91761 14.089L5.53957 10.3478L5.87627 10L5.53957 9.65222L1.91761 5.91098L6.9686 7.17707L7.43813 7.29477L7.57097 6.82929L9 1.82196Z" fill="#FDD057" stroke="#060121"></path>
+                </svg>
+            </span>
+        </h3>
+        <div class="page-body mt-4">
             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CustomerAvatarTop, additionalData = Model })
             <div asp-validation-summary="ModelOnly" class="message-error"></div>
-            <section class="fieldset">
-                @if (!string.IsNullOrEmpty(Model.AvatarUrl))
-                {
-                    <div class="image">
-                        <img src="@(Model.AvatarUrl)" alt="avatar" width="120" height="120">
+            <section class="fieldset mt-4 p-4 border rounded-3">
+                <div class="row align-items-center">
+                    @if (!string.IsNullOrEmpty(Model.AvatarUrl))
+                    {
+                        <div class="col-auto text-center mb-4 mb-md-0">
+                            <div class="image rounded-circle overflow-hidden" style="width: 150px; height: 150px;">
+                                <img src="@(Model.AvatarUrl)" alt="avatar" class="img-fluid h-100" style="object-fit: cover;">
+                            </div>
+                        </div>
+                    }
+                    <div class="col">
+                        <div class="mt-checkout-input">
+                            <label class="form-label fw-bold">@T("Account.Avatar")</label>
+                            <input name="uploadedFile" accept="image/jpeg, image/gif" type="file" aria-label="@T("Account.Avatar")" class="form-control" />
+                        </div>
                     </div>
-                }
-                <div class="mt-checkout-input">
-                    <input name="uploadedFile" accept="image/jpeg, image/gif" type="file" aria-label="@T("Account.Avatar")" />
                 </div>
             </section>
-            <section class="buttons">
-                <button type="submit" name="upload-avatar" class="button-1 mt-btn-2 upload-avatar-button">@T("Common.Upload")</button>
+            <section class="buttons mt-4">
+                <button type="submit" name="upload-avatar" class="button-1 mt-btn-2 upload-avatar-button me-2">@T("Common.Upload")</button>
                 @if (!string.IsNullOrEmpty(Model.AvatarUrl))
                 {
                     <button type="submit" name="remove-avatar" class="button-2 mt-btn-3 remove-avatar-button">@T("Account.Avatar.RemoveAvatar")</button>
                 }
             </section>
-            <div class="info">
-                @T("Account.Avatar.UploadRules")
+            <div class="info mt-4 p-3 bg-light rounded-3">
+                <small class="text-muted">@T("Account.Avatar.UploadRules")</small>
             </div>
             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CustomerAvatarBottom, additionalData = Model })
         </div>

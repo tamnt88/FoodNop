@@ -1,0 +1,45 @@
+@model EmailRevalidationModel
+@inject IThemeContext themeContext
+@{
+    Layout = "_ColumnsOne";
+
+    //title
+    NopHtml.AddTitleParts(T("PageTitle.AccountActivation").Text);
+    //page class
+    NopHtml.AppendPageCssClassParts("html-email-revalidation-page");
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+}
+<section class="mt-login-area pt-120 pb-140 p-relative z-index-1 fix">
+    <div class="container">
+        <div class="mt-login-wrapper" data-background="Themes/@(themeName)/Content/img/contact/login-bg.jpg">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6">
+                    <div class="mt-login-wrap mr-30">
+                        <div class="mt-login-top text-center mb-40">
+                            <h3 class="mt-login-title">@T("Account.EmailRevalidation")</h3>
+                            <span>@T("Account.MyAccount")</span>
+                        </div>
+                        <div class="mt-login-option">
+                            <div class="page-body">
+                                <div class="result">
+                                    @Model.Result
+                                </div>
+                                <div class="buttons">
+                                    <a href="@Model.ReturnUrl" class="mt-btn-2 w-100">
+                                        <span>@T("Common.Continue")</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="mt-login-thumb br-40 text-center text-lg-end wow img-custom-anim-top"
+                         data-wow-duration="1.5s" data-wow-delay="0.1s">
+                        <img src="~/Themes/@(themeName)/Content/img/contact/login-thumb.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

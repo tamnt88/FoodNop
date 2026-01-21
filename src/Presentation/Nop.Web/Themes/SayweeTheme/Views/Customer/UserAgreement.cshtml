@@ -62,10 +62,14 @@
                             <h3 class="mt-login-title">@T("DownloadableProducts.UserAgreement")</h3>
                         </div>
                         <div class="mt-login-option">
-                            <div class="terms-of-agreement custom-checkbox mb-30">
-                                <input class="custom-control-input" id="agreement-agree" type="checkbox" value="@T("DownloadableProducts.IAgree")" aria-label="@T("DownloadableProducts.IAgree")" />
-                                <label class="custom-control-label" for="agreement-agree"></label>
-                                @Html.Raw(Model.UserAgreementText)
+                            <div class="terms-of-agreement mt-checkout-input mb-30">
+                                <div class="custom-checkbox">
+                                    <input class="custom-control-input" id="agreement-agree" type="checkbox" value="@T("DownloadableProducts.IAgree")" aria-label="@T("DownloadableProducts.IAgree")" />
+                                    <label class="custom-control-label ms-2" for="agreement-agree">@T("DownloadableProducts.IAgree")</label>
+                                </div>
+                                <div class="mt-3 p-3 bg-light rounded-3" style="max-height: 200px; overflow-y: auto;">
+                                    @Html.Raw(Model.UserAgreementText)
+                                </div>
                             </div>
                             <button type="submit" id="continue-downloading" class="mt-btn-2 w-100 user-agreement-button"
                                     onclick="setLocation('@Url.RouteUrl(NopRouteNames.Standard.GET_DOWNLOAD, new { orderItemId = Model.OrderItemGuid, agree = true })')">

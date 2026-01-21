@@ -9,14 +9,14 @@
     var textPromptId = $"{NopCustomerServicesDefaults.CustomerAttributePrefix}{attribute.Id}_textprompt";
     var textPrompt = attribute.Name;
 
-    <div class="inputs custom-attributes mt-checkout-input">
-        <label id="@textPromptId">@textPrompt:</label>
-        
+    <div class="inputs custom-attributes mt-checkout-input mb-3">
+        <label id="@textPromptId" class="form-label fw-bold">@textPrompt:<span class="required">*</span></label>
+
         @switch (attribute.AttributeControlType)
         {
             case AttributeControlType.DropdownList:
             {
-            <select name="@(controlId)" id="@(controlId)" aria-labelledby="@textPromptId">
+            <select name="@(controlId)" id="@(controlId)" aria-labelledby="@textPromptId" class="form-select">
                 @if (!attribute.IsRequired)
                     {
                     <option value="0">---</option>
@@ -30,13 +30,13 @@
                 break;
             case AttributeControlType.RadioList:
             {
-            <ul class="option-list">
+            <ul class="option-list list-unstyled mb-0 mt-2">
                 @foreach (var attributeValue in attribute.Values)
                     {
-                    <li>
+                    <li class="mb-2">
                         <div class="custom-radio">
                             <input class="custom-control-input" id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
-                            <label class="custom-control-label" for="@(controlId)_@(attributeValue.Id)">@attributeValue.Name</label>
+                            <label class="custom-control-label ms-2" for="@(controlId)_@(attributeValue.Id)">@attributeValue.Name</label>
                         </div>
                     </li>
                     }
@@ -46,27 +46,27 @@
             case AttributeControlType.Checkboxes:
             case AttributeControlType.ReadonlyCheckboxes:
             {
-            <ul class="option-list">
+            <ul class="option-list list-unstyled mb-0 mt-2">
                 @foreach (var attributeValue in attribute.Values)
                     {
-                    <li>
+                    <li class="mb-2">
                         <div class="custom-checkbox">
                             <input class="custom-control-input" id="@(controlId)_@(attributeValue.Id)" type="checkbox" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" @(attribute.AttributeControlType == AttributeControlType.ReadonlyCheckboxes ? Html.Raw(" disabled=\"disabled\"") : null) />
-                            <label class="custom-control-label" for="@(controlId)_@(attributeValue.Id)">@attributeValue.Name</label>
+                            <label class="custom-control-label ms-2" for="@(controlId)_@(attributeValue.Id)">@attributeValue.Name</label>
                         </div>
                     </li>
                     }
             </ul>
             }
-            break;
+                break;
             case AttributeControlType.TextBox:
             {
-                <input name="@(controlId)" type="text" class="textbox" id="@(controlId)" value="@(attribute.DefaultValue)" aria-labelledby="@textPromptId" />
+                <input name="@(controlId)" type="text" class="textbox form-control" id="@(controlId)" value="@(attribute.DefaultValue)" aria-labelledby="@textPromptId" />
             }
-            break;
+                break;
             case AttributeControlType.MultilineTextbox:
             {
-            <textarea id="@(controlId)" name="@(controlId)" aria-labelledby="@textPromptId">@(attribute.DefaultValue)</textarea>
+            <textarea id="@(controlId)" name="@(controlId)" aria-labelledby="@textPromptId" class="form-control">@(attribute.DefaultValue)</textarea>
                 }
                 break;
             case AttributeControlType.Datepicker:
@@ -77,10 +77,6 @@
                     //not support attribute type
                 }
                 break;
-        }
-        @if (attribute.IsRequired)
-        {
-            <nop-required />
         }
     </div>
 }
