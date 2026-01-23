@@ -9187,14 +9187,133 @@ input[type=color] {
   text-align: center;
 }
 
-  .mtheader__midel-login a i,
-  .mtheader__midel-login .mtcartmini-open-btn i {
-    font-size: 28px;
-    color: var(--mt-common-dark);
-    position: relative;
-    top: 16px;
-    margin-right: 10px;
-  }
+.mtheader__midel-login a i,
+.mtheader__midel-login .mtcartmini-open-btn i {
+  font-size: 28px;
+  color: var(--mt-common-dark);
+  position: relative;
+  top: 16px;
+  margin-right: 10px;
+}
+
+.mtheader__midel-login.header-links .mtcartmini-open-btn,
+.mtheader__midel-login.header-links .mtheader__midel-card-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mtheader__midel-login.header-links .mtcartmini-open-btn i {
+  position: static;
+  top: auto;
+  margin-right: 0;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.mtheader__midel-login.mtheader__mobile-cart:not(.header-links) {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.mtheader__midel-login .mt__header-login-another-page {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+.mtheader__midel-login .mt__header-login-another-page i {
+  position: static;
+  top: auto;
+  margin-right: 0;
+  font-size: 18px;
+}
+
+.mtheader__midel-login .mt__header-login-another-page h6,
+.mtheader__midel-login .mt__header-login-another-page span {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.mtheader__account-dropdown {
+  position: relative;
+}
+
+.mtheader__account-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--mt-common-dark);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.mtheader__account-trigger i:first-child {
+  font-size: 18px;
+}
+
+.mtheader__account-trigger i:last-child {
+  font-size: 12px;
+}
+
+.mtheader__account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 180px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
+  padding: 8px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: 0.2s ease;
+  z-index: 999;
+}
+
+.mtheader__account-dropdown:hover .mtheader__account-menu,
+.mtheader__account-dropdown:focus-within .mtheader__account-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mtheader__account-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  color: var(--mt-common-dark);
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.mtheader__account-item i {
+  width: 14px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.mtheader__account-item span {
+  line-height: 1.2;
+}
+
+.mtheader__account-item:hover {
+  background: #f9fafb;
+  color: var(--mt-theme-1);
+}
 
   .mtheader__midel-login a span,
   .mtheader__midel-login .mtcartmini-open-btn span {

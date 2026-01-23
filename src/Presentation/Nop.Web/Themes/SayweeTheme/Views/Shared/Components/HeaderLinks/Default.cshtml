@@ -77,37 +77,42 @@
     <div class="mtheader__midel-wishlist">
         <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
     </div>
-    <div class="mtheader__midel-login mtheader__mobile-cart">
-
-        @if (Model.IsAuthenticated)
-        {
-            <a href="@Url.RouteUrl(NopRouteNames.General.CUSTOMER_INFO)" class="mt__header-login-another-page">
-                <i class="fa-solid fa-user-plus"></i>
-                <h6>@T("Account.MyAccount")</h6>
-            </a>
-            <a href="@Url.RouteUrl(NopRouteNames.Standard.LOGOUT)" class="mt__header-login-another-page">
-                <i class="fa-solid fa-portal-exit"></i>
-                <h6>@T("Account.Logout")</h6>
-            </a>
-
-        }
-        else
-        {
-            <a href="@Url.RouteUrl(NopRouteNames.General.LOGIN)" class="mt__header-login-another-page">
-                <i class="fa-solid fa-user-plus"></i>
-                <span>@T("Account.Login")</span>
-                <h6>Account</h6>
-            </a>
-        }
-
-
+    <div class="mtheader__midel-login mtheader__mobile-cart mtheader__account-dropdown">
+        <button class="mtheader__account-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>@T("Account.MyAccount")</span>
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="mtheader__account-menu" role="menu">
+            @if (Model.IsAuthenticated)
+            {
+                <a href="@Url.RouteUrl(NopRouteNames.General.CUSTOMER_INFO)" class="mtheader__account-item" role="menuitem">
+                    <i class="fa-solid fa-user"></i>
+                    <span>@T("Account.MyAccount")</span>
+                </a>
+                <a href="@Url.RouteUrl(NopRouteNames.Standard.LOGOUT)" class="mtheader__account-item" role="menuitem">
+                    <i class="fa-solid fa-portal-exit"></i>
+                    <span>@T("Account.Logout")</span>
+                </a>
+            }
+            else
+            {
+                <a href="@Url.RouteUrl(NopRouteNames.General.LOGIN)" class="mtheader__account-item" role="menuitem">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>@T("Account.Login")</span>
+                </a>
+                <a href="@Url.RouteUrl(NopRouteNames.Standard.REGISTER)" class="mtheader__account-item" role="menuitem">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <span>@T("Account.Register")</span>
+                </a>
+            }
+        </div>
     </div>
     <div class="mtheader__midel-login mtheader__mobile-cart header-links">
         <div class="mtcartmini-open-btn">
             <div class="mtheader__midel-card-value">
                 <i class="fa-solid fa-basket-shopping"></i>
                 <p class="cart-qty">@Model.ShoppingCartItems</p>
-                <span>Cart Items</span>
                 @* <h6>$570.00</h6> *@
             </div>
         </div>
