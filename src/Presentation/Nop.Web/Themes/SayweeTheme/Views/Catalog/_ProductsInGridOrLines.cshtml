@@ -41,7 +41,7 @@
                 <!--pagination  -->
                 @if (!await pager.IsEmpty())
                 {
-                    <div class="mt-pagination-wrap d-flex align-items-center justify-content-between mt-20 flex-wrap">
+                    <div class="mt-pagination-wrap d-flex align-items-center justify-content-end mt-20 flex-wrap">
                          
                         <div class="mt-pagination mb-20">
                             @pager
@@ -79,6 +79,20 @@
                     </div> 
                 }
 
+                <script asp-location="Footer">
+                    $(function () {
+                        var $pager = $('.mt-pagination');
+                        if (!$pager.length) {
+                            return;
+                        }
+                        $pager.find('ul').addClass('pagination justify-content-end');
+                        $pager.find('li').addClass('page-item');
+                        $pager.find('li.active').addClass('active');
+                        $pager.find('li.disabled').addClass('disabled');
+                        $pager.find('a').addClass('page-link');
+                        $pager.find('span').addClass('page-link');
+                    });
+                </script>
 
             </div>
         </div> 

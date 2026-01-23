@@ -16,7 +16,7 @@
                 var controlId = $"{NopCatalogDefaults.ProductAttributePrefix}{attribute.Id}";
                 var textPrompt = !string.IsNullOrEmpty(attribute.TextPrompt) ? attribute.TextPrompt : attribute.Name;
                 var textPromptId = $"{NopCatalogDefaults.ProductAttributePrefix}textprompt_{attribute.Id}";
-                <div class="attribute-item mb-30" id="@($"{NopCatalogDefaults.ProductAttributePrefix}label_{attribute.Id}")" @(attribute.HasCondition ? Html.Raw("style = \"display: none\"") : null)>
+                <div class="attribute-item mb-30" id="@($"{NopCatalogDefaults.ProductAttributePrefix}label_{attribute.Id}")" data-required="@(attribute.IsRequired.ToString().ToLowerInvariant())" @(attribute.HasCondition ? Html.Raw("style = \"display: none\"") : null)>
                     <h5 class="attribute-title mb-15">
                         <label id="@textPromptId" class="text-prompt">
                             @textPrompt
@@ -443,6 +443,62 @@
         //render scripts
         //almost the same implementation is used in the \Views\Product\_RentalInfo.cshtml file
         <script asp-location="Footer">
+            function isRequiredAttributeSelected(container) {
+                var dropdown = container.find('select');
+                if (dropdown.length) {
+                    return dropdown.val() && dropdown.val() !== '0';
+                }
+
+                var radios = container.find('input[type="radio"]');
+                if (radios.length) {
+                    return radios.is(':checked');
+                }
+
+                var checkboxes = container.find('input[type="checkbox"]');
+                if (checkboxes.length) {
+                    return checkboxes.is(':checked');
+                }
+
+                var textInputs = container.find('input[type="text"], textarea');
+                if (textInputs.length) {
+                    var hasValue = true;
+                    textInputs.each(function () {
+                        if (!$(this).val()) {
+                            hasValue = false;
+                            return false;
+                        }
+                    });
+                    return hasValue;
+                }
+
+                var fileInput = container.find('input[type="hidden"][name^="@NopCatalogDefaults.ProductAttributePrefix"]');
+                if (fileInput.length) {
+                    return !!fileInput.val();
+                }
+
+                return true;
+            }
+
+            function updateAddToCartState(productId) {
+                var $form = $('#product-details-form');
+                var $requiredAttributes = $form.find('.attribute-item[data-required="true"]:visible');
+                var isValid = true;
+
+                $requiredAttributes.each(function () {
+                    var $container = $(this).find('.attribute-control');
+                    if (!isRequiredAttributeSelected($container)) {
+                        isValid = false;
+                        return false;
+                    }
+                });
+
+                var $addToCartButton = $('#add-to-cart-button-' + productId);
+                if ($addToCartButton.length) {
+                    $addToCartButton.toggleClass('is-disabled', !isValid);
+                    $addToCartButton.attr('aria-disabled', !isValid);
+                }
+            }
+
             function @(attributeChangeHandlerFuncName)() {
                 $.ajax({
                     cache: false,
@@ -513,12 +569,23 @@
                             alert(data.message);
                         }
                         $(document).trigger({ type: "product_attributes_changed", changedData: data });
+                        updateAddToCartState(@Model.Id);
                     }
                 });
             }
             $(function() {
                 @(attributeChangeHandlerFuncName)();
                 @Html.Raw(attributeChangeScriptsBuilder.ToString())
+                updateAddToCartState(@Model.Id);
+                $('#product-details-form').on('change input', '.attribute-control :input', function () {
+                    updateAddToCartState(@Model.Id);
+                });
+                $('#product-details-form').on('click', '#add-to-cart-button-@Model.Id', function (event) {
+                    if ($(this).hasClass('is-disabled')) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                    }
+                });
             });
         </script>
     }

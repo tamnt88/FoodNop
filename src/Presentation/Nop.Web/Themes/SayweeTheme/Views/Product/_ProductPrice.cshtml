@@ -21,10 +21,10 @@
             }
             if (!string.IsNullOrWhiteSpace(Model.OldPrice))
             {
-                <del>@Model.OldPrice</del>
+                <del class="old-price-value-@Model.ProductId">@Model.OldPrice</del>
             }
 
-            <span>@Html.Raw(Model.Price)</span>
+            <span class="price-value-@Model.ProductId">@Html.Raw(Model.Price)</span>
 
         }
     </div>

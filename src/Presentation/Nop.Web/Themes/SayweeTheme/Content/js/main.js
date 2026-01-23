@@ -230,6 +230,36 @@
     },
   });
 
+  ////////////////////////////////////////////////////
+  // 4.1 Swiper category subcategories slider
+  var swiper = new Swiper(".mtsubcategory__active", {
+    slidesPerView: 5,
+    slidesPerGroup: 5,
+    spaceBetween: 24,
+    breakpoints: {
+      1200: {
+        slidesPerView: 5,
+        slidesPerGroup: 5,
+      },
+      992: {
+        slidesPerView: 5,
+        slidesPerGroup: 5,
+      },
+      768: {
+        slidesPerView: 2,
+        slidesPerGroup: 2,
+      },
+      0: {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+      },
+    },
+    navigation: {
+      nextEl: ".mt-subcategory-arrow-right",
+      prevEl: ".mt-subcategory-arrow-left",
+    },
+  });
+
 
 
   ////////////////////////////////////////////////////

@@ -5,29 +5,7 @@
 
  *@
 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsBeforePictures, additionalData = Model })
-<div class="col-lg-3 col-md-3 col-sm-3">
-    <div class="mt-shop-details__tab-btn-box">
-        <nav>
-            @if (Model.PictureModels.Count > 1)
-            {
-                int picIndex = 0;
-                <div class="nav nav-tab" id="nav-tab" role="tablist">
-
-                    @foreach (var picture in Model.PictureModels)
-                    {
-                        <button class="nav-links @(picIndex == 0 ? "active" : "") " id="nav-@picIndex-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-@picIndex" type="button" role="tab" aria-controls="nav-@picIndex"
-                                aria-selected="true">
-                            <img src="@picture.ThumbImageUrl" alt="@picture.AlternateText" title="@picture.Title">
-                        </button>
-                        picIndex++;
-                    }
-                </div>
-            }
-        </nav>
-    </div>
-</div>
-<div class="col-lg-9 col-md-9 col-sm-9">
+<div class="col-12">
     <div class="mt-shop-details__tab-content-box mb-20">
         @if (Model.PictureModels.Count > 1)
         {
@@ -45,6 +23,26 @@
                 }
             </div>
         }
-
+    </div>
+</div>
+<div class="col-12">
+    <div class="mt-shop-details__tab-btn-box mt-shop-details__thumbs-bottom">
+        <nav>
+            @if (Model.PictureModels.Count > 1)
+            {
+                int picIndex = 0;
+                <div class="nav nav-tab" id="nav-tab" role="tablist">
+                    @foreach (var picture in Model.PictureModels)
+                    {
+                        <button class="nav-links @(picIndex == 0 ? "active" : "")" id="nav-@picIndex-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-@picIndex" type="button" role="tab" aria-controls="nav-@picIndex"
+                                aria-selected="true">
+                            <img src="@picture.ThumbImageUrl" alt="@picture.AlternateText" title="@picture.Title">
+                        </button>
+                        picIndex++;
+                    }
+                </div>
+            }
+        </nav>
     </div>
 </div>

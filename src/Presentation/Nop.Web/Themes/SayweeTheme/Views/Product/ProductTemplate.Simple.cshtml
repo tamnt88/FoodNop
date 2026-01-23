@@ -3,7 +3,9 @@
 @using Nop.Core
 @using Nop.Core.Domain.Catalog
 @using Nop.Core.Domain.Seo
+@using Nop.Core.Domain.Vendors
 @using Nop.Services.Html
+@using System.Linq
 @inject IThemeContext themeContext
 @inject IHtmlFormatter htmlFormatter
 @inject IWebHelper webHelper
@@ -93,46 +95,8 @@
 
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewTop, additionalData = Model })
                             <!--product reviews-->
+                            @await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)
 
-                            <div class="mt-shop-details__product-info mb-15">
-                                <ul>
-                                    <li>Type: <span>Organic</span></li>
-                                    <!--manufacturers-->
-                                    @await Html.PartialAsync("_ProductManufacturers", Model.ProductManufacturers)
-
-                                    <li>SKU: <span>@Model.Sku</span></li>
-                                    @* <li>Brand: <span>EcoMart</span></li> *@
-
-                                </ul>
-                            </div>
-                            <div class="mt-shop-details__product-box ">
-                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
-                                    <span><i class="fa-solid fa-sack-dollar"></i></span>
-                                    <div class="mt-shop-details__product-box-text">
-                                        <p>Save 5% on First Flipkart Order! for this</p>
-                                    </div>
-                                </div>
-                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
-                                    <span><i class="fa-solid fa-tags"></i></span>
-                                    <div class="mt-shop-details__product-box-text">
-                                        <p>Get $30+ with Citi-branded Credit Card EMI. Terms apply.</p>
-                                    </div>
-                                </div>
-                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
-                                    <span><i class="fa-solid fa-truck"></i></span>
-                                    <div class="mt-shop-details__product-box-text">
-                                        <p>Enjoy free shipping on all orders over $100.</p>
-                                    </div>
-                                </div>
-                                <div class="mt-shop-details__product-box-item d-flex align-items-center ">
-                                    <span><i class="fa-solid fa-shield"></i></span>
-                                    <div class="mt-shop-details__product-box-text">
-                                        <p>Your transactions are safe with us. We</p>
-                                    </div>
-                                </div>
-                            </div> 
-                            <!--SKU, MAN, GTIN, vendor-->
-                            @await Html.PartialAsync("_SKU_Man_GTIN_Ven", Model)
                             <!--delivery-->
                             @await Html.PartialAsync("_DeliveryInfo", Model) 
 
@@ -155,21 +119,33 @@
 
                                 var dataDictAddToCart = new ViewDataDictionary(ViewData);
                                 dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
-                                @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
-
-                                @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
+                                <div class="mt-shop-details__action-group">
+                                    @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
+                                    <!--wishlist, compare, email a friend-->
+                                    <div class="overview-buttons overview-buttons--inline">
+                                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
+                                        @{
+                                            var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
+                                            dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                                            @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                                        }
+                                        @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
+                                        @await Html.PartialAsync("_ProductEmailAFriendButton", Model)
+                                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
+                                    </div>
+                                </div>
                             }
-                            <!--wishlist, compare, email a friend-->
-                            <div class="overview-buttons">
-                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
-                                @{
-                                    var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
-                                    dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
-                                    @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
-                                }
-                                @await Html.PartialAsync("_CompareProductsButton", Model)
-                                @await Html.PartialAsync("_ProductEmailAFriendButton", Model)
-                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
+                            <div class="mt-product-meta-grid">
+                                <div class="mt-shop-details__product-info">
+                                    <ul>
+                                        <li><span class="label">Category:</span> <span>@Model.Breadcrumb?.CategoryBreadcrumb?.LastOrDefault()?.Name</span></li>
+                                        @if (Model.ShowVendor)
+                                        {
+                                            <li><span class="label">Brand:</span> <span><a href="@(await NopUrl.RouteGenericUrlAsync<Vendor>(new { SeName = Model.VendorModel.SeName }))">@Model.VendorModel.Name</a></span></li>
+                                        }
+                                        <li><span class="label">SKU:</span> <span>@Model.Sku</span></li>
+                                    </ul>
+                                </div>
                             </div>
                             @await Html.PartialAsync("_ShareButton", Model)
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
