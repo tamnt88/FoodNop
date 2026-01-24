@@ -20,62 +20,68 @@
         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CustomerAddressesTop, additionalData = Model })
         @if (Model.Addresses.Count > 0)
         {
-                <div class="address-list">
-                    @for (var i = 0; i < Model.Addresses.Count; i++)
-                    {
-                        var address = Model.Addresses[i];
-                        <div class="section address-item">
-                            <h2 class="title">
-                                @address.FirstName @address.LastName
-                            </h2>
-                            <ul class="info mt-footer-list">
-                                <li class="name">
-                                    @address.FirstName @address.LastName
-                                </li>
-                                <li class="email">
-                                    <label>@T("Address.Fields.Email"):</label>
-                                    @address.Email
-                                </li>
-                                @if (address.PhoneEnabled)
-                                {
-                                    <li class="phone">
-                                        <label>@T("Address.Fields.PhoneNumber"):</label>
-                                        @address.PhoneNumber
-                                    </li>
-                                }
-                                @if (address.FaxEnabled)
-                                {
-                                    <li class="fax">
-                                        <label>@T("Address.Fields.FaxNumber"):</label>
-                                        @address.FaxNumber
-                                    </li>
-                                }
-                                @if (address.CompanyEnabled && !string.IsNullOrEmpty(address.Company))
-                                {
-                                    <li class="company">@address.Company</li>
-                                }
-                                @foreach(var item in address.AddressFields)
-                                {
-                                    <li class=@item.Key.ToString().ToLower()>@item.Value</li>                                    
-                                }
-                                @if (!string.IsNullOrEmpty(address.FormattedCustomAddressAttributes))
-                                {
-                                    <li class="custom-attributes-view">
-                                        @Html.Raw(address.FormattedCustomAddressAttributes)
-                                    </li>
-                                }
-                            </ul>
-                            <div class="buttons d-flex flex-wrap gap-2">
-                                <button type="button" class="button-2 mt-btn-2 edit-address-button" onclick="location.href = '@(Url.RouteUrl(NopRouteNames.Standard.CUSTOMER_ADDRESS_EDIT, new { addressId = address.Id }))'">
-                                    <span>@T("Common.Edit")</span>
-                                </button>
-                                <button type="button" class="button-2 mt-btn-3 delete-address-button" onclick="deletecustomeraddress(@(address.Id))">
-                                    <span>@T("Common.Delete")</span>
-                                </button>
-                            </div>
-                        </div>
-                    }
-                </div>
+            <div class="address-table-wrapper">
+                <table class="address-table">
+                    <thead>
+                        <tr>
+                            <th>@T("Address.Fields.FirstName")</th>
+                            <th>@T("Account.YourAddress")</th>
+                            <th>@T("Account.YourContactInformation")</th>
+                            <th>@T("Common.Actions")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Addresses.Count; i++)
+                        {
+                            var address = Model.Addresses[i];
+                            <tr>
+                                <td class="address-name">
+                                    <div class="address-title">@address.FirstName @address.LastName</div>
+                                    @if (address.CompanyEnabled && !string.IsNullOrEmpty(address.Company))
+                                    {
+                                        <div class="address-company">@address.Company</div>
+                                    }
+                                </td>
+                                <td class="address-details">
+                                    @foreach (var item in address.AddressFields)
+                                    {
+                                        <div>@item.Value</div>
+                                    }
+                                    @if (!string.IsNullOrEmpty(address.FormattedCustomAddressAttributes))
+                                    {
+                                        <div class="custom-attributes-view">
+                                            @Html.Raw(address.FormattedCustomAddressAttributes)
+                                        </div>
+                                    }
+                                </td>
+                                <td class="address-contact">
+                                    <div><strong>@T("Address.Fields.Email"):</strong> @address.Email</div>
+                                    @if (address.PhoneEnabled)
+                                    {
+                                        <div><strong>@T("Address.Fields.PhoneNumber"):</strong> @address.PhoneNumber</div>
+                                    }
+                                    @if (address.FaxEnabled)
+                                    {
+                                        <div><strong>@T("Address.Fields.FaxNumber"):</strong> @address.FaxNumber</div>
+                                    }
+                                </td>
+                                <td class="address-actions">
+                                    <div class="buttons d-flex flex-wrap gap-2">
+                                        <button type="button" class="button-2 mt-btn-2 edit-address-button" onclick="location.href = '@(Url.RouteUrl(NopRouteNames.Standard.CUSTOMER_ADDRESS_EDIT, new { addressId = address.Id }))'">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span>@T("Common.Edit")</span>
+                                        </button>
+                                        <button type="button" class="button-2 mt-btn-3 delete-address-button" onclick="deletecustomeraddress(@(address.Id))">
+                                            <i class="fa-solid fa-trash"></i>
+                                            <span>@T("Common.Delete")</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
                 <script asp-location="Footer">
                     function deletecustomeraddress(addressId) {
                         if (confirm('@T("Common.AreYouSure")')) {
@@ -109,6 +115,7 @@
         }
         <div class="add-button d-flex">
             <button type="button" class="button-1 mt-btn-2 add-address-button" onclick="location.href='@Url.RouteUrl(NopRouteNames.Standard.CUSTOMER_ADDRESS_ADD)'">
+                <i class="fa-solid fa-plus"></i>
                 <span>@T("Common.AddNew")</span>
             </button>
         </div>

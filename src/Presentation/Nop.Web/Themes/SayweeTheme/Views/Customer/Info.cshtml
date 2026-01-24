@@ -93,7 +93,7 @@
                     @if (Model.FirstNameEnabled)
                     {
                         <div class="inputs mt-checkout-input col-md-6">
-                            <label asp-for="FirstName" asp-postfix=":"><span class="required">*</span></label>
+                            <label asp-for="FirstName">@T("Account.Fields.FirstName")<span class="required">*</span></label>
                             <input asp-for="FirstName" />
                             <span asp-validation-for="FirstName"></span>
                         </div>
@@ -101,7 +101,7 @@
                     @if (Model.LastNameEnabled)
                     {
                         <div class="inputs mt-checkout-input col-md-6">
-                            <label asp-for="LastName" asp-postfix=":"><span class="required">*</span></label>
+                            <label asp-for="LastName">@T("Account.Fields.LastName")<span class="required">*</span></label>
                             <input asp-for="LastName" />
                             <span asp-validation-for="LastName"></span>
                         </div>
@@ -122,14 +122,14 @@
                         </div>
                     }
                     <div class="inputs mt-checkout-input col-md-6">
-                        <label asp-for="Email" asp-postfix=":"><span class="required">*</span></label>
+                        <label asp-for="Email">@T("Account.Fields.Email")<span class="required">*</span></label>
                         <input asp-for="Email" />
                         <span asp-validation-for="Email"></span>
                     </div>
                     @if (!string.IsNullOrEmpty(Model.EmailToRevalidate))
                     {
                         <div class="inputs mt-checkout-input col-md-12">
-                            <label asp-for="EmailToRevalidate"></label>
+                            <label asp-for="EmailToRevalidate">@T("Account.Fields.EmailToRevalidate")</label>
                             <span class="email-to-revalidate">@Model.EmailToRevalidate</span>
                             <span class="email-to-revalidate-note">
                                 <em>@T("Account.Fields.EmailToRevalidate.Note")</em>
@@ -141,7 +141,7 @@
                         if (Model.AllowUsersToChangeUsernames)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="Username" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="Username">@T("Account.Fields.Username")<span class="required">*</span></label>
                                 <input asp-for="Username" />
                                 <span asp-validation-for="Username"></span>
                                 @if (Model.CheckUsernameAvailabilityEnabled)
@@ -153,7 +153,7 @@
                         else
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="Username" asp-postfix=":"></label>
+                                <label asp-for="Username">@T("Account.Fields.Username")</label>
                                 <span class="readonly-username">@Model.Username</span>
                             </div>
                         }
@@ -170,7 +170,7 @@
                         @if (Model.CompanyEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="Company" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="Company">@T("Account.Fields.Company")<span class="required">*</span></label>
                                 <input asp-for="Company" />
                                 <span asp-validation-for="Company"></span>
                             </div>
@@ -178,7 +178,7 @@
                         @if (Model.DisplayVatNumber)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="VatNumber" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="VatNumber">@T("Account.Fields.VatNumber")<span class="required">*</span></label>
                                 <input asp-for="VatNumber" />
                                 <span asp-validation-for="VatNumber"></span>
                                 <span class="vat-status">@Model.VatNumberStatusNote</span>
@@ -205,7 +205,7 @@
                         @if (Model.StreetAddressEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="StreetAddress" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="StreetAddress">@T("Account.Fields.StreetAddress")<span class="required">*</span></label>
                                 <input asp-for="StreetAddress" />
                                 <span asp-validation-for="StreetAddress"></span>
                             </div>
@@ -213,7 +213,7 @@
                         @if (Model.StreetAddress2Enabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="StreetAddress2" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="StreetAddress2">@T("Account.Fields.StreetAddress2")<span class="required">*</span></label>
                                 <input asp-for="StreetAddress2" />
                                 <span asp-validation-for="StreetAddress2"></span>
                             </div>
@@ -221,7 +221,7 @@
                         @if (Model.ZipPostalCodeEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="ZipPostalCode" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="ZipPostalCode">@T("Account.Fields.ZipPostalCode")<span class="required">*</span></label>
                                 <input asp-for="ZipPostalCode" />
                                 <span asp-validation-for="ZipPostalCode"></span>
                             </div>
@@ -229,7 +229,7 @@
                         @if (Model.CityEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="City" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="City">@T("Account.Fields.City")<span class="required">*</span></label>
                                 <input asp-for="City" />
                                 <span asp-validation-for="City"></span>
                             </div>
@@ -237,7 +237,7 @@
                         @if (Model.CountyEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="County" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="County">@T("Account.Fields.County")<span class="required">*</span></label>
                                 <input asp-for="County" />
                                 <span asp-validation-for="County"></span>
                             </div>
@@ -245,7 +245,7 @@
                         @if (Model.CountryEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="CountryId" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="CountryId">@T("Account.Fields.Country")<span class="required">*</span></label>
                                 <select asp-for="CountryId" asp-items="Model.AvailableCountries"
                                 data-trigger="country-select"
                                 data-url="@(Url.RouteUrl(NopRouteNames.Ajax.GET_STATES_BY_COUNTRY_ID))"
@@ -257,7 +257,7 @@
                         @if (Model.CountryEnabled && Model.StateProvinceEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="StateProvinceId" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="StateProvinceId">@T("Account.Fields.StateProvince")<span class="required">*</span></label>
                                 <select asp-for="StateProvinceId" asp-items="Model.AvailableStates"></select>
                                 <span id="states-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait")</span>
                                 <span asp-validation-for="StateProvinceId"></span>
@@ -276,7 +276,7 @@
                         @if (Model.PhoneEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="Phone" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="Phone">@T("Account.Fields.Phone")<span class="required">*</span></label>
                                 <input asp-for="Phone" />
                                 <span asp-validation-for="Phone"></span>
                             </div>
@@ -284,7 +284,7 @@
                         @if (Model.FaxEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="Fax" asp-postfix=":"><span class="required">*</span></label>
+                                <label asp-for="Fax">@T("Account.Fields.Fax")<span class="required">*</span></label>
                                 <input asp-for="Fax" />
                                 <span asp-validation-for="Fax"></span>
                             </div>
@@ -340,7 +340,7 @@
                         @if (Model.AllowCustomersToSetTimeZone)
                         {
                             <div class="inputs mt-checkout-input col-md-6">
-                                <label asp-for="TimeZoneId" asp-postfix=":"></label>
+                                <label asp-for="TimeZoneId">@T("Account.Fields.TimeZone")</label>
                                 <select asp-for="TimeZoneId" asp-items="Model.AvailableTimeZones"></select>
                                 <span asp-validation-for="TimeZoneId"></span>
                             </div>
@@ -348,7 +348,7 @@
                         @if (Model.SignatureEnabled)
                         {
                             <div class="inputs mt-checkout-input col-md-12">
-                                <label asp-for="Signature" asp-postfix=":"></label>
+                                <label asp-for="Signature">@T("Account.Fields.Signature")</label>
                                 <textarea asp-for="Signature" class="account-signature-text"></textarea>
                             </div>
                         }

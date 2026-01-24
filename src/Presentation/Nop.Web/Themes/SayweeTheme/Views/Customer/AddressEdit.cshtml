@@ -22,10 +22,17 @@
             @{
                 var dataDictAddress = new ViewDataDictionary(ViewData);
                 dataDictAddress.TemplateInfo.HtmlFieldPrefix = "Address";
-                @await Html.PartialAsync("_CreateOrUpdateAddress", Model.Address, dataDictAddress)
+            @await Html.PartialAsync("_CreateOrUpdateAddress", Model.Address, dataDictAddress)
             }
             <div class="buttons">
-                <button type="submit" class="button-1 save-address-button">@T("Common.Save")</button>
+                <button type="submit" class="button-1 save-address-button">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    @T("Common.Save")
+                </button>
+                <a class="button-1 back-address-button" href="@Url.RouteUrl(NopRouteNames.General.CUSTOMER_ADDRESSES)">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    @T("Common.Back")
+                </a>
             </div>
         </div>
     </div>
