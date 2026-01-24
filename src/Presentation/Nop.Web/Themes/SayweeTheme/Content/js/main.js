@@ -233,17 +233,17 @@
   ////////////////////////////////////////////////////
   // 4.1 Swiper category subcategories slider
   var swiper = new Swiper(".mtsubcategory__active", {
-    slidesPerView: 5,
-    slidesPerGroup: 5,
+    slidesPerView: 8,
+    slidesPerGroup: 8,
     spaceBetween: 24,
     breakpoints: {
       1200: {
-        slidesPerView: 5,
-        slidesPerGroup: 5,
+        slidesPerView: 8,
+        slidesPerGroup: 8,
       },
       992: {
-        slidesPerView: 5,
-        slidesPerGroup: 5,
+        slidesPerView: 6,
+        slidesPerGroup: 6,
       },
       768: {
         slidesPerView: 2,

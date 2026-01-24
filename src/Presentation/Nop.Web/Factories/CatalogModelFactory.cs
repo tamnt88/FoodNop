@@ -328,7 +328,7 @@ public partial class CatalogModelFactory : ICatalogModelFactory
     /// <param name="products">The products</param>
     /// <param name="isFiltering">A value indicating that filtering has been applied</param>
     /// <returns>A task that represents the asynchronous operation</returns>
-    protected virtual async Task PrepareCatalogProductsAsync(CatalogProductsModel model, IPagedList<Product> products, bool isFiltering = false)
+    protected virtual async Task PrepareCatalogProductsAsync(CatalogProductsModel model, IPagedList<Product> products, bool isFiltering = false, bool prepareSpecificationAttributes = false)
     {
         if (!string.IsNullOrEmpty(model.WarningMessage))
             return;
@@ -337,7 +337,7 @@ public partial class CatalogModelFactory : ICatalogModelFactory
             model.NoResultMessage = await _localizationService.GetResourceAsync("Catalog.Products.NoResult");
         else
         {
-            model.Products = (await _productModelFactory.PrepareProductOverviewModelsAsync(products)).ToList();
+            model.Products = (await _productModelFactory.PrepareProductOverviewModelsAsync(products, prepareSpecificationAttributes: prepareSpecificationAttributes)).ToList();
             model.LoadPagedList(products);
         }
     }
@@ -715,7 +715,9 @@ public partial class CatalogModelFactory : ICatalogModelFactory
 
         ArgumentNullException.ThrowIfNull(command);
 
-        command.PageSize = 24;
+        var pageSizeOptions = new[] { 24, 40, 60, 80, 100 };
+        if (command.PageSize <= 0 || !pageSizeOptions.Contains(command.PageSize))
+            command.PageSize = 24;
 
         var model = new CatalogProductsModel
         {
@@ -729,8 +731,7 @@ public partial class CatalogModelFactory : ICatalogModelFactory
         //view mode
         await PrepareViewModesAsync(model, command);
         //page size
-        await PreparePageSizeOptionsAsync(model, command, false, "24", 24);
-        model.AllowCustomersToSelectPageSize = false;
+        await PreparePageSizeOptionsAsync(model, command, true, "24,40,60,80,100", 24);
 
         var categoryIds = new List<int> { category.Id };
 
@@ -811,7 +812,7 @@ public partial class CatalogModelFactory : ICatalogModelFactory
             orderBy: (ProductSortingEnum)command.OrderBy);
 
         var isFiltering = filterableOptions.Any() || selectedPriceRange?.From is not null;
-        await PrepareCatalogProductsAsync(model, products, isFiltering);
+        await PrepareCatalogProductsAsync(model, products, isFiltering, prepareSpecificationAttributes: true);
 
         return model;
     }

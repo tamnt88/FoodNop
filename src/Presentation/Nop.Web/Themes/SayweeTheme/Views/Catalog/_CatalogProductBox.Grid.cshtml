@@ -5,6 +5,7 @@
 @using Nop.Core.Domain.Catalog
 @using Nop.Core.Domain.Orders
 @using Nop.Core.Domain.Tax
+@using System.Linq
 
 @inject CatalogSettings catalogSettings
 @inject IWorkContext workContext
@@ -25,6 +26,14 @@
 
     var addtowishlistlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
     var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = Model.Id });
+    var weightValues = Model.ProductSpecificationModel?.Groups
+        .SelectMany(group => group.Attributes)
+        .FirstOrDefault(attr => attr.Name != null && attr.Name.Contains("weight", StringComparison.InvariantCultureIgnoreCase))
+        ?.Values
+        .Select(value => value.ValueRaw)
+        .Where(value => !string.IsNullOrWhiteSpace(value))
+        .Distinct()
+        .ToList();
 }
 
 <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
@@ -78,10 +87,15 @@
 
 
                 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
-                <div class="mtfeature__product-cate">
-                    <span>1Kg</span>
-                    <span>500Kg</span>
-                </div>
+                @if (weightValues?.Any() == true)
+                {
+                    <div class="mtfeature__product-cate">
+                        @foreach (var weight in weightValues)
+                        {
+                            <span>@Html.Raw(weight)</span>
+                        }
+                    </div>
+                }
                 @if (!Model.ProductPrice.DisableBuyButton)
                 {
                     var addToCartText = T("ShoppingCart.AddToCart").Text;

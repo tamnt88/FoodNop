@@ -27,6 +27,10 @@ public partial record ProductOverviewModel : BaseNopEntityModel
 
     public bool MarkAsNew { get; set; }
 
+    public decimal Weight { get; set; }
+
+    public string WeightUnit { get; set; }
+
     //price
     public ProductPriceModel ProductPrice { get; set; }
     //pictures

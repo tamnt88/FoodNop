@@ -6,6 +6,7 @@ using Nop.Core;
 using Nop.Core.Caching;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Customers;
+using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Media;
 using Nop.Core.Domain.Orders;
 using Nop.Core.Domain.Security;
@@ -73,6 +74,7 @@ public partial class ProductModelFactory : IProductModelFactory
     protected readonly IStaticCacheManager _staticCacheManager;
     protected readonly IStoreContext _storeContext;
     protected readonly IStoreService _storeService;
+    protected readonly IMeasureService _measureService;
     protected readonly IShoppingCartModelFactory _shoppingCartModelFactory;
     protected readonly ITaxService _taxService;
     protected readonly IUrlRecordService _urlRecordService;
@@ -81,6 +83,7 @@ public partial class ProductModelFactory : IProductModelFactory
     protected readonly IWebHelper _webHelper;
     protected readonly IWorkContext _workContext;
     protected readonly MediaSettings _mediaSettings;
+    protected readonly MeasureSettings _measureSettings;
     protected readonly OrderSettings _orderSettings;
     protected readonly SeoSettings _seoSettings;
     protected readonly ShippingSettings _shippingSettings;
@@ -121,6 +124,7 @@ public partial class ProductModelFactory : IProductModelFactory
         IStaticCacheManager staticCacheManager,
         IStoreContext storeContext,
         IStoreService storeService,
+        IMeasureService measureService,
         IShoppingCartModelFactory shoppingCartModelFactory,
         ITaxService taxService,
         IUrlRecordService urlRecordService,
@@ -129,6 +133,7 @@ public partial class ProductModelFactory : IProductModelFactory
         IWebHelper webHelper,
         IWorkContext workContext,
         MediaSettings mediaSettings,
+        MeasureSettings measureSettings,
         OrderSettings orderSettings,
         SeoSettings seoSettings,
         ShippingSettings shippingSettings,
@@ -164,6 +169,7 @@ public partial class ProductModelFactory : IProductModelFactory
         _staticCacheManager = staticCacheManager;
         _storeContext = storeContext;
         _storeService = storeService;
+        _measureService = measureService;
         _shoppingCartModelFactory = shoppingCartModelFactory;
         _taxService = taxService;
         _urlRecordService = urlRecordService;
@@ -171,6 +177,7 @@ public partial class ProductModelFactory : IProductModelFactory
         _webHelper = webHelper;
         _workContext = workContext;
         _mediaSettings = mediaSettings;
+        _measureSettings = measureSettings;
         _orderSettings = orderSettings;
         _seoSettings = seoSettings;
         _shippingSettings = shippingSettings;
@@ -1318,6 +1325,7 @@ public partial class ProductModelFactory : IProductModelFactory
         ArgumentNullException.ThrowIfNull(products);
 
         var models = new List<ProductOverviewModel>();
+        var baseWeightName = (await _measureService.GetMeasureWeightByIdAsync(_measureSettings.BaseWeightId))?.Name ?? string.Empty;
         foreach (var product in products)
         {
             var model = new ProductOverviewModel
@@ -1329,6 +1337,8 @@ public partial class ProductModelFactory : IProductModelFactory
                 SeName = await _urlRecordService.GetSeNameAsync(product),
                 Sku = product.Sku,
                 ProductType = product.ProductType,
+                Weight = product.Weight,
+                WeightUnit = baseWeightName,
                 MarkAsNew = product.MarkAsNew &&
                             (!product.MarkAsNewStartDateTimeUtc.HasValue || product.MarkAsNewStartDateTimeUtc.Value < DateTime.UtcNow) &&
                             (!product.MarkAsNewEndDateTimeUtc.HasValue || product.MarkAsNewEndDateTimeUtc.Value > DateTime.UtcNow)

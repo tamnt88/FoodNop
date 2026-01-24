@@ -5,6 +5,7 @@
 @using Nop.Core.Domain.Catalog
 @using Nop.Core.Domain.Orders
 @using Nop.Core.Domain.Tax
+@using System.Linq
 
 @inject CatalogSettings catalogSettings
 @inject IWorkContext workContext
@@ -27,6 +28,14 @@
     var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = Model.Id });
 
     var productPicture = Model.PictureModels.FirstOrDefault();
+    var weightValues = Model.ProductSpecificationModel?.Groups
+        .SelectMany(group => group.Attributes)
+        .FirstOrDefault(attr => attr.Name != null && attr.Name.Contains("weight", StringComparison.InvariantCultureIgnoreCase))
+        ?.Values
+        .Select(value => value.ValueRaw)
+        .Where(value => !string.IsNullOrWhiteSpace(value))
+        .Distinct()
+        .ToList();
 }
 
 <div class="mt-shop-list-item mb-40 d-flex align-items-center">
@@ -49,10 +58,15 @@
             @Html.Raw(Model.ShortDescription)
         </p>
         <div class="mt-shop-list-pricing-wrap mb-20 d-flex align-items-center">
-            <div class="mt-shop-list-cate mr-10">
-                <span>1Kg</span>
-                <span>500Kg</span>
-            </div>
+            @if (weightValues?.Any() == true)
+            {
+                <div class="mt-shop-list-cate mr-10">
+                    @foreach (var weight in weightValues)
+                    {
+                        <span>@Html.Raw(weight)</span>
+                    }
+                </div>
+            }
             <div class="mt-shop-list-rating">
                 <span><i class="fa-solid fa-star"></i></span>
                 <span><i class="fa-solid fa-star"></i></span>

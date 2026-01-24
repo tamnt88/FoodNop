@@ -9347,6 +9347,28 @@ input[type=color] {
   width: 100%;
 }
 
+.mt-shop-sidebar .mt-price-box {
+  margin-top: 30px;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px 14px;
+}
+
+.mt-shop-sidebar .mt-price-box .mt-shop-widget-title {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.html-category-page .mtshop__area {
+  padding-top: 50px;
+}
+
+.html-category-page .mt-breadcrumb-area {
+  padding-bottom: 30px;
+}
+
 .mt-shop-sidebar .sidebar-category-header {
   display: flex;
   align-items: center;
@@ -9383,6 +9405,10 @@ input[type=color] {
   color: #111827;
   font-weight: 600;
   font-size: 14px;
+}
+
+.mt-shop-sidebar .sidebar-category-list a:hover {
+  color: var(--mt-theme-1);
 }
 
 .mt-shop-sidebar .sidebar-category-row {
@@ -13305,6 +13331,10 @@ input[type=color] {
   font-family: var(--mt-ff-body);
   margin-top: 30px;
   margin-bottom: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mtshop__category-arrow {
@@ -17949,6 +17979,10 @@ input[type=color] {
 }
 
 .mt__select-box .nice-select::after {
+  right: 8px;
+}
+
+.product-page-size .nice-select::after {
   right: 8px;
 }
 

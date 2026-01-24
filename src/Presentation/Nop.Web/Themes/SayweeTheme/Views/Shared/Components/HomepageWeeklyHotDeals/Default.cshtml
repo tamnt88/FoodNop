@@ -1,6 +1,7 @@
 ﻿@model IList<ProductOverviewModel>
 @using Nop.Core.Domain.Catalog
 @using Nop.Core.Domain.Orders
+@using System.Linq
 @inject IThemeContext themeContext
 @{
 
@@ -123,6 +124,14 @@
 
         var addtowishlistlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
         var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = product.Id });
+        var weightValues = product.ProductSpecificationModel?.Groups
+            .SelectMany(group => group.Attributes)
+            .FirstOrDefault(attr => string.Equals(attr.Name, "Weight", StringComparison.InvariantCultureIgnoreCase))
+            ?.Values
+            .Select(value => value.ValueRaw)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct()
+            .ToList();
 
         <div class="@boxClass">
             <div class="mthot__product-item  p-relative fix">
@@ -147,10 +156,15 @@
                     
                 </div>
                 <div class="mthot__product-content">
-                    <div class="mthot__product-cate mb-10">
-                        <span>1Kg</span>
-                        <span>500Kg</span>
-                    </div>
+                    @if (weightValues?.Any() == true)
+                    {
+                        <div class="mthot__product-cate mb-10">
+                            @foreach (var weight in weightValues)
+                            {
+                                <span>@Html.Raw(weight)</span>
+                            }
+                        </div>
+                    }
                     <h6 class="mthot__product-title mb-10 ">
                         <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = product.SeName }))">
                             @product.Name  
