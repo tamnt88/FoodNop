@@ -58,6 +58,34 @@
         <h6 class="desktop-category-subgroup-title"><a class="desktop-category-subgroup-link" href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = lineModel.Category.SeName }))">@lineModel.Category.Name</a></h6>
          
     }
+
+    async Task RenderCategoryTree(CategorySimpleModel category)
+    {
+        var isActive = category.Id == Model.CurrentCategoryId || category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+        var liClass = isActive ? "is-active is-open" : string.Empty;
+        <li class="@liClass">
+            <div class="sidebar-category-row">
+                <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = category.SeName }))">
+                    <span class="sidebar-category-name">@category.Name</span>
+                </a>
+                @if (category.SubCategories.Any())
+                {
+                    <button type="button" class="sidebar-category-toggle" aria-label="Toggle category" aria-expanded="@(isActive.ToString().ToLowerInvariant())">
+                        <span class="toggle-icon"></span>
+                    </button>
+                }
+            </div>
+            @if (category.SubCategories.Any())
+            {
+                <ul class="sidebar-category-sublist">
+                    @foreach (var sub in category.SubCategories)
+                    {
+                        await RenderCategoryTree(sub);
+                    }
+                </ul>
+            }
+        </li>
+    }
 }
  
 @if (Model.Categories.Count > 0)
@@ -114,6 +142,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="sidebar-category-tree">
+            <div class="sidebar-category-header">
+                <i class="fa-light fa-bars"></i>
+                <span>@T("Categories")</span>
+            </div>
+            <ul class="sidebar-category-list">
+                @foreach (var category in Model.Categories)
+                {
+                    await RenderCategoryTree(category);
+                }
+            </ul>
         </div>
         <div class="desktop-search">
             @await Component.InvokeAsync(typeof(SearchBoxViewComponent))

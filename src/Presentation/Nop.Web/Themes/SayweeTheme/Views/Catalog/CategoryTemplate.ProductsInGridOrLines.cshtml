@@ -104,19 +104,13 @@
     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeFilters, additionalData = Model })
     @await Html.PartialAsync("_CatalogFilters", Model.CatalogProductsModel)
 }
+
+@section CategoryNavigation {
+    @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent), new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })
+}
  
    
 <div class="mt-shop-wrapper page">
-    <!-- banner -->
-    <div class="mt-shop-top mb-30 wow img-custom-anim-top" data-wow-duration="1.5s"
-         data-wow-delay="0.1s">
-        <div class="mt-shop-top-filtar mb-20">
-            <a class="active" href="#"><i class="fa-light fa-flask"></i> Filtered</a>
-            <a href="#"><i class="fa-light fa-xmark"></i> Fruits & Vegetables</a>
-            <a href="#"><i class="fa-light fa-xmark"></i> RosMart</a>
-        </div>
-        <a href="#"><img src="~/Themes/@(themeName)/Content/img/banner/shop-banner.jpg" alt=""></a>
-    </div>
     @{
         var catalogProductsViewData = new ViewDataDictionary(ViewData);
         catalogProductsViewData["fetchUrl"] = Html.Raw(Url.RouteUrl(NopRouteNames.Ajax.GET_CATEGORY_PRODUCTS, new { categoryId = Model.Id }));

@@ -9309,6 +9309,149 @@ input[type=color] {
   line-height: 1.2;
 }
 
+.desktop-category-menu .sidebar-category-tree {
+  display: none;
+}
+
+.mt-shop-sidebar .desktop-category-menu {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.mt-shop-sidebar .desktop-category-button,
+.mt-shop-sidebar .desktop-category-dropdown,
+.mt-shop-sidebar .desktop-category-panel,
+.mt-shop-sidebar .desktop-search {
+  display: none !important;
+}
+
+.mt-shop-sidebar .sidebar-category-tree {
+  display: block;
+  border: 1px solid #eef0f3;
+  border-radius: 12px;
+  background: #fff;
+  overflow: hidden;
+  width: 100%;
+}
+
+.mt-shop-sidebar {
+  width: 100%;
+}
+
+.mt-shop-sidebar .desktop-category-menu,
+.mt-shop-sidebar .sidebar-category-tree,
+.mt-shop-sidebar .sidebar-category-header,
+.mt-shop-sidebar .sidebar-category-list,
+.mt-shop-sidebar .sidebar-category-row {
+  width: 100%;
+}
+
+.mt-shop-sidebar .sidebar-category-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--mt-theme-1);
+  color: #fff;
+  font-weight: 700;
+}
+
+.mt-shop-sidebar .sidebar-category-header i {
+  font-size: 14px;
+}
+
+.mt-shop-sidebar .sidebar-category-list,
+.mt-shop-sidebar .sidebar-category-sublist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mt-shop-sidebar .sidebar-category-list > li {
+  border-bottom: 1px solid #eef0f3;
+}
+
+.mt-shop-sidebar .sidebar-category-list > li:last-child {
+  border-bottom: 0;
+}
+
+.mt-shop-sidebar .sidebar-category-list a {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  color: #111827;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mt-shop-sidebar .sidebar-category-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mt-shop-sidebar .sidebar-category-toggle {
+  border: 0;
+  background: transparent;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mt-shop-sidebar .sidebar-category-toggle .toggle-icon {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+.mt-shop-sidebar .sidebar-category-toggle .toggle-icon::before,
+.mt-shop-sidebar .sidebar-category-toggle .toggle-icon::after {
+  content: "";
+  position: absolute;
+  background: #6b7280;
+}
+
+.mt-shop-sidebar .sidebar-category-toggle .toggle-icon::before {
+  width: 10px;
+  height: 2px;
+  top: 4px;
+  left: 0;
+}
+
+.mt-shop-sidebar .sidebar-category-toggle .toggle-icon::after {
+  width: 2px;
+  height: 10px;
+  top: 0;
+  left: 4px;
+}
+
+.mt-shop-sidebar .sidebar-category-list li.is-open > .sidebar-category-row .toggle-icon::after {
+  display: none;
+}
+
+.mt-shop-sidebar .sidebar-category-sublist {
+  display: none;
+}
+
+.mt-shop-sidebar .sidebar-category-list li.is-open > .sidebar-category-sublist {
+  display: block;
+}
+
+.mt-shop-sidebar .sidebar-category-sublist a {
+  padding-left: 28px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.mt-shop-sidebar .sidebar-category-list li.is-active > a {
+  color: var(--mt-theme-1);
+}
+
 .html-customer-info-page .page.account-page {
   max-width: 880px;
   margin: 0 auto;

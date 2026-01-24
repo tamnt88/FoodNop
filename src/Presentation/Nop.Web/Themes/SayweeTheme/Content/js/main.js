@@ -670,6 +670,17 @@
     $('#ship-box').on('click', function () {
       $('#ship-box-info').slideToggle(1000);
     });
+
+    ////////////////////////////////////////////////////
+    // 20. Sidebar Category Toggle
+    $(document).on('click', '.sidebar-category-toggle', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      var $item = $(this).closest('li');
+      var isOpen = $item.hasClass('is-open');
+      $item.toggleClass('is-open', !isOpen);
+      $(this).attr('aria-expanded', (!isOpen).toString());
+    });
   }
   mt_ecommerce();
 

@@ -715,6 +715,8 @@ public partial class CatalogModelFactory : ICatalogModelFactory
 
         ArgumentNullException.ThrowIfNull(command);
 
+        command.PageSize = 24;
+
         var model = new CatalogProductsModel
         {
             UseAjaxLoading = _catalogSettings.UseAjaxCatalogProductsLoading
@@ -727,8 +729,8 @@ public partial class CatalogModelFactory : ICatalogModelFactory
         //view mode
         await PrepareViewModesAsync(model, command);
         //page size
-        await PreparePageSizeOptionsAsync(model, command, category.AllowCustomersToSelectPageSize,
-            category.PageSizeOptions, category.PageSize);
+        await PreparePageSizeOptionsAsync(model, command, false, "24", 24);
+        model.AllowCustomersToSelectPageSize = false;
 
         var categoryIds = new List<int> { category.Id };
 
