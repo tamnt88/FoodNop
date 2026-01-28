@@ -11033,6 +11033,43 @@ input[type=color] {
   margin-bottom: 0;
 }
 
+.mtblog__2 .mtblog__item .mtblog__title-fixed {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--mt-theme-3);
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  line-height: 1.4;
+  margin-bottom: 0;
+  min-height: 84px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.mtblog__2 .mtblog__item .mtblog__title-fixed a {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--mt-theme-3);
+  text-decoration: none;
+  line-height: 1.4;
+  max-height: 84px;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.mtblog__2 .mtblog__item .mtblog__title-fixed a:hover {
+  color: var(--mt-common-white);
+}
+
 .mt-trending-blog-border {
   padding-bottom: 30px;
   border-bottom: 1px dashed var(--mt-border-1);

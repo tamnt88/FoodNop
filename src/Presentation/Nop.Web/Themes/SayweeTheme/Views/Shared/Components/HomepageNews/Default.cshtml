@@ -1,4 +1,4 @@
-﻿@model HomepageNewsItemsModel
+@model HomepageNewsItemsModel
 @inject IThemeContext themeContext
 @using Nop.Core.Domain.News
 @{
@@ -72,7 +72,7 @@
                                             <span><a href="#">Organic</a></span>
                                             <span><a href="#">Grocery</a></span>
                                         </div>
-                                        <h4 class="mtblog__title">
+                                        <h4 class="mtblog__title mtblog__title-fixed">
                                             <a href="@(await NopUrl.RouteGenericUrlAsync<NewsItem>(new { SeName = item.SeName }))">
                                                 @Html.Raw(item.Short)
                                             </a>
