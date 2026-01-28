@@ -693,6 +693,15 @@ public partial class CatalogModelFactory : ICatalogModelFactory
                     PictureModel = await PrepareCategoryPictureModelAsync(category)
                 };
 
+                //featured products
+                if (!_catalogSettings.IgnoreFeaturedProducts)
+                {
+                    var currentStore = await _storeContext.GetCurrentStoreAsync();
+                    var featuredProducts = await _productService.GetCategoryFeaturedProductsAsync(category.Id, currentStore.Id);
+                    if (featuredProducts != null)
+                        catModel.FeaturedProducts = (await _productModelFactory.PrepareProductOverviewModelsAsync(featuredProducts)).ToList();
+                }
+
                 return catModel;
             }).ToListAsync();
         });

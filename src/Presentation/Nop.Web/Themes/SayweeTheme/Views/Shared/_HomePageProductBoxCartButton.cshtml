@@ -1,0 +1,123 @@
+@model ProductOverviewModel
+
+@using Nop.Core
+@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Orders
+@using Nop.Core.Domain.Tax
+@using System.Linq
+
+@inject CatalogSettings catalogSettings
+@inject IWorkContext workContext
+
+@{
+    //prepare "Add to cart" AJAX link
+    var addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+    }
+
+    var addtowishlistlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+    var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = Model.Id });
+    var weightValues = Model.ProductSpecificationModel?.Groups
+        .SelectMany(group => group.Attributes)
+        .FirstOrDefault(attr => string.Equals(attr.Name, "Weight", StringComparison.InvariantCultureIgnoreCase))
+        ?.Values
+        .Select(value => value.ValueRaw)
+        .Where(value => !string.IsNullOrWhiteSpace(value))
+        .Distinct()
+        .ToList();
+}
+
+
+<div class="mtfeature__product-item p-relative fix">
+    <div class="mtfeature__product-offer">
+        <span>70% OFF</span>
+    </div>
+    <div class="mtfeature__product-img mb-15">
+        @if (!Model.ProductPrice.DisableWishlistButton)
+        {
+            @await Html.PartialAsync("_MoveToWishlistModal", Model.ProductToWishlist)
+            <div class="mtfeature__product-wishlist">
+                <a href="javascript:void(0)" class="button-2 add-to-wishlist-button" title="@T("ShoppingCart.AddToWishlist")" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;">
+                    <i class="fa-regular fa-heart"></i>
+                </a>
+            </div>
+
+        }
+        @foreach (var picture in Model.PictureModels)
+        {
+            <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">
+                <img src="@picture.ImageUrl" alt="@picture.AlternateText" itle="@picture.Title">
+            </a>
+            break;
+        }
+
+    </div>
+    <div class="mtfeature__product-content mb-15">
+        @if (weightValues?.Any() == true)
+        {
+            <div class="mtfeature__product-cate mb-10">
+                @foreach (var weight in weightValues)
+                {
+                    <span>@Html.Raw(weight)</span>
+                }
+            </div>
+        }
+        <h5 class="mtfeature__product-title">
+            <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">
+                @Model.Name
+            </a>
+        </h5>
+    </div>
+    @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+    {
+        decimal ratingPercent = 0;
+        int stars = 0;
+        if (Model.ReviewOverviewModel.TotalReviews != 0)
+        {
+            ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5.0m;
+            stars = (int)Math.Round(ratingPercent / 20);
+        }
+        <div class="mtfeature__product-rating mb-15" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
+            @for (int i = 0; i < stars; i++)
+            {
+                <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
+            }
+        </div>
+    }
+    <div class="mtfeature__product-pricing-wrap pt-10 d-flex align-items-center justify-content-between">
+        <div class="mtfeature__product-price">
+            <span>@Model.ProductPrice.Price</span>
+            @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+            {
+                <del>@Model.ProductPrice.OldPrice</del>
+
+            }
+        </div>
+        <div class="mtfeature__product-cart">
+            @if (!Model.ProductPrice.DisableBuyButton)
+            {
+                var addToCartText = T("ShoppingCart.AddToCart").Text;
+                if (Model.ProductPrice.IsRental)
+                {
+                    addToCartText = T("ShoppingCart.Rent").Text;
+                }
+                if (Model.ProductPrice.AvailableForPreOrder)
+                {
+                    addToCartText = T("ShoppingCart.PreOrder").Text;
+                }
+                <div class="mtfeature__product-btn">
+                    <a href="javascript:void(0)" class="mt-btn-3" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">Add To Cart</a>
+                </div> 
+            }
+        </div>
+    </div>
+</div>
+ 

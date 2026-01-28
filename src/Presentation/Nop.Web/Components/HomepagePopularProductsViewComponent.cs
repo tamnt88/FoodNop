@@ -9,37 +9,19 @@ namespace Nop.Web.Components;
 
  
 public partial class HomepagePopularProductsViewComponent : NopViewComponent
-{
-    protected readonly IAclService _aclService;
-    protected readonly IProductModelFactory _productModelFactory;
-    protected readonly IProductService _productService;
-    protected readonly IStoreMappingService _storeMappingService;
+{ 
+    protected readonly ICatalogModelFactory _catalogModelFactory;
 
-    public HomepagePopularProductsViewComponent(IAclService aclService,
-        IProductModelFactory productModelFactory,
-        IProductService productService,
-        IStoreMappingService storeMappingService)
+    public HomepagePopularProductsViewComponent(ICatalogModelFactory catalogModelFactory)
     {
-        _aclService = aclService;
-        _productModelFactory = productModelFactory;
-        _productService = productService;
-        _storeMappingService = storeMappingService;
+        _catalogModelFactory = catalogModelFactory; 
     }
 
     public async Task<IViewComponentResult> InvokeAsync(int? productThumbPictureSize)
     {
-        var products = await (await _productService.GetAllProductsDisplayedOnHomepageAsync())
-            //ACL and store mapping
-            .WhereAwait(async p => await _aclService.AuthorizeAsync(p) && await _storeMappingService.AuthorizeAsync(p))
-            //availability dates
-            .Where(p => _productService.ProductIsAvailable(p))
-            //visible individually
-            .Where(p => p.VisibleIndividually).ToListAsync();
-
-        if (!products.Any())
+        var model = await _catalogModelFactory.PrepareHomepageCategoryModelsAsync();
+        if (!model.Any())
             return Content("");
-
-        var model = (await _productModelFactory.PrepareProductOverviewModelsAsync(products, true, true, productThumbPictureSize)).ToList();
 
         return View(model);
     }
