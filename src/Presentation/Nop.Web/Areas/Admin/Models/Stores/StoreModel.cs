@@ -73,6 +73,9 @@ public partial record StoreModel : BaseNopEntityModel, ILocalizedModel<StoreLoca
 
     public IList<StoreLocalizedModel> Locales { get; set; }
 
+    [NopResourceDisplayName("Admin.Configuration.Stores.Fields.CompanyEmail")]
+    public string CompanyEmail { get; set; }
+
     #endregion
 }
 

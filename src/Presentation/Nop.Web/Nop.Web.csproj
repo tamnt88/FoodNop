@@ -66,6 +66,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Themes\SayweeTheme\Views\Blog\Components\BlogMonths\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Themes\SayweeTheme\Views\Blog\Components\BlogTags\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Themes\SayweeTheme\Views\Blog\List.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
     <Content Update="Themes\SayweeTheme\Views\Catalog\_CatalogFilters.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>

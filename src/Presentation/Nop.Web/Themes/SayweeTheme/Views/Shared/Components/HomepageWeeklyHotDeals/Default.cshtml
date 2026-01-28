@@ -1,4 +1,4 @@
-﻿@model IList<ProductOverviewModel>
+@model IList<ProductOverviewModel>
 @using Nop.Core.Domain.Catalog
 @using Nop.Core.Domain.Orders
 @using System.Linq
@@ -165,7 +165,7 @@
                             }
                         </div>
                     }
-                    <h6 class="mthot__product-title mb-10 ">
+                    <h6 class="mthot__product-title mthot__product-title-fixed mb-10 ">
                         <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = product.SeName }))">
                             @product.Name  
                         </a>

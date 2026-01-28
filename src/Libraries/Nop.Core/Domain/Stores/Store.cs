@@ -87,4 +87,6 @@ public partial class Store : BaseEntity, ILocalizedEntity, ISoftDeletedEntity
     /// Gets or sets a value indicating whether the entity has been deleted
     /// </summary>
     public bool Deleted { get; set; }
+
+    public string CompanyEmail {  get; set; }
 }
