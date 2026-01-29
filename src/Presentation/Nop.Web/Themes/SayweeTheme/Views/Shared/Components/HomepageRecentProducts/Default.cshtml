@@ -1,4 +1,7 @@
-﻿@inject IThemeContext themeContext
+﻿@using Nop.Core.Domain.Catalog
+@using Nop.Core.Domain.Orders
+@model IList<ProductOverviewModel>
+@inject IThemeContext themeContext
 @{
 
     var themeName = await themeContext.GetWorkingThemeNameAsync();
@@ -40,367 +43,11 @@
                     <div class="col-xl-8 col-lg-7">
                         <div class="mtrecent__product-left">
                             <div class="row g-3">
-                                <div class="col-xl-6 ">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-1.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$10.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">
-                                                        local organic Green <br>
-                                                        Broccoli
-                                                    </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-2.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$9.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">Packaged Whole White <br> Mushrooms </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-3.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$17.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">
-                                                        Yellow Organic Local <br>
-                                                        Bananas
-                                                    </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-4.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$13.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">
-                                                        local organic Green <br>
-                                                        Broccoli
-                                                    </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-5.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$16.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">
-                                                        Fresh packaged <br>
-                                                        Red Tomato
-                                                    </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-6.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$19.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">Organic Campa Yellow <br> Bananas </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-7.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$30.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">
-                                                        Everest Meat Curry <br>
-                                                        Masala 100m
-                                                    </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6">
-                                    <div class="mtrecent__product-left-wrap">
-                                        <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
-                                            <div class="mtrecent__product-img">
-                                                <a href="#"><img src="~/Themes/@(themeName)/Content/img/product/recent-1-8.png" alt=""></a>
-                                            </div>
-                                            <div class="mtrecent__product-content">
-                                                <div class="mtrecent__product-category d-flex justify-content-between">
-                                                    <div class="mtrecent__product-price mb-6">
-                                                        <span>$10.00</span>
-                                                        <i>/1KG</i>
-                                                    </div>
-                                                    <div class="mtrecent__product-wishlist">
-                                                        <a href="wishlist.html"><i class="fa-regular fa-heart"></i></a>
-                                                    </div>
-                                                </div>
-                                                <h4 class="mtrecent__product-title mb-20">
-                                                    <a href="product-details.html">
-                                                        Tropical Yellow <br>
-                                                        Pineapple
-                                                    </a>
-                                                </h4>
-
-                                                <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                                                    <div class="mt-shop-details__quantity proquantity">
-                                                        <div class="mt-cart-minus mt-cart-min-plus">
-                                                            <i class="fal fa-minus"></i>
-                                                        </div>
-                                                        <input type="text" value="01">
-                                                        <div class="mt-cart-plus mt-cart-min-plus">
-                                                            <i class="fal fa-plus"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mtrecent__product-rating">
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @foreach (var item in Model)
+                                {
+                                    await ProductBox(item);
+                                }
+                                 
                             </div>
                         </div>
                     </div>
@@ -456,7 +103,7 @@
                 </div>
             </div>
         </div>
-        <div class="mttop__product-area">
+        @* <div class="mttop__product-area">
             <div class="container">
                 <!-- Top Sale -->
                 <div class="mttop__product-main mb-80">
@@ -2907,8 +2554,136 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> *@
     </section>
     <!-- End Recent Product Area -->
      
+}
+
+@functions{
+
+    async Task ProductBox(ProductOverviewModel product)
+    {
+        var addtocartlink = "";
+        var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+        var quantity = 1;
+        if (product.ProductPrice.ForceRedirectionAfterAddingToCart)
+        {
+            addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = product.ProductPrice.ForceRedirectionAfterAddingToCart });
+        }
+        else
+        {
+            addtocartlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity });
+        }
+
+        var addtowishlistlink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_CATALOG, new { productId = product.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity });
+        var addtocomparelink = Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_COMPARE, new { productId = product.Id });
+        var weightValues = product.ProductSpecificationModel?.Groups
+            .SelectMany(group => group.Attributes)
+            .FirstOrDefault(attr => string.Equals(attr.Name, "Weight", StringComparison.InvariantCultureIgnoreCase))
+            ?.Values
+            .Select(value => value.ValueRaw)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct()
+            .ToList();
+
+        <div class="col-xl-6">
+            <div class="mtrecent__product-left-wrap">
+                <div class="mtrecent__product-item p-relative fix d-flex align-items-center justify-content-between">
+                    
+                <div class="mtrecent__product-img">
+                        @foreach (var picture in product.PictureModels)
+                        {
+                            <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = product.SeName }))">
+                                <img src="@picture.ImageUrl" alt="@picture.AlternateText" itle="@picture.Title">
+                            </a>
+                            break;
+                        }
+                         
+                    </div>
+                    <div class="mtrecent__product-content">
+                        <div class="mtrecent__product-category d-flex justify-content-between">
+                            <div class="mtrecent__product-price mb-6">
+                                <span>@product.ProductPrice.Price</span>
+                                @if (!string.IsNullOrEmpty(product.ProductPrice.OldPrice))
+                                {
+                                    <del>@product.ProductPrice.OldPrice</del>
+                                }
+                                @if (weightValues?.Any() == true)
+                                {
+                                    foreach (var weight in weightValues)
+                                    {
+                                        <i>@Html.Raw(weight)</i>
+                                    }
+                                } 
+                            </div>
+                            @if (!product.ProductPrice.DisableWishlistButton)
+                            {
+                                @await Html.PartialAsync("_MoveToWishlistModal", product.ProductToWishlist)
+
+                                <div class="mtrecent__product-wishlist">
+                                    <a href="javascript:void(0)" class="button-2 add-to-wishlist-button" title="@T("ShoppingCart.AddToWishlist")" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink');return false;">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </a>
+                                </div>
+                            } 
+                        </div>
+                        <h4 class="mtrecent__product-title mb-20">
+                            <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = product.SeName }))">
+                                @product.Name
+                            </a>
+                        </h4>
+
+                        <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
+                            <div class="mt-shop-details__quantity proquantity">
+                                <div class="mt-cart-minus mt-cart-min-plus">
+                                    <i class="fal fa-minus"></i>
+                                </div>
+                                <input type="text" value="01">
+                                <div class="mt-cart-plus mt-cart-min-plus">
+                                    <i class="fal fa-plus"></i>
+                                </div>
+                            </div>
+                            @if (product.ReviewOverviewModel.AllowCustomerReviews)
+                            {
+                                decimal ratingPercent = 0;
+                                int stars = 0;
+                                if (product.ReviewOverviewModel.TotalReviews != 0)
+                                {
+                                    ratingPercent = ((product.ReviewOverviewModel.RatingSum * 100) / product.ReviewOverviewModel.TotalReviews) / 5.0m;
+                                    stars = (int)Math.Round(ratingPercent / 20);
+                                } 
+                                <div class="mtrecent__product-rating">
+                                    @for (int i = 0; i < stars; i++)
+                                    {
+                                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
+                                    }
+                                </div>
+                            }
+                            
+                        </div>
+                        @if (!product.ProductPrice.DisableBuyButton)
+                        {
+                            var addToCartText = T("ShoppingCart.AddToCart").Text;
+                            if (product.ProductPrice.IsRental)
+                            {
+                                addToCartText = T("ShoppingCart.Rent").Text;
+                            }
+                            if (product.ProductPrice.AvailableForPreOrder)
+                            {
+                                addToCartText = T("ShoppingCart.PreOrder").Text;
+                            }
+                            <div class="mtfeature__product-cart">
+                                <a href="javascript:void(0)" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">
+                                    <i class="fa-solid fa-basket-shopping"></i>
+                                </a>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>  
+    }
+
 }

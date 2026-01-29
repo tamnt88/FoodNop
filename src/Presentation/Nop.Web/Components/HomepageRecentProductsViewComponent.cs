@@ -40,6 +40,7 @@ public partial class HomepageRecentProductsViewComponent : NopViewComponent
 
         var model = (await _productModelFactory.PrepareProductOverviewModelsAsync(products, true, true, productThumbPictureSize)).ToList();
 
+        model = model.Take(5).ToList();
         return View(model);
     }
 }
