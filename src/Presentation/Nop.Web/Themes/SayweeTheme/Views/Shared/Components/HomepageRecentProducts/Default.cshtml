@@ -2635,15 +2635,7 @@
                         </h4>
 
                         <div class="mtrecent__product-count-wrap d-flex align-items-center justify-content-between">
-                            <div class="mt-shop-details__quantity proquantity">
-                                <div class="mt-cart-minus mt-cart-min-plus">
-                                    <i class="fal fa-minus"></i>
-                                </div>
-                                <input type="text" value="01">
-                                <div class="mt-cart-plus mt-cart-min-plus">
-                                    <i class="fal fa-plus"></i>
-                                </div>
-                            </div>
+                             
                             @if (product.ReviewOverviewModel.AllowCustomerReviews)
                             {
                                 decimal ratingPercent = 0;
@@ -2673,12 +2665,7 @@
                             {
                                 addToCartText = T("ShoppingCart.PreOrder").Text;
                             }
-                            <div class="mtfeature__product-cart">
-                                <a href="javascript:void(0)" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">
-                                    <i class="fa-solid fa-basket-shopping"></i>
-                                </a>
-                            </div>
-
+                            <a href="javascript:void(0)" class="mt-btn-3" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink');return false;">Add To Cart</a>
                         }
                     </div>
                 </div>
