@@ -1,0 +1,151 @@
+---
+description: FoodNop catalog category ID to name mapping (reference)
+alwaysApply: true
+---
+
+# Category ID → Name Reference
+
+Use this mapping when working with category IDs in the FoodNop catalog (views, factories, navigation, filters).
+
+| id | name |
+|----|------|
+| 17 | Fruits |
+| 18 | Stonefruits |
+| 19 | Apples |
+| 20 | Pears |
+| 21 | Melons |
+| 22 | Grapes |
+| 23 | Dates |
+| 24 | Berries |
+| 25 | Citrus |
+| 26 | Persimmons |
+| 27 | Tropical |
+| 28 | Other Fruits |
+| 29 | Vegetables |
+| 30 | Organic Vegetables |
+| 31 | Leafy Vegetables |
+| 32 | Root Vegetables |
+| 33 | Onions & Shallots |
+| 34 | Tomatoes |
+| 35 | Mushrooms |
+| 36 | Potatoes & Yams |
+| 37 | Cucumbers |
+| 38 | Squash & Zucchini |
+| 39 | Corn |
+| 40 | Herbs |
+| 41 | Peppers |
+| 42 | Peas & Beans |
+| 43 | Salad |
+| 44 | Other Vegetables |
+| 45 | Meat |
+| 46 | Beef |
+| 47 | Poultry |
+| 48 | Pork |
+| 49 | Lamb |
+| 50 | Deli Meat |
+| 51 | Marinated Meat |
+| 52 | Seafood |
+| 53 | Shrimp |
+| 54 | Shellfish |
+| 55 | Whole Fish |
+| 56 | Fish Fillets & Steaks |
+| 57 | Other Seafood |
+| 58 | Frozen |
+| 59 | Appetizers & Snacks |
+| 60 | Dumplings |
+| 61 | Buns |
+| 62 | Pancakes |
+| 63 | Seafood & Fish Balls |
+| 64 | Sausages & Meat Balls |
+| 65 | Meals & Entrees |
+| 66 | Bread & Desserts |
+| 67 | Ice Cream |
+| 68 | Frozen Fruits |
+| 69 | Frozen Vegetables Appetizers |
+| 70 | Mooncakes |
+| 71 | Instant |
+| 72 | Instant Noodles |
+| 73 | Korean Instant Noodles |
+| 74 | Japanese Instant Noodles |
+| 75 | Instant Hot Pot & Meals |
+| 76 | Instant Rice |
+| 77 | Ready To Eat |
+| 78 | Porridge & Soup |
+| 79 | Breakfast Foods |
+| 80 | Powder Mix |
+| 81 | Curry |
+| 82 | Grass Jelly |
+| 83 | Bakery |
+| 84 | Freshly Made |
+| 85 | Cakes |
+| 86 | Cookies |
+| 87 | Bread |
+| 88 | Desserts & Pastries |
+| 89 | Tortillas |
+| 90 | Mooncakes |
+| 91 | Snacks |
+| 92 | Candy |
+| 93 | Chips |
+| 94 | Crackers & Cookies |
+| 95 | Nuts & Seeds |
+| 96 | Seaweed |
+| 97 | Dried Bean Curd |
+| 98 | Jerkies |
+| 99 | Dried Seafood |
+| 100 | Dried Fruits |
+| 101 | Popcorn |
+| 102 | Egg Rolls |
+| 103 | Snacks Savory |
+| 104 | Indian Sweets |
+| 105 | Healthy Snacks |
+| 106 | Beverages |
+| 107 | Tea |
+| 108 | Soft Drinks |
+| 109 | Fruit Drinks |
+| 110 | Milk Drinks |
+| 111 | Rice & Soy Drinks |
+| 112 | Coffee |
+| 113 | Sports Drinks |
+| 114 | Other |
+| 115 | Dairy & Eggs |
+| 116 | Milk & Cream |
+| 117 | Eggs |
+| 118 | Yogurt |
+| 119 | Butter |
+| 120 | Cheese |
+| 121 | Tofu & Vegan |
+| 122 | Tofu |
+| 123 | Bean Curd |
+| 124 | Miso |
+| 125 | Noodles & Wraps |
+| 126 | Frozen Plant-Based |
+| 127 | Frozen Plant-Based |
+| 128 | Kimchi |
+| 129 | Pickled Vegetables |
+| 130 | Seasoning |
+| 131 | Cooking Seasoning |
+| 132 | Dry Seasoning |
+| 133 | Dipping Sauces |
+| 134 | Soup Base |
+| 135 | Hot Sauce |
+| 136 | Soy Sauce |
+| 137 | Cooking Oil |
+| 138 | Salt & Pepper |
+| 139 | Vinegar |
+| 140 | Sugar |
+| 141 | Canned |
+| 142 | Preserved & Fermented |
+| 143 | Packaged Food |
+| 144 | Canned Food |
+| 145 | Dry Meat Sung |
+| 146 | Stinky Tofu |
+| 147 | Dry Goods |
+| 148 | Rice |
+| 149 | Noodles |
+| 150 | Grains |
+| 151 | Dried Vegetables |
+| 152 | Spices & Herbs |
+| 153 | Flour & Starch |
+| 154 | Dried Nuts & Seeds |
+| 155 | Dried Seafood |
+| 156 | Other |

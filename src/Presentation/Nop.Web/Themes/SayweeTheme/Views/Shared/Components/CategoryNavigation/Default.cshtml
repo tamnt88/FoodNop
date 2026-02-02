@@ -39,7 +39,7 @@
 
         <li data-target="desktop-cat-@(lineModel.Category.Id)" class="" tabindex="0">
             <a class="desktop-category-parent-link" href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = lineModel.Category.SeName }))">
-                <i class="fa-light fa-bolt"></i><span>@lineModel.Category.Name</span> 
+                <i class="fa-light @lineModel.Category.IconName"></i><span>@lineModel.Category.Name</span> 
             </a> 
         </li>
     }

@@ -498,7 +498,8 @@ public partial class CatalogModelFactory : ICatalogModelFactory
             {
                 Id = category.Id,
                 Name = await _localizationService.GetLocalizedAsync(category, x => x.Name),
-                SeName = await _urlRecordService.GetSeNameAsync(category)
+                SeName = await _urlRecordService.GetSeNameAsync(category),
+                IconName = category.IconName
             };
 
             //number of products in each category

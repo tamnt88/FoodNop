@@ -18,4 +18,6 @@ public partial record CategorySimpleModel : BaseNopEntityModel
     public List<CategorySimpleModel> SubCategories { get; set; }
 
     public string Route { get; set; }
+
+    public string IconName {  get; set; }
 }
