@@ -53,12 +53,11 @@
                 </div>
                 <div class="col-lg-10 col-6">
                     <div class="mtheader__bottom-wrapper p-relative d-flex align-items-center justify-content-end justify-content-xl-between">
-                        <div class="mtheader__bottom-menu">
+                        <div class="mtheader__bottom-menu d-flex align-items-center justify-content-end">
                             <div class="desktop-header-utility align-items-center">
                                 @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent))
                             </div>
                             @await Component.InvokeAsync(typeof(HeaderLinksViewComponent))
-                            
                         </div>
                     </div>
                 </div>
@@ -67,3 +66,22 @@
         </div>
     </div>
 </header>
+@await Html.PartialAsync("_MobileMenu")
+
+
+<div id="mobileSearchModal" class="mobile-search-modal" hidden>
+    <div class="mobile-search-modal__backdrop" data-modal-close></div>
+    <div class="mobile-search-modal__dialog">
+        <button type="button" class="mobile-search-modal__close" data-modal-close aria-label="@T("Common.Close")">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="mobile-search-modal__content">
+            <form action="@Url.RouteUrl(NopRouteNames.General.SEARCH)" method="get" class="mobile-search-form">
+                <input type="text" name="q" placeholder="@T("Search.SearchBox.Tooltip")" autocomplete="off" class="mobile-search-input">
+                <button type="submit" class="mobile-search-submit" aria-label="@T("Common.Search")">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
