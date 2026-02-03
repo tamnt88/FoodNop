@@ -1,0 +1,43 @@
+@using Nop.Core
+@using Nop.Web.Framework.Themes
+@inject IThemeContext themeContext
+
+<div class="mt-offcanvas">
+    <div class="mt-offcanvas-wrapper">
+        <div class="mt-offcanvas-header d-flex justify-content-between align-items-center mb-40">
+            <div class="logo">
+                @await Component.InvokeAsync(typeof(LogoViewComponent))
+            </div>
+            <div class="mt-offcanvas-close">
+                <button class="mt-offcanvas-close-toggle"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="mt-offcanvas-body">
+            <div class="mt-mobile-menu">
+                @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-offcanvas-overlay"></div>
+
+<script asp-location="Footer">
+    // Simplified Mobile Accordion Script
+    (function ($) {
+        $(document).on('click', '.mt-mobile-menu .sidebar-category-toggle', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var $btn = $(this);
+            var $row = $btn.closest('.sidebar-category-row');
+            var $li = $row.parent('li');
+            var $sublist = $li.children('.sidebar-category-sublist');
+
+            if ($sublist.length) {
+                var isExpanded = $btn.attr('aria-expanded') === 'true';
+                $btn.attr('aria-expanded', !isExpanded);
+                $sublist.slideToggle(200);
+            }
+        });
+    })(jQuery);
+</script>
