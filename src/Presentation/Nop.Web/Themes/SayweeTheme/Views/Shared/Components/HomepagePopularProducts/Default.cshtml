@@ -38,10 +38,10 @@
                 <div class="col-lg-6 ">
                     <div class="mtpopular__product-wrapper mb-45  text-lg-end">
                         <div class="mtpopular__product-tab">
-                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <ul class="nav nav-pills mb-3" id="popular-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                    <button class="nav-link active" id="popular-home-tab" data-bs-toggle="pill"
+                                            data-bs-target="#popular-home" type="button" role="tab" aria-controls="popular-home"
                                             aria-selected="true">
                                         View All
                                     </button>
@@ -49,8 +49,8 @@
                                 @foreach (var item in Model)
                                 {
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="pills-@item.Id-tab" data-bs-toggle="pill"
-                                                data-bs-target="#pills-@item.Id" type="button" role="tab" aria-controls="pills-@item.Id"
+                                        <button class="nav-link" id="popular-@item.Id-tab" data-bs-toggle="pill"
+                                                data-bs-target="#popular-@item.Id" type="button" role="tab" aria-controls="popular-@item.Id"
                                                 aria-selected="false">
                                             @item.Name
                                         </button>
@@ -64,13 +64,12 @@
                 </div>
             </div>
             <div class="mtpopular__product-wrapper">
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                         aria-labelledby="pills-home-tab">
+                <div class="tab-content" id="popular-tabContent">
+                    <div class="tab-pane fade show active" id="popular-home" role="tabpanel"
+                         aria-labelledby="popular-home-tab">
                         <div class="cols">
                             @{
-                                var homeProducts = Model.OrderBy(x=> Guid.NewGuid())
-                                .FirstOrDefault()?.FeaturedProducts;
+                                var homeProducts = Model.SelectMany(x => x.FeaturedProducts).DistinctBy(x => x.Id).ToList();
                             }
                             @foreach (var item in homeProducts)
                             {
@@ -83,13 +82,12 @@
                     {
                         var products = category.FeaturedProducts.ToList();
 
-                        <div class="tab-pane fade" id="pills-@category.Id" role="tabpanel" aria-labelledby="pills-@category.Id-tab">
+                        <div class="tab-pane fade" id="popular-@category.Id" role="tabpanel" aria-labelledby="popular-@category.Id-tab">
                             <div class="cols">
                                 @foreach (var item in products)
                                 {
                                     @await Html.PartialAsync("_HomePageProductBox", item)
                                 }
-                                 
                             </div>
                         </div>
                     }
