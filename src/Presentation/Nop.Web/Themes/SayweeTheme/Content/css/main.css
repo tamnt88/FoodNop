@@ -22254,3 +22254,78 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   width: 100% !important;
   display: block !important;
 }
+
+/*----------------------------------------*/
+/*  Product Details Tabs
+/*----------------------------------------*/
+.productdetails-tabs.mt-100 {
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+.pro-details-nav-btn {
+  border-bottom: 1px solid #eee;
+  gap: 10px;
+}
+
+.pro-details-nav-btn .nav-links {
+  padding: 12px 24px;
+  border-radius: 30px;
+  border: none;
+  background: #f5f5f5;
+  color: #666;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pro-details-nav-btn .nav-links:hover {
+  background: #e8e8e8;
+}
+
+.pro-details-nav-btn .nav-links.active {
+  background: var(--mt-theme-1);
+  color: #fff;
+}
+
+.productdetails-tabs .tab-para {
+  padding: 25px 0;
+  line-height: 1.8;
+  color: #555;
+  font-size: 15px;
+}
+
+.mt-content-tab .tab-pane {
+  padding: 20px 0;
+}
+
+.mt-content-tab {
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .productdetails-tabs.mt-100 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+  }
+
+  .pro-details-nav-btn {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pro-details-nav-btn .nav-links {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .productdetails-tabs .tab-para {
+    padding: 15px 0;
+    font-size: 14px;
+  }
+
+  .mt-content-tab .tab-pane {
+    padding: 15px 0;
+  }
+}
