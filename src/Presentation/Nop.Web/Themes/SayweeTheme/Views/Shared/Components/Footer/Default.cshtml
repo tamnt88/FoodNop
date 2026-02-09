@@ -4,14 +4,17 @@
 @using Nop.Core
 @using Nop.Core.Domain.Tax
 @using Nop.Core.Domain.Topics
+@using Nop.Web.Factories
 
 @inject IWorkContext workContext 
 @inject IStoreContext storeContext;
 @inject IThemeContext themeContext
+@inject ICommonModelFactory commonModelFactory
 
 @{
 
     var themeName = await themeContext.GetWorkingThemeNameAsync();
+    var logoModel = await commonModelFactory.PrepareLogoModelAsync();
 }
 <!-- feature area Start -->
 <section class="mtfeature__area mtfeature__bg pb-50 pt-60 fix">
@@ -83,7 +86,16 @@
                 <div class="col-lg-3 col-md-4">
                     <div class="mt-footer-widget footer-2-cols-1">
                         <div class="mt-footer-logo mb-20">
-                            <a href="#"><img src="~/Themes/@(themeName)/Content/img/logo/white-logo.png" alt=""></a>
+                            <a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">
+                                @if (!string.IsNullOrEmpty(logoModel.LogoPath))
+                                {
+                                    <img src="@logoModel.LogoPath" alt="@logoModel.StoreName">
+                                }
+                                else
+                                {
+                                    <img src="~/Themes/@(themeName)/Content/img/logo/white-logo.png" alt="">
+                                }
+                            </a>
                         </div>
                         <div class="mt-footer-content">
                             <p class="mb-25">@Model.StoreName is a online grocery shop. we are selling grocery products</p>
