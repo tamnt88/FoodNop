@@ -17837,6 +17837,30 @@
   <LocaleResource Name="ContactUs.Enquiry.Required">
     <Value>Enter enquiry</Value>
   </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature1.Description">
+    <Value>Shipping On Your Order. No Extra Charges For Delivery.</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature1.Title">
+    <Value>Free Shipping</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature2.Description">
+    <Value>Our Financial Information Is Protected</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature2.Title">
+    <Value>Secure Payments</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature3.Description">
+    <Value>We're Here To Help Whenever You Need Us.</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature3.Title">
+    <Value>24 Hour Support</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature4.Description">
+    <Value>Provides Unbeatable Deals On A Wide Range Of Products</Value>
+  </LocaleResource>
+  <LocaleResource Name="ContactUs.Feature4.Title">
+    <Value>Best Prices & Offers</Value>
+  </LocaleResource>
   <LocaleResource Name="ContactUs.FullName">
     <Value>Your name</Value>
   </LocaleResource>
