@@ -21545,6 +21545,10 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   width: 500px;
 }
 
+.desktop-search-form:focus-within {
+  border: 2px solid var(--mt-theme-1);
+}
+
 .desktop-search-input {
   flex: 1;
   min-width: 0;
@@ -21554,12 +21558,15 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   color: #0f1f3c;
 }
 
+
 .desktop-search-input::placeholder {
   color: #6a768d;
 }
 
 .desktop-search-input:focus {
   outline: none;
+  box-shadow: none;
+  border: none;
 }
 
 .desktop-search-submit {
