@@ -51,13 +51,13 @@
         NopHtml.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
         NopHtml.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + webHelper.GetThisPageUrl(false) + "\" />");
     }
-    
+
     NopHtml.AddJsonLdParts(Model.JsonLd);
     var themeName = await themeContext.GetWorkingThemeNameAsync();
 }
 <!--product breadcrumb-->
 @section Breadcrumb
-{
+    {
     @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
 }
 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsAfterBreadcrumb, additionalData = Model })
@@ -67,10 +67,10 @@
     <div class="container">
         <div class="row">
 
-       
-        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
-        
-           
+
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsTop, additionalData = Model })
+
+
                     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsEssentialTop, additionalData = Model })
                     <div class="col-xl-6 col-lg-6">
                         <div class="mt-shop-details__wrapper mb-30">
@@ -87,11 +87,11 @@
 
                             @if (!string.IsNullOrEmpty(Model.ShortDescription))
                             {
-                                <div class="mt-shop-details__text mb-17">
+                                    <div class="mt-shop-details__text mb-17">
                                     @Html.Raw(Model.ShortDescription)
-                                </div>
+                                    </div>
                             }
-                            
+
 
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewTop, additionalData = Model })
                             <!--product reviews-->
@@ -106,7 +106,7 @@
                                 dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
                                 @await Html.PartialAsync("_ProductAttributes", Model, dataDictAttributes)
                             }
-                             
+
                             <!--price & add to cart & estimate shipping-->
                             @{
                                 var dataDictPrice = new ViewDataDictionary(ViewData);
@@ -119,10 +119,10 @@
 
                                 var dataDictAddToCart = new ViewDataDictionary(ViewData);
                                 dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
-                                <div class="mt-shop-details__action-group">
+                                    <div class="mt-shop-details__action-group">
                                     @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)
-                                    <!--wishlist, compare, email a friend-->
-                                    <div class="overview-buttons overview-buttons--inline">
+                                        <!--wishlist, compare, email a friend-->
+                                        <div class="overview-buttons overview-buttons--inline">
                                         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsBefore, additionalData = Model })
                                         @{
                                             var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
@@ -132,8 +132,8 @@
                                         @await Html.PartialAsync("_ProductEstimateShipping", Model.ProductEstimateShipping)
                                         @await Html.PartialAsync("_ProductEmailAFriendButton", Model)
                                         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsInsideOverviewButtonsAfter, additionalData = Model })
+                                        </div>
                                     </div>
-                                </div>
                             }
                             <div class="mt-product-meta-grid">
                                 <div class="mt-shop-details__product-info">
@@ -141,7 +141,7 @@
                                         <li><span class="label">Category:</span> <span>@Model.Breadcrumb?.CategoryBreadcrumb?.LastOrDefault()?.Name</span></li>
                                         @if (Model.ShowVendor)
                                         {
-                                            <li><span class="label">Brand:</span> <span><a href="@(await NopUrl.RouteGenericUrlAsync<Vendor>(new { SeName = Model.VendorModel.SeName }))">@Model.VendorModel.Name</a></span></li>
+                                                <li><span class="label">Brand:</span> <span><a href="@(await NopUrl.RouteGenericUrlAsync<Vendor>(new { SeName = Model.VendorModel.SeName }))">@Model.VendorModel.Name</a></span></li>
                                         }
                                         <li><span class="label">SKU:</span> <span>@Model.Sku</span></li>
                                     </ul>
@@ -150,16 +150,16 @@
                             @await Html.PartialAsync("_ShareButton", Model)
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsOverviewBottom, additionalData = Model })
                         </div>
-                         
+
                     </div>
-                     
-                @await Component.InvokeAsync(typeof(ProductsAlsoPurchasedViewComponent), new { productId = Model.Id })
-                @await Component.InvokeAsync(typeof(RelatedProductsViewComponent), new { productId = Model.Id })
-                @await Component.InvokeAsync(typeof(CompatibleWithFilterLevelValuesViewComponent), new { productId = Model.Id })
-            
-        
-         
-        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
+
+                    @await Component.InvokeAsync(typeof(ProductsAlsoPurchasedViewComponent), new { productId = Model.Id })
+                    @await Component.InvokeAsync(typeof(RelatedProductsViewComponent), new { productId = Model.Id })
+                    @await Component.InvokeAsync(typeof(CompatibleWithFilterLevelValuesViewComponent), new { productId = Model.Id })
+
+
+
+                    @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductDetailsBottom, additionalData = Model })
     </div>
                 <div class="row">
                     <div class="productdetails-tabs mt-100 ">
@@ -197,8 +197,8 @@
                                     <div class="tab-content mt-content-tab" id="myTabContent-2">
                                         <div class="tab-para tab-pane fade show active" id="home-1" role="tabpanel"
                                              aria-labelledby="home-tab-1">
-                                            <div class="row">
-                                                 @Html.Raw(Model.FullDescription)
+                                            <div class="mt-content-tab-content">
+                                                @Html.Raw(Model.FullDescription)
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="additional-information" role="tabpanel"
