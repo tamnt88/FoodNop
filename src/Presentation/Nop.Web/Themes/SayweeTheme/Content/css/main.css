@@ -21266,6 +21266,97 @@ tr {
   color: #64748b;
 }
 
+/* Register page styles */
+.register-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eaeaef;
+}
+
+.register-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.register-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #060121;
+  margin-bottom: 15px;
+}
+
+.register-field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #060121;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.register_form .gender {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.mt-register-input-wrapper .mt-checkout-input {
+  margin-bottom: 20px;
+}
+
+.mt-register-input-wrapper .mt-checkout-input span[class*="field-validation"] {
+  position: static !important;
+  transform: none !important;
+  display: block;
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 4px;
+  text-align: left;
+  right: auto !important;
+  top: auto !important;
+}
+
+.mt-register-input-wrapper .mt-checkout-input span.field-validation-valid {
+  display: none;
+}
+
+.mt-register-input-wrapper .mt-checkout-input .password-toggle,
+.mt-register-input-wrapper .mt-checkout-input .confirm-password-toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #64748b;
+}
+
+.mt-register-input-wrapper .mt-checkout-input select {
+  width: 100%;
+  height: 55px;
+  border: 1px solid #eaeaef;
+  border-radius: 10px;
+  padding: 0 20px;
+  font-size: 14px;
+  color: #060121;
+  background-color: #fff;
+  outline: none;
+}
+
+.mt-register-input-wrapper .mt-checkout-input select:focus {
+  border-color: var(--mt-theme-1);
+}
+
+@media (max-width: 767px) {
+  .register-section-title {
+    font-size: 16px;
+  }
+  .register_form .gender {
+    gap: 15px;
+  }
+}
+
 /*----------------------------------------*/
 /*  7.4 cart css start
 /*----------------------------------------*/
