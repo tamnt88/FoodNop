@@ -37,9 +37,16 @@
 
 
 <div class="mtfeature__product-item p-relative fix">
-    <div class="mtfeature__product-offer">
-        <span>70% OFF</span>
-    </div>
+     
+    @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+    {
+        var discountValue = 100 - Math.Round(Model.ProductPrice.PriceValue.Value / Model.ProductPrice.OldPriceValue.Value * 100);
+        <div class="mtfeature__product-offer">
+            <span>@Math.Round(discountValue)% OFF</span>
+            @* <span>70% OFF</span> *@
+        </div>
+
+    }
     <div class="mtfeature__product-img mb-15">
         @if (!Model.ProductPrice.DisableWishlistButton)
         {
