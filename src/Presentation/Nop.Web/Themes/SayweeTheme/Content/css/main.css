@@ -22594,7 +22594,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   line-height: normal;
 }
 
-/* 8. Restructure Addon block (Request Quote) to bottom */
+/* 8. Restructure Addon block to bottom */
 .addon-buttons {
   margin-top: 15px;
 }
@@ -22602,6 +22602,38 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 .addon-buttons>div,
 .addon-buttons>button {
   width: 100%;
+}
+
+/* 9. Style dynamically injected Request a Quote button to sit below Checkout */
+.checkout-buttons > div:has(.rfq-button-2),
+.checkout-buttons button#checkout + div {
+  order: 3;
+  width: 100%;
+  margin-top: 5px !important;
+}
+
+.checkout-buttons .rfq-button-2 {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.checkout-buttons .rfq-button-2:hover {
+  background-color: #e9ecef;
+  color: #212529;
 }
 
 /* ==================================================
@@ -22651,4 +22683,165 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 /* Hide default jQuery UI icon to avoid duplicate or broken UI */
 .ui-dialog .ui-dialog-titlebar-close span.ui-icon {
   display: none !important;
+}
+
+/* ==================================================
+   ESTIMATE SHIPPING POPUP UI REFACTOR
+   ================================================== */
+
+.mfp-content .estimate-shipping-popup {
+  background: #fff;
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Titles */
+.estimate-shipping-popup .ship-to-title strong,
+.estimate-shipping-popup .choose-shipping-title strong {
+  display: block;
+  font-size: 18px;
+  color: #222;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.estimate-shipping-popup .choose-shipping-title {
+  margin-top: 30px;
+}
+
+/* Form Controls & Layout Fixes */
+.estimate-shipping-popup .estimate-shipping-row {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+/* Make address row inputs and * sit in a row */
+.estimate-shipping-popup .shipping-address .estimate-shipping-row {
+  display: flex !important;
+  align-items: center;
+  gap: 8px; /* space before the red star */
+}
+
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > input,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > select,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > .nice-select {
+  flex: 1; /* stretch to fill remaining space */
+}
+
+/* Compensate for the middle field which lacks a <nop-required> and <div class="estimate-shipping-row"> wrapper */
+.estimate-shipping-popup .shipping-address .address-item > select,
+.estimate-shipping-popup .shipping-address .address-item > .nice-select,
+.estimate-shipping-popup .shipping-address .address-item > input {
+  width: calc(100% - 15px); /* Matches flex:1 width leaving room for hypothetical asterisk */
+}
+
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > select,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > .nice-select,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > input {
+  width: 100%; /* Resets the calc for items already inside the flex container */
+}
+
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > span.required, 
+.estimate-shipping-popup .shipping-address .estimate-shipping-row > nop-required {
+  flex: 0 0 auto;
+  color: red;
+  font-weight: bold;
+  width: 7px; /* Fixed width to ensure perfect equal matching length */
+}
+
+/* Default native input styling */
+.estimate-shipping-popup select.estimate-shipping-address-control,
+.estimate-shipping-popup input.estimate-shipping-address-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.estimate-shipping-popup select.estimate-shipping-address-control:focus,
+.estimate-shipping-popup input.estimate-shipping-address-control:focus {
+  border-color: #fab43c;
+  outline: none;
+}
+
+/* Dropdown specific reset for nice-select */
+.estimate-shipping-popup .address-item {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.estimate-shipping-popup .nice-select.estimate-shipping-address-control {
+  float: none !important;
+  display: flex !important;
+  align-items: center;
+  min-height: 45px;
+  padding-right: 35px;
+}
+.estimate-shipping-popup .nice-select.estimate-shipping-address-control::after {
+  right: 15px;
+}
+.estimate-shipping-popup .nice-select.estimate-shipping-address-control .current {
+  flex: 1;
+  text-align: left;
+}
+
+/* Shipping Methods Layout Grid */
+.estimate-shipping-popup .shipping-options .estimate-shipping-row {
+  display: flex !important;
+  align-items: center;
+  gap: 15px; 
+  border-bottom: 1px solid #f1f1f1;
+  padding: 10px 0;
+  margin: 0;
+}
+.estimate-shipping-popup .shipping-options-header .estimate-shipping-row {
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+.estimate-shipping-popup .estimate-shipping-row-item-radio {
+  width: 30px; 
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+.estimate-shipping-popup .shipping-item {
+  flex: 1; 
+  text-align: left;
+  word-break: break-word; /* prevent long words from overflowing */
+}
+
+/* Apply button */
+.estimate-shipping-popup .apply-shipping-button-container {
+  margin-top: 25px;
+}
+
+.estimate-shipping-popup button.apply-shipping-button {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #efbd53;
+  /* Match Checkout button yellow */
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+
+.estimate-shipping-popup button.apply-shipping-button:hover {
+  opacity: 0.9;
+}
+
+/* Magnific Popup Close Button Specific For Estimate */
+.estimate-shipping-popup .mfp-close {
+  color: #333;
+  right: 10px;
+  top: 10px;
+  font-size: 30px;
 }
