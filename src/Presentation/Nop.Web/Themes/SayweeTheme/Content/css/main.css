@@ -22491,14 +22491,16 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 
 .mt-coupon {
   display: flex !important;
+  flex-wrap: wrap !important;
   gap: 10px !important;
   align-items: center !important;
-  max-width: 400px;
+  max-width: 450px;
 }
 
 .mt-coupon input.input-text {
   flex: 1 !important;
   padding-right: 15px !important;
+  min-width: 150px;
 }
 
 .mt-coupon button.mt-btn-apply-coupon {
@@ -22506,6 +22508,47 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   transform: none !important;
   white-space: nowrap !important;
 }
+
+.mt-coupon .message-success,
+.mt-coupon .message-failure {
+  width: 100% !important;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #e74c3c; /* Red color for failure */
+}
+
+.mt-coupon .message-success {
+  color: #27ae60; /* Green color for success */
+}
+
+/* --- COUPON APPLIED STYLES (KEEP THESE) --- */
+.mt-coupon .current-code {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 8px;
+  border: 1px dashed #27ae60;
+}
+
+.mt-coupon .remove-discount-button {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e74c3c'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/%3E%3C/svg%3E") no-repeat center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  text-indent: -9999px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.mt-coupon .remove-discount-button:hover {
+  opacity: 0.7;
+}
+
+
 
 /* ==================================================
    RE-LAYOUT ORDER SUMMARY ACTION BUTTONS (UI/UX FIX)
@@ -22602,6 +22645,41 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 .addon-buttons>div,
 .addon-buttons>button {
   width: 100%;
+}
+
+/* ==================================================
+   WISHLIST PAGE UI FIXES
+   ================================================== */
+   
+.mt-whislist-header th.cart-add-to-cart,
+.mt-whislist-header th.product-remove {
+  text-align: center !important;
+  width: 100px;
+}
+
+.mt-whislist-action-btn,
+.remove-from-cart {
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.mt-whislist-action-btn .custom-checkbox,
+.remove-from-cart .custom-checkbox {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 45px; /* Fixed height to ensure vertical centering works within row */
+}
+
+.mt-whislist-action-btn .custom-checkbox input[type="checkbox"],
+.remove-from-cart .custom-checkbox input[type="checkbox"] {
+  transform: scale(1.5); /* Make the checkbox slightly larger */
+  margin: 0;
+  cursor: pointer;
+}
+
+.remove-from-cart .remove-btn {
+  display: none !important;
 }
 
 /* 9. Style dynamically injected Request a Quote button to sit below Checkout */
