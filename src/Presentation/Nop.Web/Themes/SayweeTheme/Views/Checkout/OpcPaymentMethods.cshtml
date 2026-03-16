@@ -76,21 +76,18 @@
                     }
 
                     <div class="mt-checkout-payment-item">
-                        <div class="d-flex align-items-center gap-3">
-                            @if (!string.IsNullOrEmpty(paymentMethod.LogoUrl))
-                            {
-                                <div class="payment-logo">
-                                    <label for="paymentmethod_@(i)">
-                                        <img src="@paymentMethod.LogoUrl" alt="@paymentMethodName">
-                                    </label>
-                                </div>
-                            }
-
                             <div class="payment-details custom-radio">
                                 <input class="custom-control-input" id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" />
-                                <label class="custom-control-label" for="paymentmethod_@(i)">@paymentMethodName</label>
+                                <label class="custom-control-label d-inline-flex align-items-center" for="paymentmethod_@(i)">
+                                    @if (!string.IsNullOrEmpty(paymentMethod.LogoUrl))
+                                    {
+                                        <div class="payment-logo me-2">
+                                            <img src="@paymentMethod.LogoUrl" alt="@paymentMethodName">
+                                        </div>
+                                    }
+                                    @paymentMethodName
+                                </label>
                             </div>
-                        </div>
 
                         @if (!string.IsNullOrEmpty(paymentMethod.Description))
                         {
