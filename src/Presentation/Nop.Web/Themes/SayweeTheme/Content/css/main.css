@@ -23226,3 +23226,60 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   color: #555;
   border-left: 3px solid #ddd;
 }
+
+.checkout-as-guest-or-register-block ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+}
+
+.checkout-as-guest-or-register-block .mt-login-account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkout-as-guest-or-register-block li {
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: #444;
+  text-align: center;
+}
+
+.checkout-as-guest-or-register-block strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.order-completed-page .order-completed,
+.order-completed-page .details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px !important;
+}
+
+.order-completed-page .mt-checkout-place-title,
+.order-completed-page .details,
+.order-completed-page .order-number,
+.order-completed-page .details-link,
+.order-completed-page .mt-checkout-btn-wrapper {
+  margin: 0 !important;
+}
+
+.order-completed-page .details-link .mt-btn-3,
+.order-completed-page .order-completed-continue-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 50px !important;
+  padding: 4px 35px 0 !important;
+  line-height: 1 !important;
+  border-radius: 50px !important;
+  width: fit-content !important;
+  text-align: center !important;
+}
+
+.order-completed-page .order-completed-continue-button {
+  width: 100% !important;
+  margin-top: 10px !important;
+}
