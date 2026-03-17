@@ -22549,11 +22549,13 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   width: 100% !important;
   margin-top: 10px;
   font-size: 14px;
-  color: #e74c3c; /* Red color for failure */
+  color: #e74c3c;
+  /* Red color for failure */
 }
 
 .mt-coupon .message-success {
-  color: #27ae60; /* Green color for success */
+  color: #27ae60;
+  /* Green color for success */
 }
 
 /* --- COUPON APPLIED STYLES (KEEP THESE) --- */
@@ -22685,7 +22687,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 /* ==================================================
    WISHLIST PAGE UI FIXES
    ================================================== */
-   
+
 .mt-whislist-header th.cart-add-to-cart,
 .mt-whislist-header th.product-remove {
   text-align: center !important;
@@ -22703,12 +22705,14 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  height: 45px; /* Fixed height to ensure vertical centering works within row */
+  height: 45px;
+  /* Fixed height to ensure vertical centering works within row */
 }
 
 .mt-whislist-action-btn .custom-checkbox input[type="checkbox"],
 .remove-from-cart .custom-checkbox input[type="checkbox"] {
-  transform: scale(1.5); /* Make the checkbox slightly larger */
+  transform: scale(1.5);
+  /* Make the checkbox slightly larger */
   margin: 0;
   cursor: pointer;
 }
@@ -22718,8 +22722,8 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 }
 
 /* 9. Style dynamically injected Request a Quote button to sit below Checkout */
-.checkout-buttons > div:has(.rfq-button-2),
-.checkout-buttons button#checkout + div {
+.checkout-buttons>div:has(.rfq-button-2),
+.checkout-buttons button#checkout+div {
   order: 3;
   width: 100%;
   margin-top: 5px !important;
@@ -22837,34 +22841,39 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 .estimate-shipping-popup .shipping-address .estimate-shipping-row {
   display: flex !important;
   align-items: center;
-  gap: 8px; /* space before the red star */
+  gap: 8px;
+  /* space before the red star */
 }
 
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > input,
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > select,
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > .nice-select {
-  flex: 1; /* stretch to fill remaining space */
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>input,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>select,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>.nice-select {
+  flex: 1;
+  /* stretch to fill remaining space */
 }
 
 /* Compensate for the middle field which lacks a <nop-required> and <div class="estimate-shipping-row"> wrapper */
-.estimate-shipping-popup .shipping-address .address-item > select,
-.estimate-shipping-popup .shipping-address .address-item > .nice-select,
-.estimate-shipping-popup .shipping-address .address-item > input {
-  width: calc(100% - 15px); /* Matches flex:1 width leaving room for hypothetical asterisk */
+.estimate-shipping-popup .shipping-address .address-item>select,
+.estimate-shipping-popup .shipping-address .address-item>.nice-select,
+.estimate-shipping-popup .shipping-address .address-item>input {
+  width: calc(100% - 15px);
+  /* Matches flex:1 width leaving room for hypothetical asterisk */
 }
 
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > select,
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > .nice-select,
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > input {
-  width: 100%; /* Resets the calc for items already inside the flex container */
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>select,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>.nice-select,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>input {
+  width: 100%;
+  /* Resets the calc for items already inside the flex container */
 }
 
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > span.required, 
-.estimate-shipping-popup .shipping-address .estimate-shipping-row > nop-required {
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>span.required,
+.estimate-shipping-popup .shipping-address .estimate-shipping-row>nop-required {
   flex: 0 0 auto;
   color: red;
   font-weight: bold;
-  width: 7px; /* Fixed width to ensure perfect equal matching length */
+  width: 7px;
+  /* Fixed width to ensure perfect equal matching length */
 }
 
 /* Default native input styling */
@@ -22877,6 +22886,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   font-size: 14px;
   box-sizing: border-box;
 }
+
 .estimate-shipping-popup select.estimate-shipping-address-control:focus,
 .estimate-shipping-popup input.estimate-shipping-address-control:focus {
   border-color: #fab43c;
@@ -22888,6 +22898,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   width: 100%;
   margin-bottom: 15px;
 }
+
 .estimate-shipping-popup .nice-select.estimate-shipping-address-control {
   float: none !important;
   display: flex !important;
@@ -22895,9 +22906,11 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   min-height: 45px;
   padding-right: 35px;
 }
+
 .estimate-shipping-popup .nice-select.estimate-shipping-address-control::after {
   right: 15px;
 }
+
 .estimate-shipping-popup .nice-select.estimate-shipping-address-control .current {
   flex: 1;
   text-align: left;
@@ -22907,25 +22920,29 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 .estimate-shipping-popup .shipping-options .estimate-shipping-row {
   display: flex !important;
   align-items: center;
-  gap: 15px; 
+  gap: 15px;
   border-bottom: 1px solid #f1f1f1;
   padding: 10px 0;
   margin: 0;
 }
+
 .estimate-shipping-popup .shipping-options-header .estimate-shipping-row {
   font-weight: bold;
   border-bottom: 2px solid #ddd;
 }
+
 .estimate-shipping-popup .estimate-shipping-row-item-radio {
-  width: 30px; 
+  width: 30px;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
 }
+
 .estimate-shipping-popup .shipping-item {
-  flex: 1; 
+  flex: 1;
   text-align: left;
-  word-break: break-word; /* prevent long words from overflowing */
+  word-break: break-word;
+  /* prevent long words from overflowing */
 }
 
 /* Apply button */
@@ -22957,4 +22974,255 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   right: 10px;
   top: 10px;
   font-size: 30px;
+}
+
+/* ==========================================================================
+   FIX LAYOUT: Checkout Payment Information (Manual Credit Card)
+   ========================================================================== */
+.payment-info table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 18px !important;
+  margin: 10px 0 !important;
+}
+
+.payment-info label {
+  font-weight: 700 !important;
+  color: var(--mt-common-black);
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.payment-info input[type="text"],
+.payment-info select {
+  width: 100% !important;
+  max-width: 450px;
+  height: 50px !important;
+  padding: 0 15px !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  background-color: #F8FAFC !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+.payment-info input[type="text"]:focus,
+.payment-info select:focus {
+  border-color: var(--mt-theme-1) !important;
+  background-color: #fff !important;
+  box-shadow: 0 0 0 4px rgba(23, 175, 38, 0.1) !important;
+  outline: none !important;
+}
+
+.payment-info select#ExpireMonth,
+.payment-info select#ExpireYear {
+  width: 140px !important;
+  display: inline-block !important;
+  margin-right: 5px;
+}
+
+.payment-info input#CardCode {
+  max-width: 120px !important;
+}
+
+.payment-info .field-validation-error {
+  color: #e53e3e;
+  font-size: 13px;
+  display: block;
+  margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+  .payment-info td {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  .payment-info td:first-child {
+    margin-bottom: 5px;
+  }
+}
+
+.payment-info .message-error {
+  margin-top: 25px !important;
+  padding: 15px 20px !important;
+  background-color: #FFF5F5 !important;
+  /* Light red background */
+  border-left: 4px solid #E53E3E !important;
+  /* Strong red left border */
+  border-radius: 8px !important;
+  max-width: 450px;
+  /* Aligns with input width */
+}
+
+/* 2. Styling the error list inside the summary */
+.payment-info .message-error ul {
+  list-style: none !important;
+  /* Remove default bullet points */
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.payment-info .message-error li {
+  color: #C53030 !important;
+  /* Dark red text */
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 3px 0 !important;
+  position: relative;
+  padding-left: 20px !important;
+}
+
+.payment-info .message-error li::before {
+  content: "\f057";
+  font-family: "Font Awesome 6 Pro", "Font Awesome 5 Free";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  font-size: 14px;
+}
+
+.payment-info .field-validation-error {
+  color: #E53E3E !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  display: block !important;
+  margin-top: 4px !important;
+  padding-left: 2px !important;
+}
+
+.payment-info .input-validation-error {
+  border-color: #E53E3E !important;
+  background-color: #FFF5F5 !important;
+}
+
+#confirm-order-buttons-container {
+  margin-top: 30px !important;
+  padding-top: 20px;
+  border-top: 1px solid #f1f1f1;
+}
+
+.confirm-order-next-step-button {
+  min-width: 180px;
+  height: 50px;
+  font-weight: 700;
+}
+
+#checkout-confirm-order-load {
+  margin-bottom: 10px;
+}
+
+.opc-select-address-container {
+  display: flex !important;
+  align-items: center !important;
+  gap: 15px !important;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#billing-address-select {
+  flex: 1;
+  max-width: 600px;
+}
+
+#edit-billing-address-button,
+#delete-billing-address-button {
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+@media (max-width: 576px) {
+  .opc-select-address-container {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  #billing-address-select {
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
+
+.payment-method-status,
+.shipping-method-info li {
+  justify-content: flex-start !important;
+  gap: 10px !important;
+}
+
+.payment-method-status .label,
+.mt-team-more-info li label {
+  font-weight: 700 !important;
+  min-width: 140px;
+  display: inline-block;
+}
+
+.payment-method-status .value,
+.shipping-method-info li span:last-child {
+  font-weight: 400 !important;
+}
+
+.order-details-page .td-title {
+  display: none !important;
+}
+
+.order-details-page .section.totals {
+  margin-top: 40px;
+  border-top: 1px solid #f1f1f1;
+  padding-top: 25px;
+}
+
+.order-details-page .total-info {
+  max-width: 350px;
+  margin-bottom: 30px;
+}
+
+.order-details-page .cart-total {
+  width: 100%;
+}
+
+.order-details-page .cart-total td {
+  padding: 12px 0;
+}
+
+.order-details-page .cart-total-left {
+  text-align: left;
+  color: #646373;
+  font-size: 15px;
+}
+
+.order-details-page .cart-total-right {
+  text-align: right;
+  font-weight: 600;
+  color: #000;
+  font-size: 16px;
+}
+
+.order-details-page .cart-total tr:last-child td {
+  padding-top: 20px;
+  border-top: 2px solid #000;
+}
+
+.order-details-page .cart-total tr:last-child .cart-total-left label {
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+}
+
+.order-details-page .cart-total tr:last-child .cart-total-right span {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--mt-theme-1);
+}
+
+.order-details-page .section.totals .actions {
+  margin-top: 20px;
+}
+
+.order-details-page .selected-checkout-attributes {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #555;
+  border-left: 3px solid #ddd;
 }
