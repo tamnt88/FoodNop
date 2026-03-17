@@ -162,7 +162,12 @@
                                     <table class="table">
                                         <thead class="mt-whislist-header">
                                             <tr>
-                                                 
+                                                 @if (Model.DisplayAddToCart)
+                                                 {
+                                                     <th class="cart-add-to-cart">
+                                                         @T("ShoppingCart.AddToCart")
+                                                     </th>
+                                                 }
                                                 @if (Model.ShowSku)
                                                 {
                                                     <th class="cart-product-name">
@@ -205,14 +210,13 @@
                                                         <td class="mt-whislist-action-btn">
                                                             <div class="custom-checkbox">
                                                                 <input class="custom-control-input" type="checkbox" name="addtocart" id="addtocart-@item.Id" value="@(item.Id)" aria-labelledby="add-to-cart-caption" />
-                                                                <label class="td-title custom-control-label" for="addtocart-@item.Id"><span class="check-label">@T("ShoppingCart.AddToCart"):</span></label>
+                                                                <label class="td-title custom-control-label" for="addtocart-@item.Id"></label>
                                                             </div>
                                                         </td>
                                                     }
                                                     @if (Model.ShowSku)
                                                     {
                                                         <td class="sku">
-                                                            <label class="td-title">@T("ShoppingCart.SKU"):</label>
                                                             <span class="sku-number">@item.Sku</span>
                                                         </td>
                                                     }
@@ -293,7 +297,6 @@
                                                         <span class="amount">@item.UnitPrice</span>
                                                     </td> 
                                                     <td class="quantity">
-                                                        <label class="td-title">@T("ShoppingCart.Quantity"):</label>
                                                         @if (Model.IsEditable)
                                                         {
                                                             if (item.AllowedQuantities.Count > 0)
@@ -316,7 +319,6 @@
                                                         }
                                                     </td>
                                                     <td class="subtotal">
-                                                        <label class="td-title">@T("ShoppingCart.ItemTotal"):</label>
                                                         <span class="product-subtotal">@item.SubTotal</span>
                                                         @if (!string.IsNullOrEmpty(item.Discount))
                                                         {
@@ -334,7 +336,10 @@
                                                     @if (Model.IsEditable)
                                                     {
                                                         <td class="remove-from-cart">
-                                                            <input type="checkbox" name="removefromcart" id="removefromcart@(item.Id)" value="@(item.Id)" aria-label="@T("ShoppingCart.Remove")" />
+                                                            <div class="custom-checkbox">
+                                                                <input type="checkbox" name="removefromcart" id="removefromcart@(item.Id)" value="@(item.Id)" aria-label="@T("ShoppingCart.Remove")" />
+                                                                <label class="custom-control-label" for="removefromcart@(item.Id)"></label>
+                                                            </div>
                                                             <button type="button" name="updatecart" class="remove-btn" onclick="$('#removefromcart@(item.Id)').attr('checked', true); $('#updatecart').trigger('click');" aria-labelledby="removefromcart@(item.Id)"></button>
                                                         </td>
                                                     }
@@ -342,7 +347,18 @@
                                             }
                                              
                                         </tbody>
-                                    </table>
+                                     </table>
+                                </div>
+                                
+                                <div class="buttons mt-3 mb-3 text-end">
+                                    @if (Model.IsEditable)
+                                    {
+                                        <button type="submit" name="updatecart" id="updatecart" class="button-2 update-wishlist-button mt-btn">@T("Wishlist.UpdateCart")</button>
+                                    }
+                                    @if (Model.DisplayAddToCart)
+                                    {
+                                        <button type="submit" name="addtocartbutton" class="button-2 wishlist-add-to-cart-button mt-btn">@T("ShoppingCart.AddToCart")</button>
+                                    }
                                 </div>
                             </form>
                         </div>
@@ -362,14 +378,6 @@
                     </script>
                 }
 
-                @if (Model.IsEditable && Model.Items.Count > 0)
-                {
-                    var wishlistUrl = Url.RouteUrl(NopRouteNames.General.WISHLIST, new { customerGuid = Model.CustomerGuid, list = Model.ListId }, webHelper.GetCurrentRequestProtocol());
-                    <div class="share-info">
-                        <span class="share-label">@T("Wishlist.YourWishlistURL"):</span>
-                        <a href="@wishlistUrl" class="share-link">@wishlistUrl</a>
-                    </div>
-                }
 
             </div>
         </div>
