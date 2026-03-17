@@ -10,53 +10,23 @@
     <div class="page-body">
         <div class="container">
             <section class="nf" aria-label="@T("PageTitle.PageNotFound")">
-                <div class="nf__content">
+                <div class="nf__center">
                     <p class="nf__code" aria-hidden="true">404</p>
                     <h1 class="nf__title">@T("PageTitle.PageNotFound")</h1>
 
-                    <p class="nf__lead">@T("Search.SearchBox.Tooltip")</p>
-
-                    <form action="@Url.RouteUrl(NopRouteNames.General.SEARCH)" method="get" class="nf__search" role="search" aria-label="@T("PageTitle.Search")">
-                        <label class="visually-hidden" for="nf-q">@T("Search.SearchTerm")</label>
-                        <input id="nf-q" type="search" name="q" placeholder="@T("Search.SearchTerm")" autocomplete="off" class="nf__search-input" />
-                        <button type="submit" class="mt-btn-3 nf__search-submit">
-                            <span>@T("Search.Button")</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </form>
+                    <div class="nf__description topic-block">
+                        @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "PageNotFound" })
+                    </div>
 
                     <nav class="nf__actions" aria-label="@T("PageTitle.PageNotFound")">
                         <a class="mt-btn-3" href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">
-                            <span>@T("ShoppingCart.ContinueShopping")</span>
+                            <span>@T("Categories.Breadcrumb.Top")</span>
                             <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-                        <a class="mt-btn-2" href="@Url.RouteUrl(NopRouteNames.General.SEARCH)">
-                            <span>@T("Common.Search")</span>
                         </a>
                         <button type="button" class="mt-btn-2" onclick="history.back(); return false;">
                             <span>@T("Common.Back")</span>
                         </button>
                     </nav>
-
-                    <div class="nf__details topic-block">
-                        @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "PageNotFound" })
-                    </div>
-                </div>
-
-                <div class="nf__art" aria-hidden="true">
-                    <svg width="520" height="360" viewBox="0 0 520 360" focusable="false">
-                            <defs>
-                                <linearGradient id="nf-grad" x1="0" y1="0" x2="1" y2="1">
-                                    <stop offset="0" stop-color="currentColor" stop-opacity=".20" />
-                                    <stop offset="1" stop-color="currentColor" stop-opacity=".06" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M44 298c0-92 66-166 160-180 66-10 134 13 182 64 44 46 66 104 66 168H44Z" fill="url(#nf-grad)"></path>
-                            <path d="M150 280c28-64 88-108 158-108 52 0 100 24 130 62" fill="none" stroke="currentColor" stroke-opacity=".25" stroke-width="12" stroke-linecap="round"></path>
-                            <path d="M186 242c18-24 47-40 80-40 24 0 46 8 62 22" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="12" stroke-linecap="round"></path>
-                            <circle cx="344" cy="224" r="10" fill="currentColor" fill-opacity=".35"></circle>
-                            <circle cx="206" cy="256" r="10" fill="currentColor" fill-opacity=".35"></circle>
-                    </svg>
                 </div>
             </section>
         </div>
