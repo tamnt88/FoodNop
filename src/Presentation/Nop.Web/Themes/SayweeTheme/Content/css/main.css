@@ -22688,6 +22688,90 @@ only screen and (min-width: 768px) and (max-width: 991px) {
    WISHLIST PAGE UI FIXES
    ================================================== */
 
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.button-row .custom-wishlist-button {
+  height: 40px;
+  line-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--mt-border-1);
+  background: var(--mt-common-white);
+  color: var(--mt-common-dark);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.button-row .custom-wishlist-button:hover,
+.button-row .custom-wishlist-button:focus-visible {
+  border-color: rgba(23, 175, 38, 0.35);
+  box-shadow: 0 0 0 4px rgba(23, 175, 38, 0.12);
+}
+
+.button-row .custom-wishlist-button.add-new {
+  border-color: var(--mt-theme-1);
+  background: var(--mt-theme-1);
+  color: var(--mt-common-white);
+}
+
+.button-row .custom-wishlist-button.add-new:hover,
+.button-row .custom-wishlist-button.add-new:focus-visible {
+  box-shadow: 0 0 0 4px rgba(23, 175, 38, 0.18);
+}
+
+.custom-wishlist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.custom-wishlist .td-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--mt-common-dark);
+}
+
+.custom-wishlist-dropdown {
+  height: 40px;
+  min-width: 220px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--mt-border-1);
+  background: var(--mt-common-white);
+  color: var(--mt-common-dark);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+}
+
+.custom-wishlist-dropdown:focus {
+  border-color: rgba(23, 175, 38, 0.35);
+  box-shadow: 0 0 0 4px rgba(23, 175, 38, 0.12);
+}
+
+@media (max-width: 767px) {
+  .button-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .custom-wishlist-dropdown {
+    min-width: 100%;
+  }
+}
+
 .mt-whislist-header th.cart-add-to-cart,
 .mt-whislist-header th.product-remove {
   text-align: center !important;
