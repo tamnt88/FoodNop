@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = "_ColumnsOne";
 
     //title
@@ -7,10 +7,28 @@
     NopHtml.AppendPageCssClassParts("html-not-found-page");
 }
 <div class="page not-found-page">
-    <div class="page-title">
-        <h1>@T("PageTitle.PageNotFound")</h1>
-    </div>
     <div class="page-body">
-        @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "PageNotFound" })
+        <div class="container">
+            <section class="nf" aria-label="@T("PageTitle.PageNotFound")">
+                <div class="nf__center">
+                    <p class="nf__code" aria-hidden="true">404</p>
+                    <h1 class="nf__title">@T("PageTitle.PageNotFound")</h1>
+
+                    <div class="nf__description topic-block">
+                        @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "PageNotFound" })
+                    </div>
+
+                    <nav class="nf__actions" aria-label="@T("PageTitle.PageNotFound")">
+                        <a class="mt-btn-3" href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">
+                            <span>@T("Categories.Breadcrumb.Top")</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <button type="button" class="mt-btn-2" onclick="history.back(); return false;">
+                            <span>@T("Common.Back")</span>
+                        </button>
+                    </nav>
+                </div>
+            </section>
+        </div>
     </div>
 </div>
