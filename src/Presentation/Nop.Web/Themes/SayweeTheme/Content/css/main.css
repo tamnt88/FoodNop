@@ -23453,7 +23453,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   max-width: 60ch;
 }
 
-.not-found-page .nf__description li + li {
+.not-found-page .nf__description li+li {
   margin-top: 6px;
 }
 
@@ -23484,4 +23484,129 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+
+.order-completed-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 60px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.success-icon-wrapper {
+  margin: 0 auto 30px;
+  opacity: 0.2;
+  text-align: center;
+}
+
+.checkmark-svg {
+  width: 140px;
+  height: 140px;
+  stroke: #28a745;
+  stroke-width: 2.5;
+  fill: none;
+}
+
+.section.order-completed {
+  position: relative;
+  z-index: 1;
+}
+
+.thank-you-title {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  margin-bottom: 12px !important;
+  border: none !important;
+  text-align: center !important;
+}
+
+.status-subtitle {
+  font-size: 16px !important;
+  color: #888 !important;
+  margin-bottom: 40px !important;
+  border: none !important;
+  text-align: center !important;
+}
+
+.order-details-card {
+  background: #f8f9fa;
+  padding: 16px 30px;
+  border-left: 4px solid #28a745;
+  border-radius: 4px;
+  margin: 0 auto 40px;
+  display: inline-block;
+  min-width: 320px;
+  text-align: center;
+}
+
+.order-number-info {
+  font-size: 17px;
+  color: #444;
+  font-family: monospace;
+}
+
+.order-number-info .label {
+  color: #888;
+  margin-right: 8px;
+}
+
+.order-number-info .value {
+  font-weight: 700;
+  color: #222;
+}
+
+.buttons-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-custom {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 50px;
+  font-weight: 700;
+  text-transform: none;
+  font-size: 15px;
+  letter-spacing: 0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+  text-align: center;
+}
+
+.btn-order-details {
+  background-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.btn-homepage-continue {
+  background-color: #ffc107 !important;
+  color: #333 !important;
+}
+
+.btn-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  filter: brightness(1.05);
+}
+
+@media (min-width: 500px) {
+  .buttons-group {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .btn-custom {
+    width: auto;
+    min-width: 200px;
+  }
 }
