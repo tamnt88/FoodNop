@@ -1,4 +1,4 @@
-﻿@model CheckoutCompletedModel
+@model CheckoutCompletedModel
 @inject IThemeContext themeContext
 @{
     Layout = "_ColumnsOne";
@@ -13,25 +13,29 @@
 }
 
 @section Breadcrumb
-{
+    {
     <!-- Breadcrumb Area Start -->
     <section class="mt-breadcrumb-area mt-breadcrumb-space p-relative"
-             data-background="Themes/@(themeName)/Content/img/breadcurmb/breadcrumb-bg.jpg">
+        data-background="Themes/@(themeName)/Content/img/breadcurmb/breadcrumb-bg.jpg">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7">
                     <div class="mt-breadcrumb p-relative">
-                        <h1 class="mt-breadcrumb-title">@T("Checkout.ThankYou") <span>@T("Checkout.Progress.Complete")</span></h1>
+                        <h1 class="mt-breadcrumb-title">@T("Checkout.ThankYou")
+                            <span>@T("Checkout.Progress.Complete")</span>
+                        </h1>
                         <div class="mt-breadcrumb-list">
-                            <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a></span>
+                            <span class="active"><a
+                                    href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a></span>
                             <span class="dvir">-</span>
-                            <span><a href="@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT_COMPLETED)">@T("Checkout.Progress.Complete")</a></span>
+                            <span><a
+                                    href="@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT_COMPLETED)">@T("Checkout.Progress.Complete")</a></span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5">
                     <div class="mt-breadcrumb-img text-end wow img-custom-anim-top" data-wow-duration="1.5s"
-                         data-wow-delay="0.1s">
+                        data-wow-delay="0.1s">
                         <img src="~/Themes/@(themeName)/Content/img/breadcurmb/breadcrumb.png" alt="">
                     </div>
                 </div>
@@ -47,37 +51,50 @@
         @await Component.InvokeAsync(typeof(CheckoutProgressViewComponent), new { step = CheckoutProgressStep.Complete })
     }
 
-    <section class="mt-checkout-area pb-140 pt-140">
+    <section class="mt-checkout-area pb-100 pt-60">
         <div class="container checkout-data">
-            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CheckoutCompletedTop, additionalData = Model })
+            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone =
+            PublicWidgetZones.CheckoutCompletedTop, additionalData = Model })
 
             <div class="row justify-content-center">
                 <div class="col-lg-8">
-                    <div class="section order-completed mt-checkout-place">
-                        <h3 class="mt-checkout-place-title mb-20">@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</h3>
-
-                        <div class="details mb-30">
-                            <div class="order-number mb-10">
-                                <strong>@T("Checkout.OrderNumber"): @Model.CustomOrderNumber</strong>
-                            </div>
-                            <div class="details-link">
-                                <a href="@Url.RouteUrl(NopRouteNames.Standard.ORDER_DETAILS, new { orderID = Model.OrderId })" class="mt-btn-3">
-                                    @T("Checkout.PlacedOrderDetails")
-                                </a>
-                            </div>
+                    <div class="order-completed-container">
+                        <div class="success-icon-wrapper">
+                            <svg class="checkmark-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                                <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                            </svg>
                         </div>
 
-                        <div class="mt-checkout-btn-wrapper">
-                            <button type="button" class="button-1 mt-btn order-completed-continue-button w-100"
+                        <div class="section order-completed">
+                            <h1 class="thank-you-title">@T("Checkout.ThankYou")</h1>
+                            <h2 class="status-subtitle">@T("Checkout.YourOrderHasBeenSuccessfullyProcessed")</h2>
+
+                            <div class="order-details-card">
+                                <div class="order-number-info">
+                                    <span class="label">@T("Checkout.OrderNumber"):</span>
+                                    <span class="value">@Model.CustomOrderNumber</span>
+                                </div>
+                            </div>
+
+                            <div class="buttons-group">
+                                <a href="@Url.RouteUrl(NopRouteNames.Standard.ORDER_DETAILS, new { orderID = Model.OrderId })"
+                                    class="btn-custom btn-order-details">
+                                    @T("Checkout.PlacedOrderDetails")
+                                </a>
+
+                                <button type="button" class="btn-custom btn-homepage-continue"
                                     onclick="setLocation('@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)')">
-                                <span>@T("Checkout.ThankYou.Continue")</span>
-                            </button>
+                                    @T("Checkout.ThankYou.Continue")
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CheckoutCompletedBottom, additionalData = Model })
+            @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone =
+            PublicWidgetZones.CheckoutCompletedBottom, additionalData = Model })
         </div>
     </section>
 </div>
