@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Nop.Core;
 using Nop.Core.Caching;
@@ -93,6 +93,10 @@ public class WidgetSwiperViewComponent : NopViewComponent
                 TitleText = slide.TitleText,
                 LinkUrl = slide.LinkUrl,
                 AltText = slide.AltText,
+                Subtitle = slide.Subtitle,
+                Heading = slide.Heading,
+                DescriptionBody = slide.DescriptionBody,
+                ButtonText = slide.ButtonText,
                 LazyLoading = sliderSettings.LazyLoading
             });
         }

@@ -1,4 +1,4 @@
-﻿@using Nop.Web.Framework.Themes
+@using Nop.Web.Framework.Themes
 @model PublicSlideModel
 @inject IThemeContext themeContext 
 @{
@@ -21,25 +21,32 @@
                     <div class="mthero__content">
                         
                        
-                        <h5 class="mthero__subtitle">
-                            <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg"
-                                 alt="">
-                                <span>Get up to 30% off </span>
-    </h5>
-                        <h1 class="mthero__title">
-                            Try Best <span>Organic</span> <br>
-                            Products
-                        </h1>
-                        <p>
-                            Visit our discount shop will get 30% off every
-                            organic products, fruits and vagetables
-                        </p>
-                        <div class="mthero__btn mt-40">
-                            <a href="shop.html" class="mt-btn">
-                                <i class="fa-solid fa-basket-shopping"></i> Shop
-                                Now
-                            </a>
-                        </div>
+                        @if (!string.IsNullOrWhiteSpace(Model.Subtitle))
+                        {
+                            <h5 class="mthero__subtitle">
+                                <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg"
+                                     alt="">
+                                <span>@Model.Subtitle</span>
+                            </h5>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.Heading))
+                        {
+                            <h1 class="mthero__title">
+                                @Html.Raw(Model.Heading)
+                            </h1>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.DescriptionBody))
+                        {
+                            <p>@Model.DescriptionBody</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.ButtonText))
+                        {
+                            <div class="mthero__btn mt-40">
+                                <a href="@(string.IsNullOrWhiteSpace(Model.LinkUrl) ? "#" : Model.LinkUrl)" class="mt-btn">
+                                    <i class="fa-solid fa-basket-shopping"></i> @Model.ButtonText
+                                </a>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div class="col-lg-5">

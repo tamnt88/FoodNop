@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Nop.Core;
 using Nop.Core.Domain.Cms;
 using Nop.Core.Infrastructure;
@@ -151,6 +151,14 @@ public class SwiperPlugin : BasePlugin, IWidgetPlugin
             ["Plugins.Widgets.Swiper.ShowNavigation.Hint"] = "Check to display navigation arrows for the slider.",
             ["Plugins.Widgets.Swiper.ShowPagination"] = "Show pagination",
             ["Plugins.Widgets.Swiper.ShowPagination.Hint"] = "Check to display pagination for the slider.",
+            ["Plugins.Widgets.Swiper.Subtitle"] = "Hero subtitle",
+            ["Plugins.Widgets.Swiper.Subtitle.Hint"] = "Short line above the main heading (optional).",
+            ["Plugins.Widgets.Swiper.Heading"] = "Hero heading",
+            ["Plugins.Widgets.Swiper.Heading.Hint"] = "Main headline; HTML is allowed (e.g. line breaks and styled spans).",
+            ["Plugins.Widgets.Swiper.DescriptionBody"] = "Hero description",
+            ["Plugins.Widgets.Swiper.DescriptionBody.Hint"] = "Paragraph text under the heading (plain text).",
+            ["Plugins.Widgets.Swiper.ButtonText"] = "Button text",
+            ["Plugins.Widgets.Swiper.ButtonText.Hint"] = "Call-to-action label; uses URL from the slide URL field.",
 
         });
 
