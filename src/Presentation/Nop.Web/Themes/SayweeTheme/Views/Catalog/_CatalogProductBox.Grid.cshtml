@@ -36,8 +36,8 @@
         .ToList();
 }
 
-<div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
-    <div class="mt-shop-grid-item p-relative mb-40">
+<div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-25">
+    <div class="mt-shop-grid-item p-relative">
         <div class="mt-shop-grid-img mb-10">
             @{
                 var productPicture = Model.PictureModels.FirstOrDefault();
@@ -48,54 +48,49 @@
             </a>
         </div>
         <div class="mt-shop-grid-content">
-            <div class="mtflash__product-content mb-15 d-flex align-items-center justify-content-between">
-                <div class="mtfeature__product-price">
-                    <span>@Model.ProductPrice.Price</span>
-                    @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
-                    {
-                        <del>@Model.ProductPrice.OldPrice</del>
-                         
-                    }
-                   
-                </div>
-                @if (Model.ReviewOverviewModel.AllowCustomerReviews)
-                {
-                    var ratingPercent = 0;
-                    if (Model.ReviewOverviewModel.TotalReviews != 0)
-                    {
-                        ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
-                    }
-                    <div class="mtflash__product-ratting">
-                        <span class="mtflash__product-ricon">
-                            <i class="fa-solid fa-star"></i>
-                        </span>
-                        <span class="mtflash__product-review-number">(@Model.ReviewOverviewModel.RatingSum)</span>
-                    </div>
-                }
-                
-            </div>
-            <div class="mtfeature__product-content text-start mb-15">
-                <h5 class="mtfeature__product-title">
-                    <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">
-                        @Model.Name
-                    </a>
-                </h5>
-            </div>
-            <div class="mtfeature__product-pricing-wrap d-flex align-items-center justify-content-between">
-                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoBefore, additionalData = Model })
-                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
-
-
-                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
+            <div class="mtfeature__product-content mb-15">
                 @if (weightValues?.Any() == true)
                 {
-                    <div class="mtfeature__product-cate">
+                    <div class="mtfeature__product-cate mb-10">
                         @foreach (var weight in weightValues)
                         {
                             <span>@Html.Raw(weight)</span>
                         }
                     </div>
                 }
+                <h5 class="mtfeature__product-title">
+                    <a href="@(await NopUrl.RouteGenericUrlAsync<Product>(new { SeName = Model.SeName }))">
+                        @Model.Name
+                    </a>
+                </h5>
+            </div>
+            @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+            {
+                decimal ratingPercent = 0;
+                int stars = 0;
+                if (Model.ReviewOverviewModel.TotalReviews != 0)
+                {
+                    ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5.0m;
+                    stars = (int)Math.Round(ratingPercent / 20);
+                }
+                <div class="mtfeature__product-rating mb-15" title="@string.Format(T("Reviews.TotalReviews").Text, Model.ReviewOverviewModel.TotalReviews)">
+                    @for (int i = 0; i < stars; i++)
+                    {
+                        <a href="#"><i class="fa-solid fa-star-sharp"></i></a>
+                    }
+                </div>
+            }
+            <div class="mtfeature__product-pricing-wrap d-flex align-items-center justify-content-between">
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoBefore, additionalData = Model })
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoMiddle, additionalData = Model })
+                <div class="mtfeature__product-price">
+                    <span>@Model.ProductPrice.Price</span>
+                    @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                    {
+                        <del>@Model.ProductPrice.OldPrice</del>
+                    }
+                </div>
+                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.ProductBoxAddinfoAfter, additionalData = Model })
                 @if (!Model.ProductPrice.DisableBuyButton)
                 {
                     var addToCartText = T("ShoppingCart.AddToCart").Text;

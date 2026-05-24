@@ -112,33 +112,26 @@
                                 </form>
                             </div>
 
-                            @await Component.InvokeAsync(typeof(ExternalMethodsViewComponent), "ExternalAuthentication")
+                            
                             @* @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "LoginRegistrationInfo" }) *@
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LoginBottom, additionalData = Model })
                             <div class="mt-login-mail text-center p-relative mb-20">
                                 <p>Or Login With</p>
                             </div>
 
-                            <div class="mt-login-social mb-20 d-flex flex-wrap align-items-center justify-content-center">
-                                <div class="mt-login-option-item">
-                                    <a href="#">
-                                        <img src="~/Themes/@(themeName)/Content/img/contact/fb.svg" alt="">
-                                        <span>Facebook</span>
-                                    </a>
-                                </div>
-                                <div class="mt-login-option-item">
+                            
+
+                             <div class="mt-login-social mb-20 d-flex flex-wrap align-items-center justify-content-center">
+                                @await Component.InvokeAsync(typeof(ExternalMethodsViewComponent), "ExternalAuthentication")
+                                
+                                @* <div class="mt-login-option-item">
                                     <a href="#">
                                         <img class="apple" src="~/Themes/@(themeName)/Content/img/contact/google.svg" alt="">
                                         <span>Google</span>
                                     </a>
-                                </div>
-                            </div>
-                            <div class="mt-login-account text-center mb-30">
-                                <p>
-                                    Already have account?
-                                    <a href="#"> Login</a>
-                                </p>
-                            </div>
+                                </div> *@
+                            </div> 
+                             
                         </div>
                     </div>
                 </div>

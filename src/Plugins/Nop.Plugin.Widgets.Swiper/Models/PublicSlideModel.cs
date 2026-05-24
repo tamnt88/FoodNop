@@ -1,4 +1,4 @@
-﻿using Nop.Web.Framework.Models;
+using Nop.Web.Framework.Models;
 
 namespace Nop.Plugin.Widgets.Swiper.Models;
 
@@ -14,6 +14,10 @@ public record PublicSlideModel : BaseNopModel
     public string TitleText { get; set; }
     public string LinkUrl { get; set; }
     public string AltText { get; set; }
+    public string Subtitle { get; set; }
+    public string Heading { get; set; }
+    public string DescriptionBody { get; set; }
+    public string ButtonText { get; set; }
     public bool LazyLoading { get; set; }
 
     #endregion

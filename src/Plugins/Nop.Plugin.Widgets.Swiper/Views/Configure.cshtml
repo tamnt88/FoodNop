@@ -1,4 +1,4 @@
-﻿@model ConfigurationModel
+@model ConfigurationModel
 
 @{
     Layout = "_ConfigurePlugin";
@@ -115,6 +115,34 @@
                                 {
                                     Title = T("Plugins.Widgets.Swiper.LinkUrl").Text,
                                     Width = "200",
+                                    Editable = true,
+                                    EditType = EditType.String
+                                },
+                                new ColumnProperty(nameof(PublicSlideModel.Subtitle))
+                                {
+                                    Title = T("Plugins.Widgets.Swiper.Subtitle").Text,
+                                    Width = "160",
+                                    Editable = true,
+                                    EditType = EditType.String
+                                },
+                                new ColumnProperty(nameof(PublicSlideModel.Heading))
+                                {
+                                    Title = T("Plugins.Widgets.Swiper.Heading").Text,
+                                    Width = "200",
+                                    Editable = true,
+                                    EditType = EditType.String
+                                },
+                                new ColumnProperty(nameof(PublicSlideModel.DescriptionBody))
+                                {
+                                    Title = T("Plugins.Widgets.Swiper.DescriptionBody").Text,
+                                    Width = "240",
+                                    Editable = true,
+                                    EditType = EditType.String
+                                },
+                                new ColumnProperty(nameof(PublicSlideModel.ButtonText))
+                                {
+                                    Title = T("Plugins.Widgets.Swiper.ButtonText").Text,
+                                    Width = "140",
                                     Editable = true,
                                     EditType = EditType.String
                                 },

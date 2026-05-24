@@ -256,5 +256,6 @@
       
       More details here: https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals#concurrent-garbage-collection-->
     <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>
+    <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 </Project>

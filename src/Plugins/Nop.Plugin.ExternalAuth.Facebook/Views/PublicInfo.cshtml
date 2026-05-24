@@ -1,9 +1,13 @@
-﻿@{
+﻿@using Nop.Web.Framework.Themes
+@inject IThemeContext themeContext
+@{
     Layout = ""; 
-}
-<link rel="stylesheet" href="~/Plugins/ExternalAuth.Facebook/Content/facebookstyles.css" />
-<div class="facebook-login-block">
-    <div class="buttons">
-        <a asp-controller="facebookauthentication" asp-action="login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" class="facebook-btn"></a>
-    </div>
+    var themeName = await themeContext.GetWorkingThemeNameAsync();
+} 
+
+<div class="mt-login-option-item">
+    <a asp-controller="facebookauthentication" asp-action="login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" class="facebook-btn"> 
+        <img src="~/Themes/@(themeName)/Content/img/contact/fb.svg" alt="">
+        <span>Facebook</span>
+    </a>
 </div>

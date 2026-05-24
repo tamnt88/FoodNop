@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Nop.Core;
 using Nop.Plugin.Widgets.Swiper.Domain;
@@ -146,7 +146,11 @@ public class WidgetSwiperController : BasePluginController
             PictureId = model.PictureId,
             AltText = model.AltText,
             TitleText = model.TitleText,
-            LinkUrl = model.LinkUrl
+            LinkUrl = model.LinkUrl,
+            Subtitle = model.Subtitle,
+            Heading = model.Heading,
+            DescriptionBody = model.DescriptionBody,
+            ButtonText = model.ButtonText
         });
 
         sliderSettings.Slides = JsonConvert.SerializeObject(slides);
@@ -180,7 +184,11 @@ public class WidgetSwiperController : BasePluginController
                         PictureUrl = (await _pictureService.GetPictureUrlAsync(picture, 200)).Url,
                         TitleText = item.TitleText,
                         AltText = item.AltText,
-                        LinkUrl = item.LinkUrl
+                        LinkUrl = item.LinkUrl,
+                        Subtitle = item.Subtitle,
+                        Heading = item.Heading,
+                        DescriptionBody = item.DescriptionBody,
+                        ButtonText = item.ButtonText
                     };
                 });
         });
@@ -242,6 +250,10 @@ public class WidgetSwiperController : BasePluginController
         slide.TitleText = model.TitleText;
         slide.AltText = model.AltText;
         slide.LinkUrl = model.LinkUrl;
+        slide.Subtitle = model.Subtitle;
+        slide.Heading = model.Heading;
+        slide.DescriptionBody = model.DescriptionBody;
+        slide.ButtonText = model.ButtonText;
 
         var sliderSettings = await _settingService.LoadSettingAsync<SwiperSettings>(storeScope);
         sliderSettings.Slides = JsonConvert.SerializeObject(slides);

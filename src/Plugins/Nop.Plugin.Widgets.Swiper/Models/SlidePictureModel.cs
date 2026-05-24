@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Nop.Web.Framework.Models;
 using Nop.Web.Framework.Mvc.ModelBinding;
 
@@ -23,6 +23,18 @@ public record SlidePictureModel : BaseNopModel
 
     [NopResourceDisplayName("Plugins.Widgets.Swiper.AltText")]
     public string AltText { get; set; }
+
+    [NopResourceDisplayName("Plugins.Widgets.Swiper.Subtitle")]
+    public string Subtitle { get; set; }
+
+    [NopResourceDisplayName("Plugins.Widgets.Swiper.Heading")]
+    public string Heading { get; set; }
+
+    [NopResourceDisplayName("Plugins.Widgets.Swiper.DescriptionBody")]
+    public string DescriptionBody { get; set; }
+
+    [NopResourceDisplayName("Plugins.Widgets.Swiper.ButtonText")]
+    public string ButtonText { get; set; }
 
     #endregion
 }

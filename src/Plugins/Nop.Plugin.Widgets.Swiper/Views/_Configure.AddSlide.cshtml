@@ -1,4 +1,4 @@
-﻿@model SlidePictureModel
+@model SlidePictureModel
 
 <div class="card card-default">
     <div class="card-header">
@@ -39,6 +39,42 @@
             <div class="col-md-9">
                 <nop-editor asp-for="LinkUrl" />
                 <span asp-validation-for="LinkUrl"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="Subtitle" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="Subtitle" />
+                <span asp-validation-for="Subtitle"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="Heading" />
+            </div>
+            <div class="col-md-9">
+                <textarea asp-for="Heading" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Heading"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="DescriptionBody" />
+            </div>
+            <div class="col-md-9">
+                <textarea asp-for="DescriptionBody" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="DescriptionBody"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <nop-label asp-for="ButtonText" />
+            </div>
+            <div class="col-md-9">
+                <nop-editor asp-for="ButtonText" />
+                <span asp-validation-for="ButtonText"></span>
             </div>
         </div>
         <div class="form-group row">

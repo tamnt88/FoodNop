@@ -1,10 +1,17 @@
 
 @model SpecificationFilterModel
+@{
+    var totalSpecValues = 0;
+    foreach (var attribute in Model.Attributes)
+    {
+        totalSpecValues += attribute.Values.Count;
+    }
+}
 <!-- categories -->
-<div class="mt-shop-widget mb-50">
+<div class="mt-shop-widget mb-50 js-spec-filter">
     <h3 class="mt-shop-widget-title mb-20">@T("Filtering.SpecificationFilter")</h3>
     <div class="mt-shop-widget-content">
-        <div class="mt-shop-widget-brands">
+        <div class="mt-shop-widget-brands js-spec-list is-collapsed">
             @foreach (var attr in Model.Attributes)
             {
                 @foreach (var value in attr.Values)
@@ -28,6 +35,10 @@
                 } 
             }
         </div>
+        @if (totalSpecValues > 5)
+        {
+            <button type="button" class="mt-shop-widget-more js-spec-toggle">Xem thêm</button>
+        }
     </div>
 </div>
 @* <div class="product-filter product-spec-filter">
@@ -68,6 +79,47 @@
 </div> *@
 <script asp-location="Footer">
     $(function() {
+        var $specFilters = $('.js-spec-filter');
+
+        $specFilters.each(function() {
+            var $filter = $(this);
+            var $list = $filter.find('.js-spec-list');
+            var $items = $list.find('.mt-shop-widget-brands-item');
+            var $toggle = $filter.find('.js-spec-toggle');
+            var visibleCount = 5;
+
+            if (!$toggle.length || !$list.length) return;
+
+            var setToggleState = function() {
+                var shouldShowToggle = $items.length > visibleCount;
+                if (!shouldShowToggle) {
+                    $toggle.hide();
+                    $list.removeClass('is-collapsed is-expanded');
+                    $items.removeClass('is-hidden-by-toggle');
+                    return;
+                }
+
+                $toggle.show();
+                if ($list.hasClass('is-expanded')) {
+                    $toggle.text('Thu gọn');
+                    $list.removeClass('is-collapsed');
+                    $items.removeClass('is-hidden-by-toggle');
+                } else {
+                    $toggle.text('Xem thêm');
+                    $list.addClass('is-collapsed');
+                    $items.each(function(index) {
+                        $(this).toggleClass('is-hidden-by-toggle', index >= visibleCount);
+                    });
+                }
+            };
+
+            setToggleState();
+            $toggle.off('click.specToggle').on('click.specToggle', function() {
+                $list.toggleClass('is-expanded');
+                setToggleState();
+            });
+        });
+
         var $optionEls = $('[data-option-id]');
         $optionEls.on('change', function () {
             CatalogProducts.getProducts();
