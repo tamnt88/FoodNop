@@ -115,7 +115,8 @@
     {
         @await Html.PartialAsync("_CatalogSelectors", Model.CatalogProductsModel)
         
-    } 
+    }
+
     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.CategoryDetailsBeforeSubcategories, additionalData = Model })
     @*subcategories*@
     @if (Model.SubCategories.Count > 0)

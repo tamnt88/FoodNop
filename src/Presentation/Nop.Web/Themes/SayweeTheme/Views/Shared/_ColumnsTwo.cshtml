@@ -32,33 +32,46 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-3 col-lg-4">
-                <div class="mt-shop-sidebar mr-10">
-                    @if (IsSectionDefined("left"))
-                    {
-                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
-                        @await RenderSectionAsync("left")
-                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
-                    }
-                    else
-                    {
-                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
-                        @await RenderSectionAsync("CategoryNavigation", false);
-                        @await RenderSectionAsync("CatalogFilters", false);
-                        @* @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent), new { currentCategoryId = currentCategoryId, currentProductId = currentProductId }) *@
-                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfterCategoryNavigation })
-                        @* @await Component.InvokeAsync(typeof(ManufacturerNavigationViewComponent), new { currentManufacturerId = currentManufacturerId }) *@
-                        @* @await Component.InvokeAsync(typeof(VendorNavigationViewComponent)) *@
-                        @* @await Component.InvokeAsync(typeof(RecentlyViewedProductsBlockViewComponent), new { productThumbPictureSize = 64 }) *@
-                        @* @await Component.InvokeAsync(typeof(PopularProductTagsViewComponent)) *@
-                        @* @await Component.InvokeAsync(typeof(PollBlockViewComponent), new { systemKeyword = "LeftColumnPoll" }) *@
-                        @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
-                    }
+                <div class="offcanvas-lg offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+                    <div class="offcanvas-header pb-0">
+                        <h5 class="offcanvas-title" id="offcanvasSidebarLabel">@T("Mobile.Offcanvas.FilterTitle")</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasSidebar" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body flex-column">
+                        <div class="mt-shop-sidebar mr-10 w-100">
+                            @if (IsSectionDefined("left"))
+                            {
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
+                                @await RenderSectionAsync("left")
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
+                            }
+                            else
+                            {
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnBefore })
+                                @await RenderSectionAsync("CategoryNavigation", false);
+                                @await RenderSectionAsync("CatalogFilters", false);
+                                @* @await Component.InvokeAsync(typeof(CategoryNavigationViewComponent), new { currentCategoryId = currentCategoryId, currentProductId = currentProductId }) *@
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfterCategoryNavigation })
+                                @* @await Component.InvokeAsync(typeof(ManufacturerNavigationViewComponent), new { currentManufacturerId = currentManufacturerId }) *@
+                                @* @await Component.InvokeAsync(typeof(VendorNavigationViewComponent)) *@
+                                @* @await Component.InvokeAsync(typeof(RecentlyViewedProductsBlockViewComponent), new { productThumbPictureSize = 64 }) *@
+                                @* @await Component.InvokeAsync(typeof(PopularProductTagsViewComponent)) *@
+                                @* @await Component.InvokeAsync(typeof(PollBlockViewComponent), new { systemKeyword = "LeftColumnPoll" }) *@
+                                @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LeftSideColumnAfter })
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="col-xl-9 col-lg-8">
                 <div class="mt-shop-wrapper">
                     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.MainColumnBefore })
+                    <div class="d-lg-none mb-4">
+                        <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                            <i class="fa-light fa-filter"></i> @T("Mobile.Offcanvas.FilterButton")
+                        </button>
+                    </div>
                     @RenderBody()
                     @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.MainColumnAfter })
                 </div>
