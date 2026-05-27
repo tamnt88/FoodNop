@@ -16119,7 +16119,7 @@ only screen and (min-width: 768px) and (max-width: 991px),
 
 @media only screen and (max-width: 480px) {
   .mtpopular__product-wrapper .cols {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
 
