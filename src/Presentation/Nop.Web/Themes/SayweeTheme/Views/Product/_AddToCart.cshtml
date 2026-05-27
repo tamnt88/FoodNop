@@ -95,7 +95,7 @@
                     }
                 }
                 <a class="mt-btn" href="javascript:void(0)" id="add-to-cart-button-@Model.ProductId" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl(NopRouteNames.Ajax.ADD_PRODUCT_TO_CART_DETAILS, new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart })', '#product-details-form');return false;">
-                    <i class="fa-solid fa-basket-shopping"></i><span class="ml-6">@addToCartText</span>
+                    <i class="fa-regular fa-basket-shopping"></i><span class="ml-6">@addToCartText</span>
                 </a>
 
             }

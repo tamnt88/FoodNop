@@ -107,7 +107,7 @@
   @font family declaration
   */
   --mt-ff-body: "Inter", sans-serif;
-  --mt-ff-heading: "Inter", sans-serif;
+  --mt-ff-heading: "Quicksand", sans-serif;
   --mt-ff-p: "Inter", sans-serif;
   --mt-ff-fontawesome: "Font Awesome 6 Pro";
   /**
@@ -119,10 +119,23 @@
   --mt-grey-1: #dadada;
   --mt-grey-2: #646373;
   --mt-text-body: #646373;
-  --mt-theme-1: #17af26;
+  /* --mt-theme-1: #17af26; */
+  --mt-theme-1: var(--color-mt-theme-600);
   --mt-theme-2: #fdd057;
   --mt-theme-3: #ea8428;
   --mt-border-1: #eaeaef;
+
+  --color-mt-theme-50: #cffcd9;
+  --color-mt-theme-100: #8ff9ab;
+  --color-mt-theme-200: #66de89;
+  --color-mt-theme-300: #57bf76;
+  --color-mt-theme-400: #49a263;
+  --color-mt-theme-500: #3b8651;
+  --color-mt-theme-600: #2d6a3f;
+  --color-mt-theme-700: #20502e;
+  --color-mt-theme-800: #14371e;
+  --color-mt-theme-900: #092010;
+  --color-mt-theme-950: #041408;
 }
 
 /*----------------------------------------*/
@@ -132,7 +145,7 @@
   position: fixed;
   right: 50px;
   bottom: 50px;
-  background: var(--mt-theme-1);
+  background: var(--color-mt-theme-400);
   color: #fff;
   z-index: 9;
   width: 50px;
@@ -3293,7 +3306,7 @@ only screen and (min-width: 768px) and (max-width: 991px),
 
 .mt-section-title span {
   color: var(--mt-theme-1);
-  font-family: "Lora", serif;
+  font-family: var(--mt-ff-heading);
   font-size: 30px;
   font-weight: 700;
   margin-right: 4px;
@@ -9157,7 +9170,15 @@ input[type="color"] {
 .mtheader__logo {
   position: relative;
   z-index: 3;
-  padding: 10px 0;
+  text-align: center;
+}
+
+.mtheader__logo img {
+  width: 140px;
+}
+
+.header-sticky .mtheader__logo img {
+  width: 80px;
 }
 
 .mtheader__top-left a {
@@ -15811,7 +15832,7 @@ only screen and (min-width: 768px) and (max-width: 991px),
 
 .mtfeature__product-title {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   color: #3a3a3a;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -15831,15 +15852,15 @@ only screen and (min-width: 768px) and (max-width: 991px),
 
 .mtfeature__product-price span {
   font-size: 18px;
-  font-weight: 600;
-  color: var(--mt-theme-1);
+  font-weight: 700;
+  color: var(--color-mt-theme-300);
 }
 
 .mtfeature__product-cart {
-  color: #fff;
-  background: #f2994a;
-  width: 32px;
-  height: 32px;
+  color: var(--color-mt-theme-300);
+  background: var(--color-mt-theme-50);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -18986,7 +19007,7 @@ only screen and (min-width: 768px) and (max-width: 991px),
   padding-top: 10px;
 }
 
-.html-category-page .mt-shop-grid-wrapper .row > [class*="col-"] {
+.html-category-page .mt-shop-grid-wrapper .row>[class*="col-"] {
   display: flex;
 }
 
@@ -21584,7 +21605,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   padding: 11px 16px;
   border: 1px solid rgba(12, 28, 50, 0.16);
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--mt-theme-1) 0%, #1ecb66 100%);
+  background: linear-gradient(135deg, var(--mt-theme-1) 0%, var(--color-mt-theme-300) 100%);
   color: #fff;
   font-weight: 600;
   font-size: 14px;
@@ -21852,7 +21873,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
   gap: 8px;
   padding: 0 22px;
   border: none;
-  background: linear-gradient(135deg, var(--mt-theme-1) 0%, #1ecb66 100%);
+  background: linear-gradient(135deg, var(--mt-theme-1) 0%, var(--color-mt-theme-300) 100%);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
