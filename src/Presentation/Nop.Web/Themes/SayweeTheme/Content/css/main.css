@@ -19023,23 +19023,25 @@ only screen and (min-width: 768px) and (max-width: 991px),
 
 .html-category-page .mt-shop-grid-content .mtfeature__product-title {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .html-category-page .mt-shop-grid-content .mtfeature__product-price span {
   font-size: 18px;
+  font-weight: 700;
+  color: var(--color-mt-theme-300);
 }
 
 .html-category-page .mt-shop-grid-content .mtfeature__product-cart {
-  background: #f2994a;
-  width: 32px;
-  height: 32px;
+  color: var(--color-mt-theme-300);
+  background: var(--color-mt-theme-50);
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-left: auto;
-  color: #fff;
 }
 
 .html-category-page .mt-shop-grid-content .mtfeature__product-cart:hover {
