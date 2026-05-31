@@ -29,18 +29,42 @@ public class FacebookAuthenticationRegistrar : IExternalAuthenticationRegistrar
             //store access and refresh tokens for the further usage
             options.SaveTokens = true;
 
+            //request email (required by nopCommerce for registration/login)
+            options.Scope.Add("public_profile");
+            options.Scope.Add("email");
+            options.Fields.Add("id");
+            options.Fields.Add("name");
+            options.Fields.Add("email");
+            options.Fields.Add("first_name");
+            options.Fields.Add("last_name");
+
             //set custom events handlers
             options.Events = new OAuthEvents
             {
+                //re-ask for declined permissions (e.g. email) on each login attempt
+                OnRedirectToAuthorizationEndpoint = context =>
+                {
+                    var redirectUri = context.RedirectUri;
+                    if (!redirectUri.Contains("auth_type=", StringComparison.OrdinalIgnoreCase))
+                        redirectUri += "&auth_type=rerequest";
+
+                    context.Response.Redirect(redirectUri);
+
+                    return Task.CompletedTask;
+                },
                 //in case of error, redirect the user to the specified URL
-                OnRemoteFailure = context =>
+                OnRemoteFailure = async context =>
                 {
                     context.HandleResponse();
 
+                    var failureMessage = context.Failure?.Message;
+                    await FacebookAuthenticationHelper.StoreAuthenticationErrorAsync(context.HttpContext,
+                        string.IsNullOrEmpty(failureMessage)
+                            ? "Facebook authentication was cancelled or rejected."
+                            : $"Facebook authentication failed: {failureMessage}");
+
                     var errorUrl = context.Properties.GetString(FacebookAuthenticationDefaults.ErrorCallback);
                     context.Response.Redirect(errorUrl);
-
-                    return Task.FromResult(0);
                 }
             };
         });

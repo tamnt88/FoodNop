@@ -58,6 +58,7 @@
                             <span>Please login to your account</span>
                         </div>
                         <div class="mt-login-option">
+                            @await Html.PartialAsync("_ExternalAuthentication.Errors")
                             <div class="mt-login-input-wrapper mb-20">
                                 <form asp-route="@NopRouteNames.General.LOGIN" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
                                     <div class="row">

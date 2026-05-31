@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Nop.Core;
 using Nop.Core.Http;
+using Nop.Plugin.ExternalAuth.Facebook.Infrastructure;
 using Nop.Plugin.ExternalAuth.Facebook.Models;
 using Nop.Services.Authentication.External;
 using Nop.Services.Configuration;
@@ -117,9 +118,10 @@ public class FacebookAuthenticationController : BasePluginController
         //configure login callback action
         var authenticationProperties = new AuthenticationProperties
         {
-            RedirectUri = Url.Action("LoginCallback", "FacebookAuthentication", new { returnUrl = returnUrl })
+            RedirectUri = Url.Action("LoginCallback", "FacebookAuthentication", new { returnUrl })
         };
         authenticationProperties.SetString(FacebookAuthenticationDefaults.ErrorCallback, Url.RouteUrl(NopRouteNames.General.LOGIN, new { returnUrl }));
+        authenticationProperties.SetString(FacebookAuthenticationDefaults.ReturnUrl, returnUrl ?? string.Empty);
 
         return Challenge(authenticationProperties, FacebookDefaults.AuthenticationScheme);
     }
@@ -129,14 +131,39 @@ public class FacebookAuthenticationController : BasePluginController
         //authenticate Facebook user
         var authenticateResult = await HttpContext.AuthenticateAsync(FacebookDefaults.AuthenticationScheme);
         if (!authenticateResult.Succeeded || !authenticateResult.Principal.Claims.Any())
-            return RedirectToRoute(NopRouteNames.General.LOGIN);
+        {
+            var failureMessage = authenticateResult.Failure?.Message;
+            var errorMessage = string.IsNullOrEmpty(failureMessage)
+                ? "Facebook authentication failed. Please verify your Facebook app redirect URI (https://your-store/signin-facebook) and App ID/Secret settings."
+                : $"Facebook authentication failed: {failureMessage}";
+
+            await FacebookAuthenticationHelper.StoreAuthenticationErrorAsync(HttpContext, errorMessage);
+
+            return RedirectToRoute(NopRouteNames.General.LOGIN, !string.IsNullOrEmpty(returnUrl) ? new { ReturnUrl = returnUrl } : null);
+        }
+
+        if (string.IsNullOrEmpty(returnUrl))
+            returnUrl = authenticateResult.Properties?.GetString(FacebookAuthenticationDefaults.ReturnUrl);
+
+        if (string.IsNullOrEmpty(returnUrl))
+            returnUrl = null;
+
+        var email = await FacebookAuthenticationHelper.GetEmailAsync(HttpContext, authenticateResult.Principal);
+        if (string.IsNullOrEmpty(email))
+        {
+            await FacebookAuthenticationHelper.StoreAuthenticationErrorAsync(HttpContext,
+                "Facebook did not provide an email address. Ensure your Facebook app requests the email permission, " +
+                "your Facebook account has a verified email, and you approved email access when logging in.");
+
+            return RedirectToRoute(NopRouteNames.General.LOGIN, !string.IsNullOrEmpty(returnUrl) ? new { ReturnUrl = returnUrl } : null);
+        }
 
         //create external authentication parameters
         var authenticationParameters = new ExternalAuthenticationParameters
         {
             ProviderSystemName = FacebookAuthenticationDefaults.SystemName,
             AccessToken = await HttpContext.GetTokenAsync(FacebookDefaults.AuthenticationScheme, "access_token"),
-            Email = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Email)?.Value,
+            Email = email,
             ExternalIdentifier = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value,
             ExternalDisplayIdentifier = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Name)?.Value,
             Claims = authenticateResult.Principal.Claims.Select(claim => new ExternalAuthenticationClaim(claim.Type, claim.Value)).ToList()

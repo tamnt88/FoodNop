@@ -1,12 +1,19 @@
-﻿@using Nop.Web.Framework.Themes
+@using Nop.Web.Framework.Themes
 @inject IThemeContext themeContext
+@inject Nop.Core.IWebHelper webHelper
 @{
-    Layout = ""; 
+    Layout = "";
     var themeName = await themeContext.GetWorkingThemeNameAsync();
-} 
+
+    var returnUrl = string.Empty;
+    if (Context.Request.Query.TryGetValue("ReturnUrl", out var returnUrlValue) && !string.IsNullOrEmpty(returnUrlValue))
+        returnUrl = returnUrlValue.ToString();
+    else if (Context.Request.Query.TryGetValue("returnUrl", out returnUrlValue) && !string.IsNullOrEmpty(returnUrlValue))
+        returnUrl = returnUrlValue.ToString();
+}
 
 <div class="mt-login-option-item">
-    <a asp-controller="facebookauthentication" asp-action="login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" class="facebook-btn"> 
+    <a asp-controller="FacebookAuthentication" asp-action="Login" asp-route-returnUrl="@returnUrl" class="facebook-btn">
         <img src="~/Themes/@(themeName)/Content/img/contact/fb.svg" alt="">
         <span>Facebook</span>
     </a>

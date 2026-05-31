@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Nop.Services.Authentication;
 
@@ -56,7 +57,21 @@ public sealed class SignOutFromExternalAuthenticationAttribute : TypeFilterAttri
         /// <returns>A task that represents the asynchronous operation</returns>
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
+            if (ShouldSkipSignOut(context))
+                return;
+
             await SignOutFromExternalAuthenticationAsync(context);
+        }
+
+        /// <summary>
+        /// External auth callbacks must read the external cookie before it is cleared
+        /// </summary>
+        private static bool ShouldSkipSignOut(AuthorizationFilterContext context)
+        {
+            if (context.ActionDescriptor is not ControllerActionDescriptor actionDescriptor)
+                return false;
+
+            return actionDescriptor.ActionName.Equals("LoginCallback", StringComparison.InvariantCultureIgnoreCase);
         }
 
         #endregion

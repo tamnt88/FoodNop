@@ -24,4 +24,9 @@ public class FacebookAuthenticationDefaults
     /// Gets a name of error callback method
     /// </summary>
     public static string ErrorCallback => "ErrorCallback";
+
+    /// <summary>
+    /// Gets a name of the return URL authentication property
+    /// </summary>
+    public static string ReturnUrl => "ReturnUrl";
 }

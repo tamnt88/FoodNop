@@ -71,7 +71,7 @@ additionalData = Model })
         </div>
 
         <div class="mtheader__midel-login">
-            <div class="mtcartmini-open-btn header-links" aria-label="Mở giỏ hàng">
+            <div class="mtcartmini-open-btn header-links" aria-label="Mở giờ hàng">
                 <div class="mtheader__midel-card-value">
                     <i class="fa-regular fa-basket-shopping"></i>
                     <p class="cart-qty">@Model.ShoppingCartItems</p>
@@ -92,8 +92,16 @@ additionalData = Model })
     </div>
     <div class="mtheader__midel-login mtheader__mobile-cart mtheader__account-dropdown">
         <button class="mtheader__account-trigger" type="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa-solid fa-user-plus"></i>
-            <span>@T("Account.MyAccount")</span>
+            @if (Model.IsAuthenticated)
+            {
+                <i class="fa-solid fa-user"></i>
+                <span>@(string.IsNullOrEmpty(Model.CustomerName) ? T("Account.MyAccount") : Model.CustomerName)</span>
+            }
+            else
+            {
+                <i class="fa-solid fa-user-plus"></i>
+                <span>@T("Account.Login")</span>
+            }
             <i class="fa-solid fa-chevron-down"></i>
         </button>
         <div class="mtheader__account-menu" role="menu">
