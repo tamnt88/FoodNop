@@ -9,6 +9,8 @@
     void slideImage()
     {
         <img src="@Model.PictureUrl" alt="@Model.AltText" title="@Model.TitleText" @(Model.LazyLoading ? "loading=lazy" : string.Empty) />
+        
+        
     }
 }
 
@@ -17,46 +19,19 @@
     <div class="swiper-slide">
         <div class="mthero__banner" data-background="Themes/@(themeName)/Content/img/hero/hero-bg-1.jpg">
             <div class="row">
-                <div class="col-lg-7">
-                    <div class="mthero__content">
-                        
-                       
-                        @if (!string.IsNullOrWhiteSpace(Model.Subtitle))
-                        {
-                            <h5 class="mthero__subtitle">
-                                <img src="~/Themes/@(themeName)/Content/img/icon/star-icon-3.svg"
-                                     alt="">
-                                <span>@Model.Subtitle</span>
-                            </h5>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.Heading))
-                        {
-                            <h1 class="mthero__title">
-                                @Html.Raw(Model.Heading)
-                            </h1>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.DescriptionBody))
-                        {
-                            <p>@Model.DescriptionBody</p>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(Model.ButtonText))
-                        {
-                            <div class="mthero__btn mt-40">
-                                <a href="@(string.IsNullOrWhiteSpace(Model.LinkUrl) ? "#" : Model.LinkUrl)" class="mt-btn">
-                                    <i class="fa-regular fa-basket-shopping"></i> @Model.ButtonText
-                                </a>
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="col-lg-5">
+                <a href="@Model.LinkUrl">
+                <div class="col-lg-12">
                     <div class="mthero__img">
-                        @{
-                            slideImage();
-                        }
+                        
+                            @{
+                                slideImage();
+                            }
+                       
+                        
                          
                     </div>
                 </div>
+                </a>
             </div>
         </div>
     </div>
