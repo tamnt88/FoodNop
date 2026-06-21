@@ -1,9 +1,6 @@
-﻿@using Nop.Web.Framework.Themes
-@model PublicInfoModel
-@inject IThemeContext themeContext
+﻿@model PublicInfoModel
 @{
     Layout = "";
-    var themeName = await themeContext.GetWorkingThemeNameAsync();
 }
 
 <link href="~/Plugins/Widgets.Swiper/Content/css/swiper-bundle.min.css" rel="stylesheet">
@@ -31,34 +28,21 @@
     </div> *@
 
     <!-- Start Hero Area -->
-    <section class="mthero__area mthero__2 p-relative fix">
-        <div class="mthero__2-bg pt-120 pb-130" data-background="Themes/@(themeName)/Content/img/hero/hero-bg-2-1.jpg">
-            <div class="mthero__shape-wrap">
-                <div class="mthero__shape">
-                    <img src="Themes/@(themeName)/Content/img/hero/shape-2-1.png" alt="">
-                </div>
-                <div class="mthero__shape-2">
-                    <img src="Themes/@(themeName)/Content/img/hero/shape-2-2.png" alt="">
-                </div>
-                <div class="mthero__shape-3">
-                    <img src="Themes/@(themeName)/Content/img/hero/shape-2-3.png" alt="">
+    <section class="mthero__area mthero__2 nop-swiper-full p-relative fix">
+        <div class="mthero__wrapper">
+            <div class="swiper mt-hero-2-active">
+                <div class="swiper-wrapper">
+                    @foreach (var slide in Model.Slides)
+                    {
+                        @await Html.PartialAsync("~/Plugins/Widgets.Swiper/Views/_PublicInfo.Slide.cshtml", slide)
+                    }
                 </div>
             </div>
-            <div class="container">
-                <div class="mthero__wrapper">
-                    <div class="swiper mt-hero-2-active">
-                        <div class="swiper-wrapper">
-                            @foreach (var slide in Model.Slides)
-                            {
-                                @await Html.PartialAsync("~/Plugins/Widgets.Swiper/Views/_PublicInfo.Slide.cshtml", slide)
-                            }
-                        </div>
-                    </div>
-                    <div class="mthero-2-pagination"></div>
-                </div>
-            </div>
+            @if (Model.ShowPagination)
+            {
+                <div class="mthero-2-pagination"></div>
+            }
         </div>
-
     </section>
     <!-- End Hero Area -->
      

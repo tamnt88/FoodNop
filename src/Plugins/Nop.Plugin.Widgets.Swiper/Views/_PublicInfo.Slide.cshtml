@@ -1,56 +1,30 @@
-@using Nop.Web.Framework.Themes
 @model PublicSlideModel
-@inject IThemeContext themeContext 
-@{
-
-    var themeName = await themeContext.GetWorkingThemeNameAsync();
-}
-@{
-    void slideImage()
-    {
-        <img src="@Model.PictureUrl" alt="@Model.AltText" title="@Model.TitleText" @(Model.LazyLoading ? "loading=lazy" : string.Empty) />
-        
-        
-    }
-}
 
 @if (!string.IsNullOrEmpty(Model.PictureUrl))
-{ 
+{
     <div class="swiper-slide">
-        <div class="mthero__banner" data-background="Themes/@(themeName)/Content/img/hero/hero-bg-1.jpg">
-            <div class="row">
-                <a href="@Model.LinkUrl">
-                <div class="col-lg-12">
-                    <div class="mthero__img">
-                        
-                            @{
-                                slideImage();
-                            }
-                       
-                        
-                         
-                    </div>
-                </div>
-                </a>
-            </div>
-        </div>
+        @if (!string.IsNullOrEmpty(Model.LinkUrl))
+        {
+            <a href="@Model.LinkUrl" class="nop-swiper-slide__link" aria-label="@Model.AltText">
+                <img class="nop-swiper-slide__img"
+                     src="@Model.PictureUrl"
+                     alt="@Model.AltText"
+                     title="@Model.TitleText"
+                     @(Model.LazyLoading ? "loading=lazy" : string.Empty) />
+            </a>
+        }
+        else
+        {
+            <img class="nop-swiper-slide__img"
+                 src="@Model.PictureUrl"
+                 alt="@Model.AltText"
+                 title="@Model.TitleText"
+                 @(Model.LazyLoading ? "loading=lazy" : string.Empty) />
+        }
+
+        @if (Model.LazyLoading)
+        {
+            <div class="swiper-lazy-preloader"></div>
+        }
     </div>
-
-    // <div class="swiper-slide">
-    //     @if (!string.IsNullOrEmpty(Model.LinkUrl))
-    //     {
-    //         <a href="@Model.LinkUrl" aria-label="@Model.AltText">
-    //             @{ slideImage(); }
-    //         </a>
-    //     }
-    //     else
-    //     {
-    //         slideImage();
-    //     }
-
-    //     @if (Model.LazyLoading)
-    //     {
-    //         <div class="swiper-lazy-preloader"></div>
-    //     }
-    // </div>
 }

@@ -10,3 +10,45 @@
 .nop-slider .slider-img {
   max-width: 100%;
 }
+
+.nop-swiper-full {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.nop-swiper-full .mthero__wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.nop-swiper-full .swiper {
+  width: 100%;
+}
+
+.nop-swiper-full .swiper-slide {
+  width: 100%;
+}
+
+.nop-swiper-slide__link {
+  display: block;
+  width: 100%;
+  line-height: 0;
+}
+
+.nop-swiper-slide__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.nop-swiper-full .mthero-2-pagination {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  z-index: 2;
+  text-align: center;
+}

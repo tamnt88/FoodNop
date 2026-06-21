@@ -186,6 +186,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
                             <div class="mt-copyright-left text-center text-md-start">
                                 <p>@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</p>
+                        <p>Powered by <a href="@(OfficialSite.Main)" target="_blank" @(Model.IsHomePage ? string.Empty : "rel=nofollow")>nopCommerce</a></p>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
@@ -197,5 +198,5 @@
                 </div>
             </div>
             <!-- copy-right area end -->
-
+    
         </footer>
