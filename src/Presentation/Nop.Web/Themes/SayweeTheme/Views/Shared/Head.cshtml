@@ -18,8 +18,6 @@
     // {
     //     NopHtml.AppendCssFileParts("~/lib_npm/swiper/swiper-bundle.min.css");
     // }
-    //add custom CSS file (server-side overrides, loaded last)
-    NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/custom.css");
     //add jQuery UI css file
     NopHtml.AppendCssFileParts("~/lib_npm/jquery-ui-dist/jquery-ui.min.css");
     NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/main.css");
@@ -28,6 +26,9 @@
     NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/fontawesome-pro.min.css");
     NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/animate.css");
     NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/bootstrap.min.css"); 
+
+    // Amara custom CSS (server-side overrides, loaded last)
+    NopHtml.AddCssFileParts($"~/Themes/{themeName}/Content/css/amara.css");
     
     
 }
