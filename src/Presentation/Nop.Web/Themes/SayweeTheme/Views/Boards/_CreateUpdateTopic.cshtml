@@ -61,7 +61,7 @@
                 </div>
                 <div class="inputs">
                     <label asp-for="Subject">@T("Forum.TopicTitle"):</label>
-                    <input aria-label="Topic Title" asp-for="Subject" class="forum-topic-title-text" />
+                    <input aria-label="@T("Forum.TopicTitle")" asp-for="Subject" class="forum-topic-title-text" />
                     <span asp-validation-for="Subject"></span>
                 </div>
                 @if (Model.ForumEditor == EditorType.MarkdownEditor)  

@@ -18,21 +18,20 @@
                          data-wow-delay="0.5s">
                         <div class="mtnewslatter__item">
                             <h3 class="mtnewslatter__title mb-10 ">
-                                Subscribe <span class="p-relative">
+                                @T("Newsletter.Subscribe.Headline") <span class="p-relative">
                                     @T("Newsletter.Title") <img src="~/Themes/@(themeName)/Content/img/newslatter/shape-text.png" alt="">
                                 </span> <br>
-                                to get offers
+                                @T("Newsletter.Subscribe.ToGetOffers")
 
                             </h3>
                             <p class="mb-35">
-                                Enjoy early access to sales, new product launches, expert advice, and
-                                special offers delivered straight to your inbox.
+                                @T("Newsletter.Subscribe.Description")
                             </p>
                             <form action="#">
                                 <div class="mtnewslatter__subscribe p-relative">
                                     <input asp-for="NewsLetterEmail" id="newsletter-email" class="newsletter-subscribe-text" placeholder=@T("Newsletter.Email.Placeholder") aria-label="@T("Newsletter.Subscribe")" />
                                      
-                                    <button type="button" id="newsletter-subscribe-button" class="mt-btn">Subscribe</button>
+                                    <button type="button" id="newsletter-subscribe-button" class="mt-btn">@T("Newsletter.Subscribe.Button")</button>
                                 </div>
                                 @if (Model.AllowToUnsubscribe)
                                 {

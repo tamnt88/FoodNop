@@ -15,7 +15,7 @@
                 <div class="col-lg-6">
                     <div class="mt-section-content mb-30">
                         <h3 class="mt-section-title">
-                            Read Our
+                            @T("Homepage.News.ReadOur")
                             <span>@T("News")</span>
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20"
@@ -25,7 +25,7 @@
                                 </svg>
                             </span>
                         </h3>
-                        <p>Dive into a world of knowledge and inspiration with our informative articles. </p>
+                        <p>@T("Homepage.News.Description")</p>
                     </div>
                 </div>
                 <div class="col-lg-6 ">
@@ -70,8 +70,8 @@
                 </div>
                 <div class="news-body">
                     <div class="news-tags">
-                        <span class="news-tag news-tag--dark">Organic</span>
-                        <span class="news-tag">Grocery</span>
+                        <span class="news-tag news-tag--dark">@T("Homepage.News.Tag.Organic")</span>
+                        <span class="news-tag">@T("Homepage.News.Tag.Grocery")</span>
                     </div>
                     <h4 class="mtblog__title news-title">
                         <a href="@(await NopUrl.RouteGenericUrlAsync<NewsItem>(new { SeName = item.SeName }))">@Html.Raw(item.Title ?? item.Short)</a>

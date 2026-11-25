@@ -13,7 +13,7 @@
         <input type="text" class="desktop-search-input" id="@searchBoxId" autocomplete="off" name="@termFormName" placeholder="@T("Search.SearchBox.Tooltip")" aria-label="@T("Search.SearchBox.Text.Label")" />
         @if(Model.ShowSearchBoxCategories)
         {
-            <select asp-for="SearchCategoryId" name="@categoryFormName" asp-items="Model.AvailableCategories" class="search-box-category" aria-label="Search box category"></select>
+            <select asp-for="SearchCategoryId" name="@categoryFormName" asp-items="Model.AvailableCategories" class="search-box-category" aria-label="@T("Common.SearchBoxCategory")"></select>
             <script asp-location="Footer">
                 $(function () {
                     $('#@Html.IdFor(m => m.SearchCategoryId)').on('change', function () {

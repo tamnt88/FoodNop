@@ -44,6 +44,6 @@
         Selected = x.Name.Equals(Model.CurrentStoreTheme.Name, StringComparison.InvariantCultureIgnoreCase)
     }).ToListAsync();
     <div class="theme-selector">
-        <select id="store-theme" name="store-theme" asp-items="@themes" onchange="setLocation(this.value);" aria-label="Store theme"></select>
+        <select id="store-theme" name="store-theme" asp-items="@themes" onchange="setLocation(this.value);" aria-label="@T("Common.StoreTheme")"></select>
     </div>
 }

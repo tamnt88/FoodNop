@@ -22,8 +22,8 @@
                 <div class="col-lg-6">
                     <div class="mt-section-content mb-45">
                         <h3 class="mt-section-title">
-                            Popular
-                            <span>Products</span>
+                            @T("Homepage.Popular")
+                            <span>@T("Homepage.Popular.Products")</span>
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20"
                                      fill="none">
@@ -32,7 +32,7 @@
                                 </svg>
                             </span>
                         </h3>
-                        <p>Our bestsellers! Discover the customer favorites that everyone's talking about.</p>
+                        <p>@T("Homepage.Popular.Description")</p>
                     </div>
                 </div>
                 <div class="col-lg-6 ">
@@ -43,7 +43,7 @@
                                     <button class="nav-link active" id="popular-home-tab" data-bs-toggle="pill"
                                             data-bs-target="#popular-home" type="button" role="tab" aria-controls="popular-home"
                                             aria-selected="true">
-                                        View All
+                                        @T("Common.ViewAll")
                                     </button>
                                 </li>
                                 @foreach (var item in Model)

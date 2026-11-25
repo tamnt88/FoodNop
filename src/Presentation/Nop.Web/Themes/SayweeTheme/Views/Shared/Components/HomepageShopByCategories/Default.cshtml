@@ -16,11 +16,11 @@
                     <div class="col-lg-2 ">
                         <div class="mtshop__category-content mb-20 ml-30">
                             <h3 class="mtshop__category-content-title mb-15">
-                                Shop by <br>
-                                Category
+                                @T("Homepage.ShopBy") <br>
+                                @T("Homepage.Category")
                             </h3>
                             <a href="shop.html" class="mtshop__category-content-btn">
-                                View All
+                                @T("Common.ViewAll")
                                 <i class="fa-regular fa-arrow-right"></i>
                             </a>
                         </div>
@@ -37,7 +37,7 @@
                                                 <a href="@(await NopUrl.RouteGenericUrlAsync<Category>(new { SeName = item.SeName }))">
                                                     <img src="@item.PictureModel.ImageUrl" alt="@item.PictureModel.AlternateText" title="@item.PictureModel.Title">
                                                     <h5 class="mtshop__category-title">@item.Name</h5>
-                                                    <span>@item.FeaturedProducts.Count ITEMS ITEMS</span>
+                                                    <span>@string.Format(T("Catalog.Items").Text, item.FeaturedProducts.Count)</span>
                                                 </a>
                                             </div>
                                         </div>

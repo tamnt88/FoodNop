@@ -18,7 +18,7 @@
                     <form action="#" class="footer-newsletter-form">
                         <div class="input-group mb-3 justify-content-center">
                             <input asp-for="NewsLetterEmail" id="footer-newsletter-email" class="form-control newsletter-subscribe-text" placeholder=@T("Newsletter.Email.Placeholder") aria-label="@T("Newsletter.Subscribe")" />
-                            <button type="button" id="footer-newsletter-subscribe-button" class="btn btn-primary">Subscribe</button>
+                            <button type="button" id="footer-newsletter-subscribe-button" class="btn btn-primary">@T("Newsletter.Subscribe.Button")</button>
                         </div>
                         @if (Model.AllowToUnsubscribe)
                         {

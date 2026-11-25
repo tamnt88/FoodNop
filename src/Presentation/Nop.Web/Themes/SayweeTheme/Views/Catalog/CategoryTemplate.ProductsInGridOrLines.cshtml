@@ -59,7 +59,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="mt-breadcrumb p-relative">
-                            <h1 class="mt-breadcrumb-title">Shop <span>@(lastCategory?.Name)</span></h1>
+                            <h1 class="mt-breadcrumb-title">@T("Catalog.Shop") <span>@(lastCategory?.Name)</span></h1>
                             <div class="mt-breadcrumb-list">
                                 <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)" title="@T("Categories.Breadcrumb.Top")">@T("Categories.Breadcrumb.Top")</a></span>
                                 <span class="dvir">@breadcrumbDelimiter</span>
@@ -124,14 +124,14 @@
         <div class="category-grid sub-category-grid">
             <div class="mt-subcategory-slider">
                 <div class="mt-subcategory-arrows">
-                    <div class="mt-subcategory-arrow mt-subcategory-arrow-left" aria-label="Previous">
+                    <div class="mt-subcategory-arrow mt-subcategory-arrow-left" aria-label="@T("Common.Previous")">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
                                 <path d="M7.39367 0.820693C6.37396 5.14484 1.88 6.84235 1.46856 6.98943C1.4577 6.99331 1.45706 7.00855 1.4676 7.01347C1.87294 7.20245 6.37316 9.37583 7.39367 13.1793M14.54 7.00001L2.62943 7.00001" stroke="#060121" stroke-width="2" />
                             </svg>
                         </span>
                     </div>
-                    <div class="mt-subcategory-arrow mt-subcategory-arrow-right" aria-label="Next">
+                    <div class="mt-subcategory-arrow mt-subcategory-arrow-right" aria-label="@T("Common.Next")">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
                                 <path d="M7.60633 13.1793C8.62604 8.85516 13.12 7.15765 13.5314 7.01057C13.5423 7.00669 13.5429 6.99145 13.5324 6.98653C13.1271 6.79755 8.62684 4.62417 7.60633 0.820679M0.459961 6.99999L12.3706 6.99999" stroke="#060121" stroke-width="2" />

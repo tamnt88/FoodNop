@@ -9,7 +9,7 @@
                 <div class="mt-team-more-info mt-30">
                     <h4 class="mt-team-sm-title mb-20">@T("Order.BillingAddress")</h4>
                     <ul>
-                        <li><label>Name:</label> <span>@Model.BillingAddress.FirstName @Model.BillingAddress.LastName</span></li>
+                        <li><label>@T("Order.Address.Name")</label> <span>@Model.BillingAddress.FirstName @Model.BillingAddress.LastName</span></li>
                         <li><label>@T("Order.Email"):</label> <span>@Model.BillingAddress.Email</span></li>
                         @if (Model.BillingAddress.PhoneEnabled)
                         {
@@ -21,7 +21,7 @@
                         }
                         @if (Model.BillingAddress.CompanyEnabled && !string.IsNullOrEmpty(Model.BillingAddress.Company))
                         {
-                            <li><label>Company:</label> <span>@Model.BillingAddress.Company</span></li>
+                            <li><label>@T("Order.Address.Company")</label> <span>@Model.BillingAddress.Company</span></li>
                         }
                         @foreach (var item in Model.BillingAddress.AddressFields)
                         {
@@ -29,7 +29,7 @@
                         }
                         @if (!string.IsNullOrEmpty(Model.BillingAddress.FormattedCustomAddressAttributes))
                         {
-                            <li><label>Custom Attributes:</label> <span>@Html.Raw(Model.BillingAddress.FormattedCustomAddressAttributes)</span></li>
+                            <li><label>@T("Order.Address.CustomAttributes")</label> <span>@Html.Raw(Model.BillingAddress.FormattedCustomAddressAttributes)</span></li>
                         }
                         @await Html.PartialAsync("_OrderCustomValues", Model.CustomValues?.GetValuesByDisplayLocation(CustomValueDisplayLocation.BillingAddress))
                         @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OrderSummaryBillingAddress, additionalData = Model })
@@ -46,7 +46,7 @@
                         <ul>
                             @if (!Model.SelectedPickupInStore)
                             {
-                                <li><label>Name:</label> <span>@Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName</span></li>
+                                <li><label>@T("Order.Address.Name")</label> <span>@Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName</span></li>
                                 <li><label>@T("Order.Email"):</label> <span>@Model.ShippingAddress.Email</span></li>
                                 if (Model.ShippingAddress.PhoneEnabled)
                                 {
@@ -58,7 +58,7 @@
                                 }
                                 if (Model.ShippingAddress.CompanyEnabled && !string.IsNullOrEmpty(Model.ShippingAddress.Company))
                                 {
-                                    <li><label>Company:</label> <span>@Model.ShippingAddress.Company</span></li>
+                                    <li><label>@T("Order.Address.Company")</label> <span>@Model.ShippingAddress.Company</span></li>
                                 }
                                 @foreach (var item in Model.ShippingAddress.AddressFields)
                                 {
@@ -66,7 +66,7 @@
                                 }
                                 if (!string.IsNullOrEmpty(Model.ShippingAddress.FormattedCustomAddressAttributes))
                                 {
-                                    <li><label>Custom Attributes:</label> <span>@Html.Raw(Model.ShippingAddress.FormattedCustomAddressAttributes)</span></li>
+                                    <li><label>@T("Order.Address.CustomAttributes")</label> <span>@Html.Raw(Model.ShippingAddress.FormattedCustomAddressAttributes)</span></li>
                                 }
                                 @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.OrderSummaryShippingAddress, additionalData = Model })
                             }

@@ -20,11 +20,11 @@
             <div class="row align-items-center">
                 <div class="col-lg-7">
                     <div class="mt-breadcrumb p-relative">
-                        <h1 class="mt-breadcrumb-title">Register <span>Now</span></h1>
+                        <h1 class="mt-breadcrumb-title">@T("Account.Register.Now")</h1>
                         <div class="mt-breadcrumb-list">
                             <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a></span>
                             <span class="dvir">-</span>
-                            <span><a href="#">Register Now</a></span>
+                            <span><a href="#">@T("Account.Register.Now")</a></span>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="mtbreadcrumb__titleslide">
                         <h5 class="mtbreadcrumb__titleslide-title">
                             <span><i class="fa-solid fa-star-sharp"></i></span>
-                            REGISTER NOW
+                            @T("Account.Register.Now")
                         </h5>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="mt-login-wrap mr-30">
                         <div class="mt-login-top text-center mb-40">
                             <h3 class="mt-login-title">@T("Account.Register")</h3>
-                            <span>Create Your Account</span>
+                            <span>@T("Account.Register.CreateYourAccount")</span>
                         </div>
                         <div class="mt-login-option">
                             @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "Register" })
@@ -450,7 +450,7 @@
                                 </div>
                             </div>
                             <div class="mt-login-mail text-center p-relative mb-20">
-                                <p>Or Register With</p>
+                                <p>@T("Account.Register.OrRegisterWith")</p>
                             </div>
                             <div class="mt-login-social mb-20 d-flex flex-wrap align-items-center justify-content-center">
                                 <div class="external-authentication">
@@ -459,8 +459,8 @@
                             </div>
                             <div class="mt-login-account text-center mb-30">
                                 <p>
-                                    Already have account?
-                                    <a href="@loginUrl"> Login</a>
+                                    @T("Account.Register.AlreadyHaveAccount")
+                                    <a href="@loginUrl"> @T("Account.Login")</a>
                                 </p>
                             </div>
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.RegisterBottom, additionalData = Model })

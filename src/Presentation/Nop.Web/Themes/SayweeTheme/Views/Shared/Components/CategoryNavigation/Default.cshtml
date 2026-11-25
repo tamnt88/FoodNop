@@ -70,7 +70,7 @@
                 </a>
                 @if (category.SubCategories.Any())
                 {
-                    <button type="button" class="sidebar-category-toggle" aria-label="Toggle category" aria-expanded="@(isActive.ToString().ToLowerInvariant())">
+                    <button type="button" class="sidebar-category-toggle" aria-label="@T("Common.ToggleCategory")" aria-expanded="@(isActive.ToString().ToLowerInvariant())">
                         <span class="toggle-icon"></span>
                     </button>
                 }

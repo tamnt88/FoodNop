@@ -97,11 +97,11 @@
                             </a>
                         </div>
                         <div class="mt-footer-content">
-                            <p class="mb-25">@Model.StoreName is a online grocery shop. we are selling grocery products
+                            <p class="mb-25">@string.Format(T("Footer.StoreDescription").Text, Model.StoreName)
                             </p>
                             @await Component.InvokeAsync(typeof(SocialButtonsViewComponent))
                             <div class="mt-footer-app mb-20">
-                                <h4 class="mt-footer-app-title">Download App</h4>
+                                <h4 class="mt-footer-app-title">@T("Footer.DownloadApp")</h4>
                                 <div class="mt-footer-app-img mt-20">
                                     <a href="#"><img src="~/Themes/@(themeName)/Content/img/footer/goolge-play.png"
                                                          alt="Rosun"></a>

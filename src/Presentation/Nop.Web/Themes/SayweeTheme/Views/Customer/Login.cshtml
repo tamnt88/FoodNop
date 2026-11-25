@@ -26,11 +26,11 @@
             <div class="row align-items-center">
                 <div class="col-lg-7">
                     <div class="mt-breadcrumb p-relative">
-                        <h1 class="mt-breadcrumb-title">Login <span>Account</span></h1>
+                        <h1 class="mt-breadcrumb-title">@T("Account.Login.Breadcrumb") <span>@T("Account.Login.Account")</span></h1>
                         <div class="mt-breadcrumb-list">
                             <span class="active"><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Categories.Breadcrumb.Top")</a></span>
                             <span class="dvir">-</span>
-                            <span><a href="#">Login</a></span>
+                            <span><a href="#">@T("Account.Login.Breadcrumb")</a></span>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     <div class="mt-login-wrap mr-30">
                         <div class="mt-login-top text-center mb-40">
                             <h3 class="mt-login-title">@T("Account.Login.ReturningCustomer")</h3>
-                            <span>Please login to your account</span>
+                            <span>@T("Account.Login.PleaseLogin")</span>
                         </div>
                         <div class="mt-login-option">
                             @await Html.PartialAsync("_ExternalAuthentication.Errors")
@@ -68,7 +68,7 @@
                                             {
                                                 <div class="mt-checkout-input">
                                                   @*   <label asp-for="Username" asp-postfix=":"></label> *@
-                                                    <input asp-for="Username" class="username" autofocus="autofocus" placeholder="Username" />
+                                                    <input asp-for="Username" class="username" autofocus="autofocus" placeholder="@T("Account.Login.Username")" />
                                                     <span asp-validation-for="Username"></span>
                                                 </div>
                                             }
@@ -76,14 +76,14 @@
                                             {
                                                 <div class="mt-checkout-input">
                                                    @*  <label asp-for="Email" asp-postfix=":"></label> *@
-                                                    <input asp-for="Email" autofocus="autofocus" placeholder="Email Address" />
+                                                    <input asp-for="Email" autofocus="autofocus" placeholder="@T("Account.Login.EmailAddress")" />
                                                     <span asp-validation-for="Email"></span>
                                                 </div>
                                             } 
                                         </div>
                                         <div class="col-md-12">
                                             <div class="mt-checkout-input p-relative">
-                                                <input asp-for="Password" placeholder="Password" />
+                                                <input asp-for="Password" placeholder="@T("Account.Login.Password")" />
                                                 <span><i class="fa-regular fa-eye-slash"></i></span>
                                                 <span asp-validation-for="Password"></span>
                                             </div> 
@@ -91,7 +91,7 @@
                                         <div class="mt-login-suggetions d-sm-flex align-items-center justify-content-between mb-30">
                                             <div class="mt-login-remeber" type="checkbox">
                                                 <input  asp-for="RememberMe" />
-                                                <label asp-for="RememberMe">Remember me</label> 
+                                                <label asp-for="RememberMe">@T("Account.Login.RememberMe")</label> 
                                             </div>
                                             <div class="mt-login-forgot">
                                                 <a asp-route="@NopRouteNames.Standard.PASSWORD_RECOVERY">@T("Account.Login.ForgotPassword")</a>
@@ -117,7 +117,7 @@
                             @* @await Component.InvokeAsync(typeof(TopicBlockViewComponent), new { systemName = "LoginRegistrationInfo" }) *@
                             @await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.LoginBottom, additionalData = Model })
                             <div class="mt-login-mail text-center p-relative mb-20">
-                                <p>Or Login With</p>
+                                <p>@T("Account.Login.OrLoginWith")</p>
                             </div>
 
                             

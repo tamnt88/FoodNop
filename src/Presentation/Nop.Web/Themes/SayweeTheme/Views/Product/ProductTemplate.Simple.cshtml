@@ -138,12 +138,12 @@
                             <div class="mt-product-meta-grid">
                                 <div class="mt-shop-details__product-info">
                                     <ul>
-                                        <li><span class="label">Category:</span> <span>@Model.Breadcrumb?.CategoryBreadcrumb?.LastOrDefault()?.Name</span></li>
+                                        <li><span class="label">@T("Products.Category")</span> <span>@Model.Breadcrumb?.CategoryBreadcrumb?.LastOrDefault()?.Name</span></li>
                                         @if (Model.ShowVendor)
                                         {
-                                                <li><span class="label">Brand:</span> <span><a href="@(await NopUrl.RouteGenericUrlAsync<Vendor>(new { SeName = Model.VendorModel.SeName }))">@Model.VendorModel.Name</a></span></li>
+                                                <li><span class="label">@T("Products.Brand")</span> <span><a href="@(await NopUrl.RouteGenericUrlAsync<Vendor>(new { SeName = Model.VendorModel.SeName }))">@Model.VendorModel.Name</a></span></li>
                                         }
-                                        <li><span class="label">SKU:</span> <span>@Model.Sku</span></li>
+                                        <li><span class="label">@T("Products.Sku.Label")</span> <span>@Model.Sku</span></li>
                                     </ul>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@
                                                 <button class="nav-links active" id="home-tab-1" data-bs-toggle="tab"
                                                         data-bs-target="#home-1" type="button" role="tab" aria-controls="home-1"
                                                         aria-selected="true">
-                                                    <span>Description</span>
+                                                    <span>@T("Products.Tabs.Description")</span>
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
@@ -180,8 +180,7 @@
                                                         data-bs-target="#additional-information" type="button" role="tab"
                                                         aria-controls="additional-information" aria-selected="false">
                                                     <span>
-                                                        Additional
-                                                        Information
+                                                        @T("Products.Tabs.AdditionalInformation")
                                                     </span>
                                                 </button>
                                             </li>
@@ -189,7 +188,7 @@
                                                 <button class="nav-links" id="reviews-tab" data-bs-toggle="tab"
                                                         data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews"
                                                         aria-selected="false">
-                                                    <span>Reviews</span>
+                                                    <span>@T("Products.Tabs.Reviews")</span>
                                                 </button>
                                             </li>
                                         </ul>
@@ -215,45 +214,45 @@
                                                 <table class="table table-striped">
                                                     <tbody>
                                                         <tr>
-                                                            <td class="add-info">Weight</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Weight")</td>
                                                             <td class="add-info-list"> 2 lbs</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Dimensions</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Dimensions")</td>
                                                             <td class="add-info-list"> 12 × 16 × 19 in</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Product</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Product")</td>
                                                             <td class="add-info-list">
                                                                 Purchase this product on
                                                                 rag-bone.com
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Color</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Color")</td>
                                                             <td class="add-info-list"> Gray, Black</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Size</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Size")</td>
                                                             <td class="add-info-list"> S, M, L, XL</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Model</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Model")</td>
                                                             <td class="add-info-list"> Model </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Shipping</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Shipping")</td>
                                                             <td class="add-info-list"> Standard shipping: $5,95L</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Care Info</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.CareInfo")</td>
                                                             <td class="add-info-list">
                                                                 Machine Wash up to 40ºC/86ºF
                                                                 Gentle Cycle
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="add-info">Brand</td>
+                                                            <td class="add-info">@T("Products.AdditionalInfo.Brand")</td>
                                                             <td class="add-info-list"> Kazen</td>
                                                         </tr>
                                                     </tbody>
@@ -264,12 +263,12 @@
                                             <div class="row">
                                                 <div class="col-xl-6 col-lg-9">
                                                     <div class="product-details-review">
-                                                        <h3 class="mt-comments-title mb-35">Ratings and Reviews</h3>
+                                                        <h3 class="mt-comments-title mb-35">@T("Products.Reviews.RatingsAndReviews")</h3>
                                                         <div class="mt-product-details-range-wrap d-flex align-items-center mb-40">
                                                             <div class="mt-product-details-range-rating d-flex align-items-center">
                                                                 <h2 class="mt-product-details-range-count">4.7</h2>
                                                                 <div class="mt-product-details-range-review">
-                                                                    <span><i class="fa-solid fa-star-sharp"></i> Excellent</span>
+                                                                    <span><i class="fa-solid fa-star-sharp"></i> @T("Products.Reviews.Excellent")</span>
                                                                     <p class="mt-6">(40 Reviews & 56 Ratings)</p>
                                                                     <ul>
                                                                         <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
@@ -342,10 +341,10 @@
                                                         <!-- form -->
                                                         <div class="product-details-comment pb-100">
                                                             <div class="comment-title mb-20">
-                                                                <h3>Submit Your Reviews</h3>
+                                                                <h3>@T("Products.Reviews.SubmitYourReviews")</h3>
                                                             </div>
                                                             <div class="comment-rating mb-20 d-flex">
-                                                                <span>Your Ratings </span>
+                                                                <span>@T("Products.Reviews.YourRatings") </span>
                                                                 <ul>
                                                                     <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
                                                                     <li><a href="#"><i class="fa-solid fa-star-sharp"></i></a></li>
@@ -358,25 +357,24 @@
                                                                 <div class="row">
                                                                     <div class="col-xxl-6">
                                                                         <div class="comment-input">
-                                                                            <input type="text" placeholder="Your Name*">
+                                                                            <input type="text" placeholder="@T("Products.Reviews.YourName")">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xxl-6">
                                                                         <div class="comment-input">
-                                                                            <input type="email" placeholder="Your Email*">
+                                                                            <input type="email" placeholder="@T("Products.Reviews.YourEmail")">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xxl-12">
                                                                         <div class="comment-input">
-                                                                            <textarea placeholder="Your review..."></textarea>
+                                                                            <textarea placeholder="@T("Products.Reviews.YourReview")"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-xxl-12">
                                                                         <div class="comment-submit">
                                                                             <button type="submit" class="mt-btn">
                                                                                 <span>
-                                                                                    Submit
-                                                                                    Review
+                                                                                    @T("Products.Reviews.SubmitReview")
                                                                                 </span>
                                                                             </button>
                                                                         </div>
@@ -386,7 +384,7 @@
                                                         </div>
 
                                                         <div class="mt-review-box d-flex align-items-center  mb-50">
-                                                            <span>Reviews</span>
+                                                            <span>@T("Products.Tabs.Reviews")</span>
                                                             <div class="mt-reviews-box-number">
                                                                 <a href="#">
                                                                     <i class="fa-solid fa-star-sharp"></i> 5

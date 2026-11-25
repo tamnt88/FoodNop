@@ -10,61 +10,51 @@
         <nav class="mt-mobile-menu-active">
             <ul>
                 <li class="has-dropdown">
-                    <a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">Home</a>
+                    <a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Menu.Home")</a>
                     <ul class="sub-menu mt-submenu">
-                        <li><a href="index.html">Home One</a></li>
-                        <li>
-                            <a href="index-2.html">Home Two</a>
-                        </li>
-
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.HOMEPAGE)">@T("Menu.Home")</a></li>
                     </ul>
                 </li>
-                <li><a href="about.html">About</a>
+                <li><a href="@(await NopUrl.RouteTopicUrlAsync("AboutUs"))">@T("Menu.About")</a></li>
                 <li class="has-dropdown">
-                    <a href="#">Shop</a>
+                    <a href="#">@T("Menu.Shop")</a>
                     <ul class="sub-menu mt-submenu">
-                        <li><a href="shop.html">Shop</a></li>
-                        <li><a href="product-details.html">Prodcut Details</a></li>
-
+                        <li><a href="#">@T("Menu.Shop")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.WISHLIST)">@T("Menu.Wishlist")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.CART)">@T("Menu.Cart")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT)">@T("Menu.Checkout")</a></li>
                     </ul>
                 </li>
                 <li class="has-dropdown">
-                    <a href="#">Pages</a>
+                    <a href="#">@T("Menu.Pages")</a>
                     <ul class="sub-menu mt-submenu">
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                        <li><a href="team.html">Team</a></li>
-                        <li><a href="team-details.html">Team Details</a></li>
-                        <li><a href="product-details.html">Prodcut</a></li>
-                        <li><a href="wishlist.html">Wishlist</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="cart.html">Cart</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
+                        <li><a href="@(await NopUrl.RouteTopicUrlAsync("AboutUs"))">@T("Menu.About")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.CONTACT_US)">@T("Menu.Contact")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.WISHLIST)">@T("Menu.Wishlist")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.Standard.CHECKOUT)">@T("Menu.Checkout")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.CART)">@T("Menu.Cart")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.LOGIN)">@T("Menu.Login")</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.Standard.REGISTER)">@T("Menu.Register")</a></li>
                     </ul>
                 </li>
 
                 <li class="has-dropdown">
-                    <a href="#">Blog</a>
+                    <a href="@Url.RouteUrl(NopRouteNames.General.BLOG)">@T("Menu.Blog")</a>
                     <ul class="sub-menu mt-submenu">
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="blog-grid.html">Blog Grid</a></li>
-                        <li><a href="blog-details.html">Blog Details</a></li>
+                        <li><a href="@Url.RouteUrl(NopRouteNames.General.BLOG)">@T("Menu.Blog")</a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="contact.html">Contact</a>
+                    <a href="@Url.RouteUrl(NopRouteNames.General.CONTACT_US)">@T("Menu.Contact")</a>
                 </li>
             </ul>
         </nav>
     </div>
     <div class="mtheader__bottom-right d-none d-xxl-block">
-        <a href="tel:9112456859">Hotline: <span> +(00)91 1245 6859</span></a>
-        <a href="shop.html" class="mt-btn mt-btn-sm">
-            <i class="fa-solid fa-bolt"></i>FLASH
-            SALE
+        <a href="tel:9112456859">@T("Menu.Hotline") <span> +(00)91 1245 6859</span></a>
+        <a href="#" class="mt-btn mt-btn-sm">
+            <i class="fa-solid fa-bolt"></i>@T("Menu.FlashSale")
         </a>
 
     </div>
